@@ -26,13 +26,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/manifest.webmanifest"
-            ],
+            "assets": ["src/favicon.ico", "src/assets", "src/manifest.webmanifest"],
             "styles": ["src/styles.scss", "src/assets/scss/custom.scss"],
-            "scripts": [],
+            "scripts": ["src/assets/scripts/snap.js"],
             "serviceWorker": true,
             "ngswConfigPath": "ngsw-config.json"
           },
@@ -95,11 +91,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/manifest.webmanifest"
-            ],
+            "assets": ["src/favicon.ico", "src/assets", "src/manifest.webmanifest"],
             "styles": ["src/styles.scss"],
             "scripts": []
           }

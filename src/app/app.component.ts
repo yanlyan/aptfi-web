@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Asosiasi Perguruan Tinggi Farmasi Indonesia';
+  ngOnInit(): void {}
 }

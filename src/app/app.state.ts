@@ -27,7 +27,10 @@ export interface AppStateModel {
     isOnline: true,
     server: true,
     loginRedirect: null,
-    session: null,
+    session: {
+      accessToken: '',
+      refreshToken: '',
+    },
   },
 })
 @Injectable({

@@ -30,7 +30,7 @@
         fxLayoutAlign="space-between center"
         style="width: 100%"
       >
-        <span style="padding-left: 16px">aptfi</span>
+        <span style="padding-left: 16px"></span>
         <div
           fxLayout="row"
           fxLayoutAlign="space-between center"
@@ -55,17 +55,9 @@
           </div>
         </div>
         <mat-menu #menu="matMenu" xPosition="before">
-          <button mat-menu-item>
-            <mat-icon>dialpad</mat-icon>
-            <span>Redial</span>
-          </button>
-          <button mat-menu-item disabled>
-            <mat-icon>voicemail</mat-icon>
-            <span>Check voice mail</span>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>notifications_off</mat-icon>
-            <span>Disable alerts</span>
+          <button (click)="logout()" mat-menu-item>
+            <mat-icon>logout</mat-icon>
+            <span>Keluar</span>
           </button>
         </mat-menu>
       </div>
