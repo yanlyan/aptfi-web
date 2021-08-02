@@ -6,6 +6,10 @@ export class SetUserState {
   static readonly type = '[App] Set User State';
   constructor(public state: any) {}
 }
+export class SetRegisterStatus {
+  static readonly type = '[App] Set Register Status State';
+  constructor(public state: number) {}
+}
 
 export interface UserStateModel {
   user: User;
@@ -30,6 +34,15 @@ export class UserState {
       ...state,
       user: action.state.user,
       member: action.state.member,
+    });
+  }
+
+  @Action(SetRegisterStatus)
+  SetRegisterStatus(ctx: StateContext<UserStateModel>, action: SetRegisterStatus) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      member: { ...state.member, registerLastStatus: action.state },
     });
   }
 }

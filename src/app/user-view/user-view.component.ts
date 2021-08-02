@@ -1,5 +1,5 @@
+import { ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngxs/store';
@@ -22,7 +22,8 @@ export class UserViewComponent implements OnInit {
     private readonly store: Store,
     private jwtService: JwtHelperService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private viewPortScroller: ViewportScroller
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +38,6 @@ export class UserViewComponent implements OnInit {
         })
       );
       this.userState = this.store.selectSnapshot(UserState);
-
       if (this.userState.member.registerLastStatus === 0) {
         this.router.navigate(['daftar']);
       }

@@ -61,7 +61,7 @@
       <mat-expansion-panel-header>
         <mat-panel-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
           <div>Detail Fakultas yang menaungi Prodi / PSPA</div>
-          <mat-icon *ngIf="instituteValidity" style="color: #53a653">check</mat-icon>
+          <mat-icon *ngIf="facultyValidity" style="color: #53a653">check</mat-icon>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <form (ngSubmit)="onFacultySubmit()" [formGroup]="facultyForm">
@@ -306,11 +306,11 @@
               >Alamat e-mail Ketua Prodi PSPA harus diisi dengan email yang valid</mat-error
             >
           </mat-form-field>
-          <div *ngIf="s2Loading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+          <div *ngIf="pspaLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
             <mat-spinner color="primary" [diameter]="20"></mat-spinner>
             <label for="">Loading</label>
           </div>
-          <button *ngIf="!s2Loading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
+          <button *ngIf="!pspaLoading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
         </div>
       </form>
     </mat-expansion-panel>
@@ -452,15 +452,20 @@
     </mat-expansion-panel>
   </mat-accordion>
   <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="16px">
+    <div *ngIf="paymentLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+      <mat-spinner color="primary" [diameter]="20"></mat-spinner>
+      <label for="">Loading</label>
+    </div>
     <button
+      *ngIf="!paymentLoading"
       type="button"
       [disabled]="!paymentButtonStatus"
       mat-flat-button
       class="paymentButton"
       (click)="onPaymentButtonClicked()"
     >
-      <label style="margin-right: 12px">Lanjutkan ke Pembayaran</label>
-      <mat-icon style="width: 20px; height: 20px; font-size: 20px">send</mat-icon>
+      Lanjutkan ke Pembayaran
+      <mat-icon style="width: 20px; height: 20px; font-size: 20px; margin-left: 8px">send</mat-icon>
     </button>
   </div>
 </div>

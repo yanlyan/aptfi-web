@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UserRegisterGuard } from './user-register/user-register.guard';
 
 const routes: Routes = [
   {
@@ -35,8 +36,13 @@ const routes: Routes = [
         loadChildren: () => import('./lecturer/lecturer.module').then((m) => m.LecturerModule),
       },
       {
+        path: 'tagihan',
+        loadChildren: () => import('./tagihan/tagihan.module').then((m) => m.TagihanModule),
+      },
+      {
         path: 'daftar',
         component: UserRegisterComponent,
+        canActivate: [UserRegisterGuard],
       },
     ],
   },

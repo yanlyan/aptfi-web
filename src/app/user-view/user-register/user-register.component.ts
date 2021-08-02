@@ -1,13 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
 import { merge, pipe } from 'rxjs';
-import { delay, mergeAll } from 'rxjs/operators';
+import { delay, map, mergeAll, mergeMap } from 'rxjs/operators';
 import { RegForum } from 'src/app/master/reg-forum.model';
 import { RegForumService } from 'src/app/master/reg-forum.service';
+import { TagihanService } from '../tagihan/tagihan.service';
 import { Prodi } from '../user.model';
-import { UserState, UserStateModel } from '../user.state';
+import { SetRegisterStatus, UserState, UserStateModel } from '../user.state';
 import { UserRegisterService } from './user-register.service';
 
 declare const window: any;
@@ -51,6 +54,7 @@ export class UserRegisterComponent implements OnInit {
   sarpraValidity: boolean = false;
 
   paymentButtonStatus: boolean = false;
+  paymentLoading: boolean = false;
 
   step = 0;
   regForums: RegForum[];
@@ -62,7 +66,10 @@ export class UserRegisterComponent implements OnInit {
     private store: Store,
     private regForumService: RegForumService,
     private userRegister: UserRegisterService,
-    private _FileSaverService: FileSaverService
+    private _FileSaverService: FileSaverService,
+    private tagihanService: TagihanService,
+    private router: Router,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -283,7 +290,7 @@ export class UserRegisterComponent implements OnInit {
     if (this.facultyForm.valid) {
       this.facultyLoading = true;
       this.userRegister
-        .saveInstitute(this.facultyForm.value)
+        .saveFaculty(this.facultyForm.value)
         .pipe(delay(500))
         .subscribe(
           () => {
@@ -363,6 +370,9 @@ export class UserRegisterComponent implements OnInit {
         },
         (err) => {
           this.dosenS1Loading = false;
+          this.snackbar.open('Terjadi Kesalahan: Tidak dapat menyimpan data Dosen', 'Tutup', {
+            panelClass: ['snackbar-warn'],
+          });
         }
       );
     }
@@ -404,7 +414,24 @@ export class UserRegisterComponent implements OnInit {
   }
 
   onPaymentButtonClicked() {
-    window.snap.pay('208dd7c4-96b1-4f80-8d7e-11e292f1c5b6');
+    this.paymentLoading = true;
+    this.userRegister
+      .setStatusMember(1)
+      .pipe(
+        mergeMap((response) => {
+          return this.tagihanService.createOrder('register');
+        })
+      )
+      .subscribe(
+        () => {
+          this.store.dispatch(new SetRegisterStatus(1));
+          this.paymentLoading = false;
+          this.router.navigate(['tagihan']);
+        },
+        (err) => {
+          this.paymentLoading = false;
+        }
+      );
   }
 
   downloadTemplate(e: any) {

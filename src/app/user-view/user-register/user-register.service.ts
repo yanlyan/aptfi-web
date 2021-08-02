@@ -13,6 +13,10 @@ export class UserRegisterService {
     return this.httpClient.put(`${environment.api}/members/save-institute`, data);
   }
 
+  saveFaculty(data: any) {
+    return this.httpClient.put(`${environment.api}/members/save-faculty`, data);
+  }
+
   saveProdi(data: any, type: string) {
     data.prodiType = type;
     return this.httpClient.put(`${environment.api}/prodis/save-prodi`, data);
@@ -29,5 +33,11 @@ export class UserRegisterService {
   }
   uploadSarpra(data: any) {
     return this.httpClient.post(`${environment.api}/members/save-sarpra`, data);
+  }
+
+  setStatusMember(status: number) {
+    return this.httpClient.put(`${environment.api}/members/set-status`, {
+      status,
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngxs/store';
 import { SetSessionState } from '../app.state';
@@ -25,10 +26,7 @@ export class LoginComponent implements OnInit {
     private userService: UserService
   ) {
     this.loginForm = new FormGroup({
-      email: new FormControl('john@gmail.com', [
-        Validators.required,
-        Validators.email,
-      ]),
+      email: new FormControl('john@gmail.com', [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required]),
     });
   }
@@ -38,36 +36,32 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.loginForm.valid) {
       this.loading = true;
-      this.loginService
-        .login(this.loginForm.value.email, this.loginForm.value.password)
-        .subscribe(
-          (response) => {
+      this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(
+        (response) => {
+          this.store.dispatch(
+            new SetSessionState({
+              accessToken: response.access_token,
+              refreshToken: response.refresh_token,
+            })
+          );
+          const decodedToken = this.jwtService.decodeToken(response.access_token);
+
+          this.userService.getById(decodedToken.sub).subscribe((response) => {
             this.store.dispatch(
-              new SetSessionState({
-                accessToken: response.access_token,
-                refreshToken: response.refresh_token,
+              new SetUserState({
+                user: response.user,
+                member: response.member,
               })
             );
-            const decodedToken = this.jwtService.decodeToken(
-              response.access_token
-            );
+          });
 
-            this.userService.getById(decodedToken.sub).subscribe((response) => {
-              this.store.dispatch(
-                new SetUserState({
-                  user: response.user,
-                  member: response.member,
-                })
-              );
-            });
-
-            this.router.navigate(['/']);
-            this.loading = false;
-          },
-          (error) => {
-            this.loading = false;
-          }
-        );
+          this.router.navigate(['/']);
+          this.loading = false;
+        },
+        (error) => {
+          this.loading = false;
+        }
+      );
     }
   }
 
