@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { TagihanGuard } from './tagihan.guard';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
     FlexLayoutModule,
     MatIconModule,
     MatDividerModule,
+    MatProgressSpinnerModule
   ],
 })
 export class TagihanModule {}

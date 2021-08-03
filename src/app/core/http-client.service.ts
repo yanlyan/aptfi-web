@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams, HttpContext } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { config, Observable } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { AppState } from '../app.state';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +10,7 @@ import { Observable } from 'rxjs';
 export class HttpClientService {
   headers!: HttpHeaders;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private store: Store) {}
 
   get(
     path: string,
@@ -31,6 +33,15 @@ export class HttpClientService {
   ): Observable<any> {
     return this.http.get<any>(path, options);
   }
+
+  download(url: string, options:any): Observable<any> {
+    const headers = new HttpHeaders();
+    this.createAuthorizationHeader(headers);
+    options.headers = headers;
+    return this.http.get(url, options);
+  }
+
+
 
   post(path: string, data: object): Observable<any> {
     return this.http.post<any>(path, data);
@@ -76,4 +87,14 @@ export class HttpClientService {
   ): Observable<any> {
     return this.http.delete<any>(path, options);
   }
+
+  createAuthorizationHeader(headers: HttpHeaders) {
+    const appState = this.store.selectSnapshot(AppState)
+
+    if (appState.session?.accessToken ) {
+      headers.append("Authorization", appState.session.accessToken );
+    } else {
+    }
+  }
+
 }

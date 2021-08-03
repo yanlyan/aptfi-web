@@ -12,6 +12,7 @@ export interface Prodi {
   prodiPermit: string;
   prodiAccreditedBy: string;
   prodiAccreditedNo: string;
+  prodiEmail: string;
   prodiStudents: number;
   prodiStudentsYear: number;
   prodiPhone: string;

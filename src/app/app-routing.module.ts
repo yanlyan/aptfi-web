@@ -15,6 +15,14 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./register/register.module').then((m) => m.RegisterModule),
   },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./forgot-password/forgot-pasword.module').then((m) => m.ForgotPasswordModule),
+  },
+  {
+    path: 'reset-password/:token',
+    loadChildren: () => import('./reset-password/reset-password.module').then((m) => m.ResetPasswordModule),
+  },
 ];
 
 @NgModule({
@@ -22,7 +30,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       useHash: false,
       anchorScrolling: 'enabled',
-      // scrollPositionRestoration: 'enabled',
     }),
   ],
   exports: [RouterModule],

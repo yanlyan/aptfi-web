@@ -1,7 +1,7 @@
 import { Member } from '../user.model';
 
 export interface Bill {
-  id: string;
+  id: number;
   uuid: string;
   token: string;
   type: string;
@@ -12,4 +12,5 @@ export interface Bill {
   receiptFile: string;
   createdAt: string;
   member: Member;
+  loading: boolean;
 }

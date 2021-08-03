@@ -17,7 +17,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MyHttpInterceptor } from './core/http-interceptor';
 import { UserState } from './user-view/user.state';
-import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { registerLocaleData } from '@angular/common';
 import localeId from '@angular/common/locales/id';
 
@@ -52,7 +51,6 @@ export function tokenGetter() {
     NgxsStoragePluginModule.forRoot({
       key: ['app'],
     }),
-    ScrollToModule.forRoot(),
   ],
   providers: [
     {

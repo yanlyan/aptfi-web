@@ -23,4 +23,8 @@ export class TagihanService {
       orderId,
     });
   }
+
+  print(token: string){
+    return this.httpClient.download(`${environment.api}/bills/print/${token}`, {responseType: 'blob'});
+  }
 }

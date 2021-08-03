@@ -1,56 +1,67 @@
-<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="16px">
-  <mat-card *ngFor="let bill of bills">
-    <mat-card-header fxLayout="row" fxLayoutAlign="center center">
-      <mat-card-title *ngIf="bill.type === 'annual'">Iuran Anggota Tahun 2021</mat-card-title>
-      <mat-card-title *ngIf="bill.type === 'register'">Biaya Pendaftaran Anggota</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="8px" style="padding-bottom: 8px">
-        <div *ngIf="bill.lastStatus === 0" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-          <mat-icon style="color: #ddd">fiber_manual_record</mat-icon>
-          <label for="">Belum dibayar</label>
+<div>
+  <div *ngIf="billsLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+    <mat-spinner color="primary" [diameter]="20"></mat-spinner>
+    <label for="">Loading</label>
+  </div>
+  <div *ngIf="!billsLoading" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="16px">
+    <mat-card *ngFor="let bill of bills">
+      <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+        <mat-card-title *ngIf="bill.type === 'annual'">Iuran Anggota Tahun 2021</mat-card-title>
+        <mat-card-title *ngIf="bill.type === 'register'">Biaya Pendaftaran Anggota</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="8px" style="padding-bottom: 8px">
+          <div *ngIf="bill.lastStatus === 0" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+            <mat-icon style="color: #ddd">fiber_manual_record</mat-icon>
+            <label for="">Belum dibayar</label>
+          </div>
+          <div *ngIf="bill.lastStatus === 1" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+            <mat-icon style="color: #ffc957">fiber_manual_record</mat-icon>
+            <label for="">Menunggu pembayaran</label>
+          </div>
+          <div *ngIf="bill.lastStatus === 2" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+            <mat-icon style="color: #b9ea81">fiber_manual_record</mat-icon>
+            <label for="">Lunas</label>
+          </div>
+          <div>
+            {{ bill.lastStatusAt | date: "short" }}
+          </div>
         </div>
-        <div *ngIf="bill.lastStatus === 1" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-          <mat-icon style="color: #ffc957">fiber_manual_record</mat-icon>
-          <label for="">Menunggu pembayaran</label>
+        <mat-divider> </mat-divider>
+        <div style="padding: 8px" fxLayout="column" fxLayoutAlign="start stretch">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" style="padding: 8px 0">
+            <label for="">ID Transaksi</label>
+            <strong>{{ bill.token.substr(24, 12) }}</strong>
+          </div>
+          <div style="margin: 8px 0" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+            <strong style="color: #ccc; text-transform: uppercase">Nominal</strong>
+            <label style="font-size: 20px">Rp. {{ bill.amount + bill.fee | number }}</label>
+          </div>
+          <div style="margin: 8px 0" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+            <strong style="color: #ccc; text-transform: uppercase">Nama Institusi</strong>
+            <label style="font-size: 20px">{{ bill.member.universityName }}</label>
+          </div>
         </div>
-        <div *ngIf="bill.lastStatus === 2" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-          <mat-icon style="color: #b9ea81">fiber_manual_record</mat-icon>
-          <label for="">Lunas</label>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-divider> </mat-divider>
+        <div style="padding-top: 8px" fxLayout="row" fxLayoutAlign="center center">
+          <div *ngIf="bill.loading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+            <mat-spinner color="primary" [diameter]="20"></mat-spinner>
+            <label for="">Loading</label>
+          </div>
+          <button
+            *ngIf="bill.lastStatus === 0 || bill.lastStatus === 1"
+            mat-flat-button
+            color="primary"
+            (click)="onPayButtonClick(bill)"
+          >
+            Bayar Sekarang
+          </button>
+          <button  *ngIf="bill.lastStatus === 2 && !bill.loading" (click)="onPrintClick(bill)" mat-flat-button color="primary">Cetak Bukti Bayar</button>
         </div>
-        <div>
-          {{ bill.lastStatusAt | date: "short" }}
-        </div>
-      </div>
-      <mat-divider> </mat-divider>
-      <div style="padding: 8px" fxLayout="column" fxLayoutAlign="start stretch">
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" style="padding: 8px 0">
-          <label for="">ID Transaksi</label>
-          <strong>{{ bill.token.substr(24, 12) }}</strong>
-        </div>
-        <div style="margin: 8px 0" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
-          <strong style="color: #ccc; text-transform: uppercase">Nominal</strong>
-          <label style="font-size: 20px">Rp. {{ bill.amount + bill.fee | number }}</label>
-        </div>
-        <div style="margin: 8px 0" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
-          <strong style="color: #ccc; text-transform: uppercase">Nama Institusi</strong>
-          <label style="font-size: 20px">{{ bill.member.universityName }}</label>
-        </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <mat-divider> </mat-divider>
-      <div style="padding-top: 8px" fxLayout="row" fxLayoutAlign="center center">
-        <button
-          *ngIf="bill.lastStatus === 0 || bill.lastStatus === 1"
-          mat-flat-button
-          color="primary"
-          (click)="onPayButtonClick(bill)"
-        >
-          Bayar Sekarang
-        </button>
-        <button *ngIf="bill.lastStatus === 2" mat-flat-button color="primary">Cetak Bukti Bayar</button>
-      </div>
-    </mat-card-actions>
-  </mat-card>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
 </div>

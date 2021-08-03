@@ -60,6 +60,8 @@ export class UserRegisterComponent implements OnInit {
   regForums: RegForum[];
   @ViewChild('title') institute: any;
 
+  state:UserStateModel;
+
   forced: boolean = false;
 
   constructor(
@@ -100,6 +102,7 @@ export class UserRegisterComponent implements OnInit {
       prodiPermit: new FormControl(null, [Validators.required]),
       prodiAccreditedBy: new FormControl(null, [Validators.required]),
       prodiAccreditedNo: new FormControl(null, [Validators.required]),
+      prodiEmail: new FormControl(null, [Validators.required]),
       prodiStudents: new FormControl(null, [Validators.required]),
       prodiStudentsYear: new FormControl(null, [Validators.required]),
       prodiPhone: new FormControl(null, [Validators.required]),
@@ -109,16 +112,16 @@ export class UserRegisterComponent implements OnInit {
     });
 
     this.s2Form = new FormGroup({
-      prodiName: new FormControl(null, [Validators.required]),
-      prodiPermit: new FormControl(null, [Validators.required]),
-      prodiAccreditedBy: new FormControl(null, [Validators.required]),
-      prodiAccreditedNo: new FormControl(null, [Validators.required]),
-      prodiStudents: new FormControl(null, [Validators.required]),
-      prodiStudentsYear: new FormControl(null, [Validators.required]),
-      prodiPhone: new FormControl(null, [Validators.required]),
-      prodiHead: new FormControl(null, [Validators.required]),
-      prodiHeadPhone: new FormControl(null, [Validators.required]),
-      prodiHeadEmail: new FormControl(null, [Validators.required, Validators.email]),
+      prodiName: new FormControl(null, []),
+      prodiPermit: new FormControl(null, []),
+      prodiAccreditedBy: new FormControl(null, []),
+      prodiAccreditedNo: new FormControl(null, []),
+      prodiStudents: new FormControl(null, []),
+      prodiStudentsYear: new FormControl(null, []),
+      prodiPhone: new FormControl(null, []),
+      prodiHead: new FormControl(null, []),
+      prodiHeadPhone: new FormControl(null, []),
+      prodiHeadEmail: new FormControl(null, [ Validators.email]),
     });
 
     this.pspaForm = new FormGroup({
@@ -152,71 +155,75 @@ export class UserRegisterComponent implements OnInit {
       }
     });
 
-    this.store.select(UserState).subscribe((state: UserStateModel) => {
-      if (state.member) {
-        this.instituteForm.controls['foundationName'].setValue(state.member.foundationName);
-        this.instituteForm.controls['headOfFoundation'].setValue(state.member.headOfFoundation);
-        this.instituteForm.controls['universityName'].setValue(state.member.universityName);
-        this.instituteForm.controls['rectorName'].setValue(state.member.rectorName);
-        this.instituteForm.controls['universityAddress'].setValue(state.member.universityAddress);
-        this.instituteForm.controls['regForum'].setValue(state.member.regForumId);
+    this.state = this.store.selectSnapshot(UserState);
+    if (this.state.member) {
+      this.instituteForm.controls['foundationName'].setValue(this.state.member.foundationName);
+      this.instituteForm.controls['headOfFoundation'].setValue(this.state.member.headOfFoundation);
+      this.instituteForm.controls['universityName'].setValue(this.state.member.universityName);
+      this.instituteForm.controls['rectorName'].setValue(this.state.member.rectorName);
+      this.instituteForm.controls['universityAddress'].setValue(this.state.member.universityAddress);
+      this.instituteForm.controls['regForum'].setValue(this.state.member.regForumId);
 
-        this.facultyForm.controls['facultyName'].setValue(state.member.facultyName);
-        this.facultyForm.controls['deanName'].setValue(state.member.deanName);
-        this.facultyForm.controls['facultyAddress'].setValue(state.member.facultyAddress);
-        this.facultyForm.controls['facultyPhone'].setValue(state.member.facultyPhone);
-        this.facultyForm.controls['facultyWebsite'].setValue(state.member.facultyWebsite);
-        this.facultyForm.controls['facultyEmail'].setValue(state.member.facultyEmail);
+      this.facultyForm.controls['facultyName'].setValue(this.state.member.facultyName);
+      this.facultyForm.controls['deanName'].setValue(this.state.member.deanName);
+      this.facultyForm.controls['facultyAddress'].setValue(this.state.member.facultyAddress);
+      this.facultyForm.controls['facultyPhone'].setValue(this.state.member.facultyPhone);
+      this.facultyForm.controls['facultyWebsite'].setValue(this.state.member.facultyWebsite);
+      this.facultyForm.controls['facultyEmail'].setValue(this.state.member.facultyEmail);
 
-        const s1: Prodi = state.member.prodis.filter((p) => p.prodiType === 's1')[0];
-        if (s1) {
-          this.s1Form.controls['prodiName'].setValue(s1.prodiName);
-          this.s1Form.controls['prodiPermit'].setValue(s1.prodiPermit);
-          this.s1Form.controls['prodiAccreditedBy'].setValue(s1.prodiAccreditedBy);
-          this.s1Form.controls['prodiAccreditedNo'].setValue(s1.prodiAccreditedNo);
-          this.s1Form.controls['prodiStudents'].setValue(s1.prodiStudents);
-          this.s1Form.controls['prodiStudentsYear'].setValue(s1.prodiStudentsYear);
-          this.s1Form.controls['prodiPhone'].setValue(s1.prodiPhone);
-          this.s1Form.controls['prodiHead'].setValue(s1.prodiHead);
-          this.s1Form.controls['prodiHeadPhone'].setValue(s1.prodiHeadPhone);
-          this.s1Form.controls['prodiHeadEmail'].setValue(s1.prodiHeadEmail);
-        }
-
-        const s2: Prodi = state.member.prodis.filter((p) => p.prodiType === 's2')[0];
-        if (s2) {
-          this.s2Form.controls['prodiName'].setValue(s2.prodiName);
-          this.s2Form.controls['prodiPermit'].setValue(s2.prodiPermit);
-          this.s2Form.controls['prodiAccreditedBy'].setValue(s2.prodiAccreditedBy);
-          this.s2Form.controls['prodiAccreditedNo'].setValue(s2.prodiAccreditedNo);
-          this.s2Form.controls['prodiStudents'].setValue(s2.prodiStudents);
-          this.s2Form.controls['prodiStudentsYear'].setValue(s2.prodiStudentsYear);
-          this.s2Form.controls['prodiPhone'].setValue(s2.prodiPhone);
-          this.s2Form.controls['prodiHead'].setValue(s2.prodiHead);
-          this.s2Form.controls['prodiHeadPhone'].setValue(s2.prodiHeadPhone);
-          this.s2Form.controls['prodiHeadEmail'].setValue(s2.prodiHeadEmail);
-        }
-
-        const pspa: Prodi = state.member.prodis.filter((p) => p.prodiType === 'pspa')[0];
-        if (pspa) {
-          this.pspaForm.controls['prodiName'].setValue(pspa.prodiName);
-          this.pspaForm.controls['prodiPermit'].setValue(pspa.prodiPermit);
-          this.pspaForm.controls['prodiAccreditedBy'].setValue(pspa.prodiAccreditedBy);
-          this.pspaForm.controls['prodiAccreditedNo'].setValue(pspa.prodiAccreditedNo);
-          this.pspaForm.controls['prodiStudents'].setValue(pspa.prodiStudents);
-          this.pspaForm.controls['prodiStudentsYear'].setValue(pspa.prodiStudentsYear);
-          this.pspaForm.controls['prodiPhone'].setValue(pspa.prodiPhone);
-          this.pspaForm.controls['prodiHead'].setValue(pspa.prodiHead);
-          this.pspaForm.controls['prodiHeadPhone'].setValue(pspa.prodiHeadPhone);
-          this.pspaForm.controls['prodiHeadEmail'].setValue(pspa.prodiHeadEmail);
-        }
-
-        if (state.member.dosenFileS1) {
-          this.dosenS1Form.controls['fileDosen'].setValidators([]);
-          this.dosenS1Form.controls['fileDosen'].updateValueAndValidity();
-        }
-
-        this.validatePanel();
+      const s1: Prodi = this.state.member.prodis.filter((p) => p.prodiType === 's1')[0];
+      if (s1) {
+        this.s1Form.controls['prodiName'].setValue(s1.prodiName);
+        this.s1Form.controls['prodiPermit'].setValue(s1.prodiPermit);
+        this.s1Form.controls['prodiAccreditedBy'].setValue(s1.prodiAccreditedBy);
+        this.s1Form.controls['prodiAccreditedNo'].setValue(s1.prodiAccreditedNo);
+        this.s1Form.controls['prodiEmail'].setValue(s1.prodiEmail);
+        this.s1Form.controls['prodiStudents'].setValue(s1.prodiStudents);
+        this.s1Form.controls['prodiStudentsYear'].setValue(s1.prodiStudentsYear);
+        this.s1Form.controls['prodiPhone'].setValue(s1.prodiPhone);
+        this.s1Form.controls['prodiHead'].setValue(s1.prodiHead);
+        this.s1Form.controls['prodiHeadPhone'].setValue(s1.prodiHeadPhone);
+        this.s1Form.controls['prodiHeadEmail'].setValue(s1.prodiHeadEmail);
       }
+
+      const s2: Prodi = this.state.member.prodis.filter((p) => p.prodiType === 's2')[0];
+      if (s2) {
+        this.s2Form.controls['prodiName'].setValue(s2.prodiName);
+        this.s2Form.controls['prodiPermit'].setValue(s2.prodiPermit);
+        this.s2Form.controls['prodiAccreditedBy'].setValue(s2.prodiAccreditedBy);
+        this.s2Form.controls['prodiAccreditedNo'].setValue(s2.prodiAccreditedNo);
+        this.s2Form.controls['prodiStudents'].setValue(s2.prodiStudents);
+        this.s2Form.controls['prodiStudentsYear'].setValue(s2.prodiStudentsYear);
+        this.s2Form.controls['prodiPhone'].setValue(s2.prodiPhone);
+        this.s2Form.controls['prodiHead'].setValue(s2.prodiHead);
+        this.s2Form.controls['prodiHeadPhone'].setValue(s2.prodiHeadPhone);
+        this.s2Form.controls['prodiHeadEmail'].setValue(s2.prodiHeadEmail);
+      }
+
+      const pspa: Prodi = this.state.member.prodis.filter((p) => p.prodiType === 'pspa')[0];
+      if (pspa) {
+        this.pspaForm.controls['prodiName'].setValue(pspa.prodiName);
+        this.pspaForm.controls['prodiPermit'].setValue(pspa.prodiPermit);
+        this.pspaForm.controls['prodiAccreditedBy'].setValue(pspa.prodiAccreditedBy);
+        this.pspaForm.controls['prodiAccreditedNo'].setValue(pspa.prodiAccreditedNo);
+        this.pspaForm.controls['prodiStudents'].setValue(pspa.prodiStudents);
+        this.pspaForm.controls['prodiStudentsYear'].setValue(pspa.prodiStudentsYear);
+        this.pspaForm.controls['prodiPhone'].setValue(pspa.prodiPhone);
+        this.pspaForm.controls['prodiHead'].setValue(pspa.prodiHead);
+        this.pspaForm.controls['prodiHeadPhone'].setValue(pspa.prodiHeadPhone);
+        this.pspaForm.controls['prodiHeadEmail'].setValue(pspa.prodiHeadEmail);
+      }
+
+      if (this.state.member.dosenFileS1) {
+        this.dosenS1Form.controls['fileDosen'].setValidators([]);
+        this.dosenS1Form.controls['fileDosen'].updateValueAndValidity();
+      }
+
+      this.validatePanel();
+    }
+
+    this.store.select(UserState).subscribe((state: UserStateModel) => {
+
     });
   }
 
@@ -237,9 +244,11 @@ export class UserRegisterComponent implements OnInit {
       step = 3;
     }
 
-    this.s2Validity = this.s2Form.valid;
-    if (this.s2Validity) {
+    if(this.dosenS1Form.valid || this.state.member.dosenFileS1){
+      this.dosenS1Validity = true;
       step = 4;
+    }else{
+      this.dosenS1Validity = false;
     }
 
     this.pspaValidity = this.pspaForm.valid;
@@ -247,16 +256,10 @@ export class UserRegisterComponent implements OnInit {
       step = 5;
     }
 
-    this.dosenS1Validity = this.dosenS1Form.valid;
-    if (this.dosenS1Validity) {
-      step = 6;
-    }
-
     if (
       this.instituteValidity &&
       this.facultyValidity &&
       this.s1Validity &&
-      this.s2Validity &&
       this.pspaValidity &&
       this.dosenS1Validity
     ) {
