@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngxs/store';
+import { ReCaptchaService } from 'angular-recaptcha3';
 import { SetSessionState } from '../app.state';
 import { UserService } from '../user-view/user.service';
 import { SetUserState } from '../user-view/user.state';
@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit {
     private readonly store: Store,
     private router: Router, // private readonly store: Store
     private jwtService: JwtHelperService,
-    private userService: UserService
+    private userService: UserService,
+    private recaptchaService: ReCaptchaService
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('john@gmail.com', [Validators.required, Validators.email]),
@@ -33,10 +34,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit() {
+  async onSubmit() {
     if (this.loginForm.valid) {
       this.loading = true;
-      this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(
+      const token = await this.recaptchaService.execute({ action: 'login' });
+
+      this.loginService.login(this.loginForm.value.email, this.loginForm.value.password, token).subscribe(
         (response) => {
           this.store.dispatch(
             new SetSessionState({

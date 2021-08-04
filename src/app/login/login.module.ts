@@ -11,6 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { LoginGuard } from './login.guard';
+import { ReCaptchaModule } from 'angular-recaptcha3';
 
 const routes: Routes = [
   {
@@ -32,6 +33,7 @@ const routes: Routes = [
     MatDividerModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
+    ReCaptchaModule,
   ],
   exports: [LoginComponent],
 })

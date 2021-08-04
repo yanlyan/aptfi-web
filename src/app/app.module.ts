@@ -19,12 +19,13 @@ import { MyHttpInterceptor } from './core/http-interceptor';
 import { UserState } from './user-view/user.state';
 import { registerLocaleData } from '@angular/common';
 import localeId from '@angular/common/locales/id';
-
+import { ReCaptchaModule } from 'angular-recaptcha3';
 registerLocaleData(localeId, 'id');
 
 export function tokenGetter() {
   return '';
 }
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -50,6 +51,15 @@ export function tokenGetter() {
     }),
     NgxsStoragePluginModule.forRoot({
       key: ['app'],
+    }),
+    ReCaptchaModule.forRoot({
+      invisible: {
+        sitekey: environment.recaptchaSiteKey,
+      },
+      normal: {
+        sitekey: environment.recaptchaSiteKey,
+      },
+      language: 'id',
     }),
   ],
   providers: [

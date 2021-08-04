@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { ReCaptchaService } from 'angular-recaptcha3';
 import { SetSessionState } from '../app.state';
 import { MustMatch } from '../core/must-match.validator';
 import { RegisterService } from './register.service';
@@ -19,7 +20,8 @@ export class RegisterComponent implements OnInit {
     private registerService: RegisterService,
     private readonly store: Store,
     private router: Router, // private readonly store: Store
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private recaptchaService: ReCaptchaService
   ) {
     this.loginForm = this.fb.group(
       {
@@ -54,15 +56,18 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit() {
+  async onSubmit() {
     if (this.loginForm.valid) {
       this.loading = true;
+      const token = await this.recaptchaService.execute({ action: 'register' });
+
       this.registerService
         .register(
           this.loginForm.value.name,
           this.loginForm.value.email,
           this.loginForm.value.password,
-          this.loginForm.value.passwordConfirmation
+          this.loginForm.value.passwordConfirmation,
+          token
         )
         .subscribe(
           (response) => {

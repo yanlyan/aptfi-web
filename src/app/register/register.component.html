@@ -9,9 +9,7 @@
   </div>
   <mat-card>
     <mat-card-header fxLayout="row" fxLayoutAlign="center center">
-      <mat-card-title style="margin: 24px 0px"
-        >Daftar akun ke Sistem Keanggotaan APTFI</mat-card-title
-      >
+      <mat-card-title style="margin: 24px 0px">Daftar akun ke Sistem Keanggotaan APTFI</mat-card-title>
     </mat-card-header>
     <mat-card-content fxLayout="column" fxLayoutAlign="center stretch">
       <form
@@ -23,81 +21,36 @@
         style="margin: 0px 16px"
       >
         <mat-form-field>
-          <input
-            matInput
-            placeholder="Nama Universitas"
-            formControlName="name"
-            type="text"
-          />
-          <mat-error *ngIf="!!loginForm.get('name')?.hasError('required')"
-            >Nama Universitas harus diisi</mat-error
-          >
+          <input matInput placeholder="Nama Universitas" formControlName="name" type="text" />
+          <mat-error *ngIf="!!loginForm.get('name')?.hasError('required')">Nama Universitas harus diisi</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input
-            matInput
-            placeholder="Email Universitas"
-            formControlName="email"
-            type="email"
-          />
-          <mat-error *ngIf="!!loginForm.get('email')?.hasError('required')"
-            >Email Universitas harus diisi</mat-error
-          >
-          <mat-error *ngIf="!!loginForm.get('email')?.hasError('email')"
-            >Email Universitas tidak valid</mat-error
-          >
+          <input matInput placeholder="Email Universitas" formControlName="email" type="email" />
+          <mat-error *ngIf="!!loginForm.get('email')?.hasError('required')">Email Universitas harus diisi</mat-error>
+          <mat-error *ngIf="!!loginForm.get('email')?.hasError('email')">Email Universitas tidak valid</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input
-            matInput
-            placeholder="Password"
-            formControlName="password"
-            type="password"
-          />
+          <input matInput placeholder="Password" formControlName="password" type="password" />
           <mat-error>Password harus diisi</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input
-            matInput
-            placeholder="Ulangi Password"
-            formControlName="passwordConfirmation"
-            type="password"
-          />
+          <input matInput placeholder="Ulangi Password" formControlName="passwordConfirmation" type="password" />
           <mat-error>Ulangi Password harus sama dengan password</mat-error>
         </mat-form-field>
         <div>
-          <div
-            style="margin-top: 20px; padding-bottom: 20px"
-            fxLayout="row"
-            fxLayoutAlign="space-around center"
-          >
-            <button
-              *ngIf="!loading"
-              mat-raised-button
-              color="primary"
-              type="submit"
-              fxFlex="33"
-            >
-              Buat Akun Baru
-            </button>
-            <div
-              *ngIf="loading"
-              fxLayout="row"
-              fxLayoutAlign="center center"
-              fxLayoutGap="8px"
-            >
+          <div style="margin-top: 20px; padding-bottom: 20px" fxLayout="row" fxLayoutAlign="space-around center">
+            <button *ngIf="!loading" mat-raised-button color="primary" type="submit" fxFlex="33">Buat Akun Baru</button>
+            <div *ngIf="loading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
               <mat-spinner color="primary" [diameter]="20"></mat-spinner>
               <label for="">Loading</label>
             </div>
           </div>
+          <recaptcha [size]="'invisible'" [hide]="true"> </recaptcha>
+
           <mat-divider></mat-divider>
         </div>
       </form>
-      <div
-        fxLayout="row"
-        fxLayoutAlign="space-between center"
-        style="margin-top: 24px; width: 100%"
-      >
+      <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 24px; width: 100%">
         <div>
           <a routerLink="/login">Masuk ke akun</a>
         </div>

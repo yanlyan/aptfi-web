@@ -8,17 +8,13 @@ import { HttpClientService } from '../core/http-client.service';
 export class RegisterService {
   constructor(private httpClient: HttpClientService) {}
 
-  register(
-    name: string,
-    email: string,
-    password: string,
-    passwordConfirm: string
-  ) {
+  register(name: string, email: string, password: string, passwordConfirm: string, token: string) {
     return this.httpClient.post(`${environment.api}/register`, {
       name,
       email,
       password,
       password_confirmation: passwordConfirm,
+      recaptcha: token,
     });
   }
 }

@@ -8,10 +8,11 @@ import { HttpClientService } from '../core/http-client.service';
 export class LoginService {
   constructor(private httpClient: HttpClientService) {}
 
-  login(email: string, password: string) {
+  login(email: string, password: string, token: string) {
     return this.httpClient.post(`${environment.api}/login`, {
       email,
       password,
+      recaptcha: token
     });
   }
 }
