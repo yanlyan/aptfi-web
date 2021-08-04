@@ -1,0 +1,42 @@
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="32px">
+  <mat-form-field fxFlex="70%">
+    <mat-label>Cari</mat-label>
+    <input matInput #filterInput />
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource" matSort>
+    <!-- Index Column -->
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <span class="mobile-label">No:</span>
+        {{ element.index }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Path Column -->
+    <ng-container matColumnDef="university_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Nama Universitas</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label">Email:</span>
+        {{ element.universityName }}</mat-cell
+      >
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+      <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutGap="8px">
+        <button mat-flat-button color="primary" [routerLink]="['/master/users/edit', element.id]">Ubah</button>
+        <button mat-flat-button color="warn">Hapus</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>

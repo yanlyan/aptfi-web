@@ -7,28 +7,28 @@ import { ReCaptchaService } from 'angular-recaptcha3';
 import { SetSessionState } from '../app.state';
 import { UserService } from '../user-view/user.service';
 import { SetUserState } from '../user-view/user.state';
-import { LoginService } from './login.service';
+import { AdminLoginService } from './admin-login.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-admin-login',
+  templateUrl: './admin-login.component.html',
+  styleUrls: ['./admin-login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class AdminLoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
 
   constructor(
-    private loginService: LoginService,
+    private loginService: AdminLoginService,
     private readonly store: Store,
-    private router: Router, // private readonly store: Store
+    private router: Router,
     private jwtService: JwtHelperService,
     private userService: UserService,
     private recaptchaService: ReCaptchaService
   ) {
     this.loginForm = new FormGroup({
-      email: new FormControl('john@gmail.com', [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required]),
+      email: new FormControl('sekretariat.aptfi@gmail.com', [Validators.required, Validators.email]),
+      password: new FormControl('NXA3HVtkUh', [Validators.required]),
     });
   }
 
@@ -48,18 +48,12 @@ export class LoginComponent implements OnInit {
               role: response.user.role,
             })
           );
-          const decodedToken = this.jwtService.decodeToken(response.access_token);
-
-          this.userService.getById(decodedToken.sub).subscribe((response) => {
-            this.store.dispatch(
-              new SetUserState({
-                user: response.user,
-                member: response.member,
-              })
-            );
-          });
-
-          this.router.navigate(['/']);
+          this.store.dispatch(
+            new SetUserState({
+              user: response.user,
+            })
+          );
+          this.router.navigate(['admin']);
           this.loading = false;
         },
         (error) => {
@@ -67,9 +61,5 @@ export class LoginComponent implements OnInit {
         }
       );
     }
-  }
-
-  goToRegister() {
-    this.router.navigate(['daftar']);
   }
 }

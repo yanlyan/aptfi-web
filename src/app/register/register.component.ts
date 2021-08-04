@@ -75,6 +75,7 @@ export class RegisterComponent implements OnInit {
               new SetSessionState({
                 accessToken: response.access_token,
                 refreshToken: response.refresh_token,
+                role: response.user.role,
               })
             );
             this.router.navigate(['/']);

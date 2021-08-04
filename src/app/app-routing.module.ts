@@ -6,6 +6,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./user-view/user-view.module').then((m) => m.UserViewModule),
   },
+  {
+    path: 'admin/login',
+    loadChildren: () => import('./admin-login/admin-login.module').then((m) => m.AdminLoginModule),
+  },
 
   {
     path: 'login',
@@ -22,6 +26,11 @@ const routes: Routes = [
   {
     path: 'reset-password/:token',
     loadChildren: () => import('./reset-password/reset-password.module').then((m) => m.ResetPasswordModule),
+  },
+
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin-view/admin-view.module').then((m) => m.AdminViewModule),
   },
 ];
 

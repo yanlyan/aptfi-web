@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  Router,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { of } from 'rxjs';
 import { AppState, AppStateModel } from '../app.state';
 
 @Injectable({ providedIn: 'root' })
@@ -18,6 +14,11 @@ export class UserGuard implements CanActivate {
       this.router.navigate(['login']);
       return false;
     }
-    return true;
+    if (appState.session.role.id !== 2) {
+      this.router.navigate(['admin']);
+      return of(false);
+    }
+
+    return of(true);
   }
 }

@@ -11,8 +11,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$aptfi-primary: mat.define-palette(mat.$amber-palette, 400);
-$aptfi-accent: mat.define-palette(mat.$grey-palette, A200, A100, A400);
+$aptfi-primary: mat.define-palette(mat.$blue-gray-palette, 700);
+$aptfi-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $aptfi-warn: mat.define-palette(mat.$red-palette);
@@ -66,4 +66,11 @@ body {
       color: #333;
     }
   }
+}
+
+.nav-accordion .mat-expansion-panel-body {
+  padding: 0;
+}
+.nav-accordion .mat-expansion-indicator::after {
+  color: #fff;
 }

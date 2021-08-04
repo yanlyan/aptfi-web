@@ -1,8 +1,13 @@
+export interface Role {
+  id: number;
+  name: string;
+}
 export interface User {
   id: bigint;
   name: string;
   email: string;
   emailVerifiedAt: Date;
+  role: Role;
 }
 
 export interface Prodi {

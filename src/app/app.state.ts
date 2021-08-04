@@ -1,5 +1,6 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
+import { Role } from './user-view/user.model';
 
 export class SetSessionState {
   static readonly type = '[App] Set Session';
@@ -7,6 +8,7 @@ export class SetSessionState {
     public state: {
       accessToken: string;
       refreshToken: string;
+      role: Role;
     }
   ) {}
 }
@@ -18,6 +20,7 @@ export interface AppStateModel {
   session: {
     accessToken: string;
     refreshToken: string;
+    role: Role;
   };
 }
 
@@ -30,6 +33,7 @@ export interface AppStateModel {
     session: {
       accessToken: '',
       refreshToken: '',
+      role: null,
     },
   },
 })

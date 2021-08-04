@@ -45,6 +45,7 @@ export class UserNavigationComponent implements OnInit {
       new SetSessionState({
         accessToken: '',
         refreshToken: '',
+        role: null,
       })
     );
     this.router.navigate(['/login']);
