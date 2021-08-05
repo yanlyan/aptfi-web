@@ -19,17 +19,53 @@
     <ng-container matColumnDef="university_name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Nama Universitas</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <span class="mobile-label">Email:</span>
+        <span class="mobile-label"></span>
         {{ element.universityName }}</mat-cell
       >
+    </ng-container>
+    <!-- Path Column -->
+    <ng-container matColumnDef="created_at">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Submit</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.createdAt | date: "d MMMM y" }}</mat-cell
+      >
+    </ng-container>
+    <!-- Path Column -->
+    <ng-container matColumnDef="register_paid">
+      <mat-header-cell *matHeaderCellDef>Biaya Pendaftaran</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        <mat-chip-list aria-label="Register Paid">
+          <mat-chip *ngIf="element.registerPaid" class="chip-success" selected>Sudah dibayar</mat-chip>
+          <mat-chip *ngIf="!element.registerPaid" color="warn" selected>Belum dibayar</mat-chip>
+        </mat-chip-list>
+      </mat-cell>
+    </ng-container>
+    <!-- Path Column -->
+    <ng-container matColumnDef="annual_paid">
+      <mat-header-cell *matHeaderCellDef>Iuran Tahun Pertama</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        <mat-chip-list aria-label="Annual Paid">
+          <mat-chip *ngIf="element.annualPaid" class="chip-success" selected>Sudah dibayar</mat-chip>
+          <mat-chip *ngIf="!element.annualPaid" color="warn" selected>Belum dibayar</mat-chip>
+        </mat-chip-list>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="document">
+      <mat-header-cell *matHeaderCellDef>Dokumen</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        <button mat-flat-button>Lihat Detail</button>
+      </mat-cell>
     </ng-container>
 
     <!-- Action Column -->
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
       <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutGap="8px">
-        <button mat-flat-button color="primary" [routerLink]="['/master/users/edit', element.id]">Ubah</button>
-        <button mat-flat-button color="warn">Hapus</button>
+        <button mat-flat-button color="primary" (click)="onVerifyClick(element)">Verifikasi</button>
       </mat-cell>
     </ng-container>
 

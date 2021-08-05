@@ -10,6 +10,7 @@ import { AppState } from '../app.state';
 import { Member, User } from '../user-view/user.model';
 import { UserService } from '../user-view/user.service';
 import { UserStateModel, SetUserState, UserState } from '../user-view/user.state';
+import { LoadingState, LoadingStateModel } from './admin-loading.state';
 
 @Component({
   selector: 'app-admin-view',
@@ -20,7 +21,6 @@ export class AdminViewComponent {
   member: Member;
   user: User;
   userState: UserStateModel;
-
   constructor(
     private readonly store: Store,
     private jwtService: JwtHelperService,

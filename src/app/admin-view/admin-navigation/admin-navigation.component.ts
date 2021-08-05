@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { map, mergeMap, shareReplay } from 'rxjs/operators';
 import { SetSessionState } from 'src/app/app.state';
 import { UserState, UserStateModel } from 'src/app/user-view/user.state';
+import { LoadingStateModel, LoadingState } from '../admin-loading.state';
 
 @Component({
   selector: 'app-admin-navigation',
@@ -21,6 +22,8 @@ export class AdminNavigationComponent implements OnInit {
 
   approvalOpened: boolean;
   tagihanOpened: boolean;
+
+  loadingState$: Observable<LoadingStateModel> = this.store.select(LoadingState);
 
   constructor(
     private breakpointObserver: BreakpointObserver,

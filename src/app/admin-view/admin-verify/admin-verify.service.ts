@@ -19,4 +19,8 @@ export class AdminVerifyService {
       },
     });
   }
+
+  verifyMember(uuid: string) {
+    return this.httpClient.put(`${environment.api}/members/verify/${uuid}`, {});
+  }
 }

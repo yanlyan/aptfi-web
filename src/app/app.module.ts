@@ -20,6 +20,7 @@ import { UserState } from './user-view/user.state';
 import { registerLocaleData } from '@angular/common';
 import localeId from '@angular/common/locales/id';
 import { ReCaptchaModule } from 'angular-recaptcha3';
+import { LoadingState } from './admin-view/admin-loading.state';
 registerLocaleData(localeId, 'id');
 
 export function tokenGetter() {
@@ -41,7 +42,7 @@ export function tokenGetter() {
       registrationStrategy: 'registerWhenStable:30000',
     }),
     LayoutModule,
-    NgxsModule.forRoot([AppState, UserState], {
+    NgxsModule.forRoot([AppState, UserState, LoadingState], {
       developmentMode: !environment.production,
     }),
     JwtModule.forRoot({
