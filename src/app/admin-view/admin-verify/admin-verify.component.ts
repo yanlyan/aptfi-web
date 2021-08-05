@@ -3,6 +3,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { merge, fromEvent } from 'rxjs';
 import { distinctUntilChanged, debounceTime, startWith, switchMap, map } from 'rxjs/operators';
@@ -32,19 +33,26 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  @ViewChild('filterInput') filterInput: ElementRef;
+  @ViewChild('filterInput', { static: true }) filterInput: ElementRef;
 
-  constructor(private cdref: ChangeDetectorRef, private adminVerifyService: AdminVerifyService, private store: Store) {
+  constructor(
+    private cdref: ChangeDetectorRef,
+    private adminVerifyService: AdminVerifyService,
+    private store: Store,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.store.dispatch(new SetLoadingState(true));
   }
 
   ngOnInit() {
-    this.paginator.pageIndex = 0;
-    this.paginator.pageSize = 10;
+    this.paginator.pageIndex = this.route.snapshot.queryParams.page || 0;
+    this.paginator.pageSize = this.route.snapshot.queryParams.size || 10;
     this.paginator.page.next();
   }
 
   ngAfterViewInit() {
+    this.filterInput.nativeElement.value = this.route.snapshot.queryParams.search || '';
     this.sort.sort({
       id: 'university_name',
       start: 'asc',
@@ -68,7 +76,7 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
   loadData() {
     return this.adminVerifyService
       .getAllMember(
-        this.paginator.pageIndex,
+        this.paginator.pageIndex + 1,
         this.paginator.pageSize,
         this.sort.active,
         this.sort.direction,
@@ -76,7 +84,7 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
       )
       .pipe(
         map((data) => {
-          this.resultsLength = data.total;
+          this.resultsLength = data.pagination.length;
           return data.data;
         }),
         map((data) => {
@@ -103,5 +111,15 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
         this.store.dispatch(new SetLoadingState(false));
       }
     );
+  }
+
+  onDetailClick(member: Member) {
+    this.router.navigate([`admin/verify/detail/${member.uuid}`], {
+      queryParams: {
+        page: this.paginator.pageIndex,
+        search: this.filterInput.nativeElement.value,
+        size: this.paginator.pageSize,
+      },
+    });
   }
 }

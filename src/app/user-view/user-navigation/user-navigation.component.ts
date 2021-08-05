@@ -1,10 +1,10 @@
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { LoadingState, LoadingStateModel } from 'src/app/admin-view/admin-loading.state';
 import { SetSessionState } from 'src/app/app.state';
 import { UserState, UserStateModel } from '../user.state';
 
@@ -19,13 +19,16 @@ export class UserNavigationComponent implements OnInit {
     shareReplay()
   );
 
-  state$: Observable<UserStateModel> = this.store.select(UserState);
+  state$: Observable<UserStateModel> = this.store.select(UserState).pipe();
+  anggotaOpened: boolean = false;
+  tagihanOpened: boolean = false;
+
+  loadingState$: Observable<LoadingStateModel> = this.store.select(LoadingState);
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private readonly store: Store,
-    private readonly router: Router,
-    private viewPortScroller: ViewportScroller
+    private readonly router: Router
   ) {}
   ngOnInit() {
     this.router.events.subscribe((e) => {
@@ -39,6 +42,19 @@ export class UserNavigationComponent implements OnInit {
         }
       }
     });
+
+    const approvalMenu = ['/dosen', '/daftar', '/profil'];
+    for (const am of approvalMenu) {
+      if (this.router.url.includes(am)) {
+        this.anggotaOpened = true;
+      }
+    }
+    const tagihanMenu = ['/tagihan', '/tagihan-rekap'];
+    for (const am of tagihanMenu) {
+      if (this.router.url.includes(am)) {
+        this.tagihanOpened = true;
+      }
+    }
   }
   logout() {
     this.store.dispatch(
@@ -49,5 +65,15 @@ export class UserNavigationComponent implements OnInit {
       })
     );
     this.router.navigate(['/login']);
+  }
+
+  onOpened(name: string) {
+    if (name === 'anggota') {
+      this.anggotaOpened = true;
+      this.tagihanOpened = false;
+    } else if (name === 'tagihan') {
+      this.anggotaOpened = false;
+      this.tagihanOpened = true;
+    }
   }
 }

@@ -1,1 +1,82 @@
-<p>lecturer-list works!</p>
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="32px">
+  <mat-form-field fxFlex="70%">
+    <mat-label>Cari</mat-label>
+    <input matInput #filterInput />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Prodi Dosen" #matSelect name="dosenType">
+      <mat-option [value]="'s1'">Dosen S1</mat-option>
+      <mat-option [value]="'pspa'">Dosen PSPA</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource" matSort>
+    <!-- Index Column -->
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <span class="mobile-label">No:</span>
+        {{ element.index }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Path Column -->
+    <ng-container matColumnDef="dosen_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Nama Dosen</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.dosenName }} {{ element.dosenTitle }}</mat-cell
+      >
+    </ng-container>
+    <!-- Path Column -->
+    <ng-container matColumnDef="dosen_nidn">
+      <mat-header-cell *matHeaderCellDef>NIDN</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.dosenNidn }}</mat-cell
+      >
+    </ng-container>
+    <!-- Path Column -->
+    <ng-container matColumnDef="dosen_birth_date">
+      <mat-header-cell *matHeaderCellDef>Tanggal Lahir</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.dosenBirthDate | date: "d MMMM y" }}
+      </mat-cell>
+    </ng-container>
+    <!-- Path Column -->
+    <ng-container matColumnDef="dosen_position">
+      <mat-header-cell *matHeaderCellDef>Jabatan Akademik</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.dosenPosition }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dosen_expertise">
+      <mat-header-cell *matHeaderCellDef>Bidang Keahlian</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.dosenExpertise }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dosen_prodi">
+      <mat-header-cell *matHeaderCellDef>Program Studi</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.dosenProdi }}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    [length]="resultsLength"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>

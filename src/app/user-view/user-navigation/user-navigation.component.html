@@ -7,13 +7,32 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="profil" routerLinkActive="active">Profil</a>
-      <a mat-list-item routerLink="dosen" routerLinkActive="active">Dosen</a>
-      <a mat-list-item routerLink="daftar" routerLinkActive="active">Pendaftaran</a>
-      <a mat-list-item routerLink="tagihan" routerLinkActive="active">Tagihan</a>
-    </mat-nav-list>
+    <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <img src="assets/image/logo.png" style="width: 42px" alt="" />
+      <label for="">APTFI</label>
+    </mat-toolbar>
+    <mat-accordion class="nav-accordion" multi [displayMode]="'flat'">
+      <mat-expansion-panel [(expanded)]="anggotaOpened" (opened)="onOpened('anggota')">
+        <mat-expansion-panel-header>Keanggotaan</mat-expansion-panel-header>
+        <div fxLayout="column" fxLayoutAlign="start stretch" class="list-item">
+          <a routerLink="/profil" [routerLinkActive]="'active'">Profil</a>
+          <a routerLink="/dosen" [routerLinkActive]="'active'">List Dosen</a>
+          <a
+            *ngIf="(state$ | async).member?.registerLastStatus === 0"
+            routerLink="/daftar"
+            [routerLinkActive]="'active'"
+            >Pendaftaran</a
+          >
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel [(expanded)]="tagihanOpened" (opened)="onOpened('tagihan')">
+        <mat-expansion-panel-header>Tagihan</mat-expansion-panel-header>
+        <div fxLayout="column" fxLayoutAlign="start stretch" class="list-item">
+          <a routerLink="/tagihan" [routerLinkActive]="'active'">Cek Tagihan</a>
+          <a routerLink="/tagihan-rekap" [routerLinkActive]="'active'">Rekap Tagihan</a>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-sidenav>
   <mat-sidenav-content id="mat-sidenav-content">
     <mat-toolbar color="primary">
@@ -52,6 +71,30 @@
       </div>
     </mat-toolbar>
     <!-- Add Content Here -->
+    <div
+      *ngIf="(loadingState$ | async).loading"
+      style="
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 1000;
+        background-color: rgba(255, 255, 255, 0.9);
+      "
+    >
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" style="padding-top: 24px">
+        <div
+          style="background: #fff; padding: 12px 16px; border-radius: 5px"
+          fxLayout="row"
+          fxLayoutAlign="space-around center"
+          fxLayoutGap="8px"
+          class="mat-elevation-z8"
+        >
+          <mat-spinner color="accent" [diameter]="20"> </mat-spinner>
+          <label for="">Loading</label>
+        </div>
+      </div>
+    </div>
     <div style="margin: 24px" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="16px">
       <div
         *ngIf="!(state$ | async).user?.emailVerifiedAt"

@@ -4,6 +4,7 @@
 
 .sidenav {
   width: 200px;
+  background: #455a64;
 }
 
 .sidenav .mat-toolbar {
@@ -20,4 +21,52 @@
   &.active {
     background-color: #ddd;
   }
+}
+
+.nav-accordion {
+  .mat-expansion-panel {
+    border-radius: 0;
+
+    .mat-expansion-panel-header {
+      color: #fff;
+      background: #455a64;
+      border-top: 1px solid #3b4d55;
+      border-bottom: 1px solid #3b4d55;
+
+      .mat-expansion-indicator {
+        &:after {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .list-item {
+    a {
+      padding: 12px;
+      color: rgba(0, 0, 0, 0.87);
+      text-decoration: none;
+      border-bottom: 1px solid rgb(199, 199, 199);
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+
+      &.active {
+        background: rgba(0, 0, 0, 0.14);
+      }
+    }
+  }
+}
+
+.mat-drawer-side {
+  border-right: none;
+}
+
+.mat-toolbar {
+  background: #455a64 !important;
+  color: #fff;
+}
+
+.mat-expansion-panel-content {
+  font-size: 14px;
 }

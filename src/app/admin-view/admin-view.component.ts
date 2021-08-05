@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
 import { ViewportScroller } from '@angular/common';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -10,7 +7,6 @@ import { AppState } from '../app.state';
 import { Member, User } from '../user-view/user.model';
 import { UserService } from '../user-view/user.service';
 import { UserStateModel, SetUserState, UserState } from '../user-view/user.state';
-import { LoadingState, LoadingStateModel } from './admin-loading.state';
 
 @Component({
   selector: 'app-admin-view',

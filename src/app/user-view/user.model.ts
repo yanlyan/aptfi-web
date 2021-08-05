@@ -1,3 +1,5 @@
+import { RegForum } from '../master/reg-forum.model';
+
 export interface Role {
   id: number;
   name: string;
@@ -48,6 +50,7 @@ export interface Member {
   facultyEmail: string;
   registerLastStatus: number;
   regForumId: bigint;
+  regForum: RegForum;
   dosenFileS1: string;
   dosenFilePspa: string;
   dosenFileSarpra: string;
@@ -58,4 +61,6 @@ export interface Member {
   deletedBy: bigint;
   createdAt: Date;
   updatedAt: Date;
+  annualPaid: boolean;
+  registerPaid: boolean;
 }

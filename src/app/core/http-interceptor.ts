@@ -16,15 +16,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class MyHttpInterceptor implements HttpInterceptor {
-  constructor(
-    private readonly store: Store,
-    private readonly snackbar: MatSnackBar
-  ) {}
+  constructor(private readonly store: Store, private readonly snackbar: MatSnackBar) {}
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const appState: AppStateModel = this.store.selectSnapshot(AppState);
     const token = appState.session ? appState.session.accessToken : null;
     if (token) {
@@ -49,13 +43,10 @@ export class MyHttpInterceptor implements HttpInterceptor {
           return event;
         }),
         catchError((error: HttpErrorResponse) => {
-          this.snackbar.open(
-            `Terjadi Kesalahan : ${error.error.message}`,
-            'Tutup',
-            {
-              panelClass: ['snackbar-warn'],
-            }
-          );
+          this.snackbar.open(`Terjadi Kesalahan : ${error.error.message}`, 'Tutup', {
+            panelClass: ['snackbar-warn'],
+            duration: 10000,
+          });
           return throwError(error);
         })
       );

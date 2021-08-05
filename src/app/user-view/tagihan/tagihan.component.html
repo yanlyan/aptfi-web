@@ -1,9 +1,5 @@
 <div>
-  <div *ngIf="billsLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-    <mat-spinner color="primary" [diameter]="20"></mat-spinner>
-    <label for="">Loading</label>
-  </div>
-  <div *ngIf="!billsLoading" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="16px">
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="16px">
     <mat-card *ngFor="let bill of bills">
       <mat-card-header fxLayout="row" fxLayoutAlign="center center">
         <mat-card-title *ngIf="bill.type === 'annual'">Iuran Anggota Tahun 2021</mat-card-title>
@@ -53,15 +49,23 @@
           <button
             *ngIf="bill.lastStatus === 0 || bill.lastStatus === 1"
             mat-flat-button
-            color="primary"
+            color="accent"
             (click)="onPayButtonClick(bill)"
           >
+            <mat-icon>credit_card</mat-icon>
             Bayar Sekarang
           </button>
-          <button  *ngIf="bill.lastStatus === 2 && !bill.loading" (click)="onPrintClick(bill)" mat-flat-button color="primary">Cetak Bukti Bayar</button>
+          <button
+            *ngIf="bill.lastStatus === 2 && !bill.loading"
+            (click)="onPrintClick(bill)"
+            mat-flat-button
+            color="accent"
+          >
+            <mat-icon>receipt</mat-icon>
+            Cetak Bukti Bayar
+          </button>
         </div>
       </mat-card-actions>
     </mat-card>
   </div>
-
 </div>

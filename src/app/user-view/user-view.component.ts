@@ -1,8 +1,8 @@
-import { ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngxs/store';
+import { SetLoadingState } from '../admin-view/admin-loading.state';
 import { AppState } from '../app.state';
 import { Member, User } from './user.model';
 import { UserService } from './user.service';
@@ -22,13 +22,13 @@ export class UserViewComponent implements OnInit {
     private readonly store: Store,
     private jwtService: JwtHelperService,
     private userService: UserService,
-    private router: Router,
-    private viewPortScroller: ViewportScroller
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     const token = this.store.selectSnapshot(AppState);
     const decodedToken = this.jwtService.decodeToken(token.session.accessToken);
+    this.store.dispatch(new SetLoadingState(true));
 
     this.userService.getById(decodedToken.sub).subscribe((response) => {
       this.store.dispatch(
@@ -41,6 +41,7 @@ export class UserViewComponent implements OnInit {
       if (this.userState.member.registerLastStatus === 0) {
         this.router.navigate(['daftar']);
       }
+      this.store.dispatch(new SetLoadingState(false));
     });
   }
 }

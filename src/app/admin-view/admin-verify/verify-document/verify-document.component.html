@@ -1,0 +1,322 @@
+<div fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="16px">
+  <h1 style="text-align: center" #title>Detail Dokumen {{ member?.universityName }}</h1>
+  <mat-divider></mat-divider>
+  <h2>Universitas</h2>
+  <mat-divider></mat-divider>
+  <table>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Nama Yayasan</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ member?.foundationName }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Nama Ketua Yayasan</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ member?.headOfFoundation }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Nama Universitas</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ member?.universityName }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Nama Rektor</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ member?.rectorName }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Forum Wilayah</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ member?.regForum.name }}</td>
+    </tr>
+
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Alamat Universitas</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ member?.universityAddress }}</td>
+    </tr>
+  </table>
+  <mat-divider></mat-divider>
+  <h2>Fakultas</h2>
+  <mat-divider></mat-divider>
+  <table>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Nama Fakultas</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ member?.facultyName }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Nama Dekan</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ member?.deanName }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Alamat Fakultas</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ member?.facultyAddress }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>No. HP / Fax Fakultas</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ member?.facultyPhone }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Website Fakultas</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ member?.facultyWebsite }}</td>
+    </tr>
+  </table>
+  <mat-divider></mat-divider>
+  <h2>Program Studi Sarjana (S1)</h2>
+  <mat-divider></mat-divider>
+  <table>
+    <tr>
+      <td width="30%">
+        <h3 style="margin: 0"><strong>Nama Program Studi</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ s1?.prodiName }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Ijin Operasional</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ s1?.prodiPermit }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Akreditasi Oleh</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ s1?.prodiAccreditedBy }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>No. SK Akreditasi</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ s1?.prodiAccreditedNo }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Email Program Studi</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ s1?.prodiEmail }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Jumlah mahasiswa</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ s1?.prodiStudents }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Jumlah mahasiswa per tahun</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ s1?.prodiStudentsYear }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>No. Telpon/Fax Prodi</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ s1?.prodiPhone }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>Nama Ketua Prodi</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ s1?.prodiHead }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>No. HP Ketua Prodi</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ s1?.prodiHeadPhone }}</td>
+    </tr>
+    <tr>
+      <td width="20%">
+        <h3 style="margin: 0"><strong>E-mail Ketua Prodi</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>{{ s1?.prodiHeadEmail }}</td>
+    </tr>
+  </table>
+  <mat-divider></mat-divider>
+  <h2>Dosen Tetap Prodi S1</h2>
+  <mat-divider></mat-divider>
+  <table>
+    <tr>
+      <td width="30%">
+        <h3 style="margin: 0"><strong>File Data Dosen</strong></h3>
+      </td>
+      <td width="5%">:</td>
+      <td>
+        <button mat-flat-button color="primary" (click)="download('dosen_file_S1')">
+          <mat-icon>download</mat-icon>
+          Unduh File
+        </button>
+      </td>
+    </tr>
+  </table>
+  <mat-divider></mat-divider>
+  <section *ngIf="s2">
+    <h2>Program Studi Sarjana (S2)</h2>
+    <mat-divider></mat-divider>
+    <table>
+      <tr>
+        <td width="30%">
+          <h3 style="margin: 0"><strong>Nama Program Studi</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>{{ s2?.prodiName }}</td>
+      </tr>
+      <tr>
+        <td width="20%">
+          <h3 style="margin: 0"><strong>Ijin Operasional</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>{{ s2?.prodiPermit }}</td>
+      </tr>
+      <tr>
+        <td width="20%">
+          <h3 style="margin: 0"><strong>Akreditasi Oleh</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>{{ s2?.prodiAccreditedBy }}</td>
+      </tr>
+      <tr>
+        <td width="20%">
+          <h3 style="margin: 0"><strong>No. SK Akreditasi</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>{{ s2?.prodiAccreditedNo }}</td>
+      </tr>
+      <tr>
+        <td width="20%">
+          <h3 style="margin: 0"><strong>Email Program Studi</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>{{ s2?.prodiEmail }}</td>
+      </tr>
+      <tr>
+        <td width="20%">
+          <h3 style="margin: 0"><strong>Jumlah mahasiswa</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>{{ s2?.prodiStudents }}</td>
+      </tr>
+      <tr>
+        <td width="20%">
+          <h3 style="margin: 0"><strong>Jumlah mahasiswa per tahun</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>{{ s2?.prodiStudentsYear }}</td>
+      </tr>
+      <tr>
+        <td width="20%">
+          <h3 style="margin: 0"><strong>No. Telpon/Fax Prodi</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>{{ s2?.prodiPhone }}</td>
+      </tr>
+      <tr>
+        <td width="20%">
+          <h3 style="margin: 0"><strong>Nama Ketua Prodi</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>{{ s2?.prodiHead }}</td>
+      </tr>
+      <tr>
+        <td width="20%">
+          <h3 style="margin: 0"><strong>No. HP Ketua Prodi</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>{{ s2?.prodiHeadPhone }}</td>
+      </tr>
+      <tr>
+        <td width="20%">
+          <h3 style="margin: 0"><strong>E-mail Ketua Prodi</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>{{ s2?.prodiHeadEmail }}</td>
+      </tr>
+    </table>
+  </section>
+  <mat-divider></mat-divider>
+  <section *ngIf="member?.dosenFilePspa">
+    <h2>Dosen Tetap Prodi Profesi Apoteker</h2>
+    <mat-divider style="margin-bottom: 16px"></mat-divider>
+    <table style="width: 100%">
+      <tr>
+        <td width="30%">
+          <h3 style="margin: 0"><strong>File Data Dosen</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>
+          <button mat-flat-button color="primary" (click)="download('dosen_file_pspa')">
+            <mat-icon>download</mat-icon>
+            Unduh File
+          </button>
+        </td>
+      </tr>
+    </table>
+  </section>
+  <section *ngIf="member?.dosenFileSarpra">
+    <h2>Data Informasi Anggaran, Fasilitas dan Sarana-Prasarana</h2>
+    <mat-divider style="margin-bottom: 16px"></mat-divider>
+    <table style="width: 100%">
+      <tr>
+        <td width="30%">
+          <h3 style="margin: 0"><strong>File Data Anggaran</strong></h3>
+        </td>
+        <td width="5%">:</td>
+        <td>
+          <button mat-flat-button color="primary" (click)="download('dosen_file_sarpra')">
+            <mat-icon>download</mat-icon>
+            Unduh File
+          </button>
+        </td>
+      </tr>
+    </table>
+  </section>
+  <mat-divider></mat-divider>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-flat-button color="primary" (click)="back()">
+      <mat-icon>keyboard_backspace</mat-icon>
+      <label for="">Kembali</label>
+    </button>
+    <button *ngIf="member.annualPaid && member.registerPaid" (click)="onVerifyClick()" mat-flat-button style="background-color: #8ecf54; color: #fff">
+      <mat-icon>check</mat-icon>
+      <label for="">Verifikasi</label>
+    </button>
+  </div>
+</div>

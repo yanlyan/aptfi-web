@@ -1,9 +1,9 @@
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { map, mergeMap, shareReplay } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { SetSessionState } from 'src/app/app.state';
 import { UserState, UserStateModel } from 'src/app/user-view/user.state';
 import { LoadingStateModel, LoadingState } from '../admin-loading.state';
@@ -20,23 +20,36 @@ export class AdminNavigationComponent implements OnInit {
     shareReplay()
   );
 
-  approvalOpened: boolean;
-  tagihanOpened: boolean;
+  approvalOpened: boolean = false;
+  tagihanOpened: boolean = false;
 
   loadingState$: Observable<LoadingStateModel> = this.store.select(LoadingState);
 
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private store: Store,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private breakpointObserver: BreakpointObserver, private store: Store, private router: Router) {}
 
   ngOnInit() {
-    if (['/admin/verify'].includes(this.router.url)) {
-      this.approvalOpened = true;
-    } else if (['/admin/tagihan'].includes(this.router.url)) {
-      this.tagihanOpened = true;
+    this.router.events.subscribe((e) => {
+      if (e instanceof NavigationEnd) {
+        const scrollto = document.querySelector('.mat-sidenav-content');
+        if (scrollto) {
+          document.querySelector('.mat-sidenav-content').scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        }
+      }
+    });
+    const approvalMenu = ['/admin/verify'];
+    for (const am of approvalMenu) {
+      if (this.router.url.includes(am)) {
+        this.approvalOpened = true;
+      }
+    }
+    const tagihanMenu = ['/admin/tagihan'];
+    for (const am of tagihanMenu) {
+      if (this.router.url.includes(am)) {
+        this.tagihanOpened = true;
+      }
     }
 
     this.state$ = this.store.select(UserState);

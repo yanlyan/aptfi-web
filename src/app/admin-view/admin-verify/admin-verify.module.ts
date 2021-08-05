@@ -10,16 +10,23 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { VerifyDocumentComponent } from './verify-document/verify-document.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminVerifyComponent,
   },
+  {
+    path: 'detail/:uuid',
+    component: VerifyDocumentComponent,
+  },
 ];
 
 @NgModule({
-  declarations: [AdminVerifyComponent],
+  declarations: [AdminVerifyComponent, VerifyDocumentComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -31,6 +38,8 @@ const routes: Routes = [
     MatChipsModule,
     MatButtonModule,
     FlexLayoutModule,
+    MatIconModule,
+    MatDividerModule,
   ],
 })
 export class AdminVerifyModule {}
