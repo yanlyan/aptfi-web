@@ -13,4 +13,5 @@ export interface Bill {
   createdAt: string;
   member: Member;
   loading: boolean;
+  universityName: string;
 }

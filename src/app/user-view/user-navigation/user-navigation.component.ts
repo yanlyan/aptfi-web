@@ -54,7 +54,7 @@ export class UserNavigationComponent implements OnInit {
         this.anggotaOpened = true;
       }
     }
-    const tagihanMenu = ['/tagihan', '/tagihan-rekap'];
+    const tagihanMenu = ['/tagihan', '/rekap-tagihan'];
     for (const am of tagihanMenu) {
       if (this.router.url.includes(am)) {
         this.tagihanOpened = true;

@@ -5,6 +5,7 @@
   </mat-form-field>
   <mat-form-field fxFlex="25%">
     <mat-select placeholder="Status Pembayaran" #matSelect name="status">
+      <mat-option [value]="''">Tampilkan Semua</mat-option>
       <mat-option [value]="0">Belum Bayar</mat-option>
       <mat-option [value]="1">Menunggu Pembayaran</mat-option>
       <mat-option [value]="2">Lunas</mat-option>

@@ -9,17 +9,17 @@ import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
 import { merge, fromEvent } from 'rxjs';
 import { distinctUntilChanged, debounceTime, startWith, switchMap, map } from 'rxjs/operators';
-import { Bill } from 'src/app/user-view/tagihan/tagihan.model';
-import { TagihanService } from 'src/app/user-view/tagihan/tagihan.service';
-import { SetLoadingState } from '../admin-loading.state';
-import { AdminTagihanService } from './admin-tagihan.service';
+import { SetLoadingState } from 'src/app/admin-view/admin-loading.state';
+import { AdminTagihanService } from 'src/app/admin-view/admin-tagihan/admin-tagihan.service';
+import { Bill } from '../tagihan/tagihan.model';
+import { TagihanService } from '../tagihan/tagihan.service';
 
 @Component({
-  selector: 'app-admin-tagihan',
-  templateUrl: './admin-tagihan.component.html',
-  styleUrls: ['./admin-tagihan.component.scss'],
+  selector: 'app-rekap-tagihan',
+  templateUrl: './rekap-tagihan.component.html',
+  styleUrls: ['./rekap-tagihan.component.scss'],
 })
-export class AdminTagihanComponent implements OnInit {
+export class RekapTagihanComponent implements OnInit {
   isLoadingResults: boolean;
   resultsLength: any;
   displayedColumns: string[] = ['index', 'members.university_name', 'type', 'amount', 'last_status', 'receipt'];
@@ -87,7 +87,7 @@ export class AdminTagihanComponent implements OnInit {
         this.sort.direction,
         this.filterInput.nativeElement.value,
         this.statusSelect.value,
-        'false'
+        'true'
       )
       .pipe(
         map((data) => {

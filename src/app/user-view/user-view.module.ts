@@ -40,6 +40,10 @@ const routes: Routes = [
         loadChildren: () => import('./tagihan/tagihan.module').then((m) => m.TagihanModule),
       },
       {
+        path: 'rekap-tagihan',
+        loadChildren: () => import('./rekap-tagihan/rekap-tagihan.module').then((m) => m.RekapTagihanModule),
+      },
+      {
         path: 'daftar',
         component: UserRegisterComponent,
         canActivate: [UserRegisterGuard],

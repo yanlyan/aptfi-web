@@ -3,6 +3,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { Store } from '@ngxs/store';
+import { FileSaverService } from 'ngx-filesaver';
+import { LoadingState, SetLoadingState } from 'src/app/admin-view/admin-loading.state';
+import { AdminVerifyService } from 'src/app/admin-view/admin-verify/admin-verify.service';
+import { Member, Prodi } from '../user.model';
 import { UserState, UserStateModel } from '../user.state';
 
 @Component({
@@ -30,9 +34,33 @@ export class UserProfileComponent implements OnInit {
 
   done: string = 'number';
 
-  constructor(private _formBuilder: FormBuilder, private store: Store) {}
+  member: Member;
+  s1: Prodi;
+  s2: Prodi;
+  pspa: Prodi;
+
+  constructor(
+    private _formBuilder: FormBuilder,
+    private store: Store,
+    private adminVerifyService: AdminVerifyService,
+    private _FileSaverService: FileSaverService
+  ) {}
 
   ngOnInit(): void {
+    this.store.dispatch(new SetLoadingState(true));
+    this.adminVerifyService.getDetailMember('none').subscribe(
+      (response) => {
+        this.store.dispatch(new SetLoadingState(false));
+        this.member = response.member;
+        this.s1 = this.member.prodis.filter((prodi) => prodi.prodiType === 's1')[0];
+        this.s2 = this.member.prodis.filter((prodi) => prodi.prodiType === 's2')[0];
+        this.pspa = this.member.prodis.filter((prodi) => prodi.prodiType === 'pspa')[0];
+      },
+      (err) => {
+        this.store.dispatch(new SetLoadingState(false));
+      }
+    );
+
     this.firstControl = this._formBuilder.group({
       required: ['', Validators.required],
     });
@@ -74,5 +102,26 @@ export class UserProfileComponent implements OnInit {
           break;
       }
     });
+  }
+
+  download(column: string) {
+    this.store.dispatch(new SetLoadingState(true));
+    this.adminVerifyService.downloadFile(this.member.uuid, column).subscribe(
+      (resp) => {
+        let fileName = '';
+        if (column === 'dosen_file_S1') {
+          fileName = `Data Dosen Tetap S1 ${this.member.universityName}`;
+        } else if (column === 'dosen_file_pspa') {
+          fileName = `Data Dosen Tetap PSPA ${this.member.universityName}`;
+        } else if (column === 'dosen_file_sarpra') {
+          fileName = `Data Anggaran ${this.member.universityName}`;
+        }
+        this._FileSaverService.save(resp, fileName, 'xlsx');
+        this.store.dispatch(new SetLoadingState(false));
+      },
+      (err) => {
+        this.store.dispatch(new SetLoadingState(false));
+      }
+    );
   }
 }

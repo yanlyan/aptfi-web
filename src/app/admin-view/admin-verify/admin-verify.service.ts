@@ -20,7 +20,7 @@ export class AdminVerifyService {
     });
   }
 
-  getDetailMember(uuid: string) {
+  getDetailMember(uuid: string = '') {
     return this.httpClient.get(`${environment.api}/members/${uuid}`);
   }
 

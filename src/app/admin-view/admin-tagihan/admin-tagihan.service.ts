@@ -8,7 +8,15 @@ import { environment } from 'src/environments/environment';
 export class AdminTagihanService {
   constructor(private httpClient: HttpClientService) {}
 
-  getAllBills(page: number, size: number, sortColumn: string, sortDirection: string, search: string, status: number) {
+  getAllBills(
+    page: number,
+    size: number,
+    sortColumn: string,
+    sortDirection: string,
+    search: string,
+    status: number | string,
+    mine: string
+  ) {
     return this.httpClient.get(`${environment.api}/bills/paginate`, {
       params: {
         page: page.toString(),
@@ -17,6 +25,7 @@ export class AdminTagihanService {
         orderDirection: sortDirection,
         search,
         status: status.toString(),
+        mine: mine || 'false',
       },
     });
   }
