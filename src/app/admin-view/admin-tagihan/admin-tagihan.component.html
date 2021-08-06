@@ -1,1 +1,79 @@
-<p>admin-tagihan works!</p>
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="32px">
+  <mat-form-field fxFlex="70%">
+    <mat-label>Cari</mat-label>
+    <input matInput #filterInput />
+  </mat-form-field>
+  <mat-form-field fxFlex="25%">
+    <mat-select placeholder="Status Pembayaran" #matSelect name="status">
+      <mat-option [value]="0">Belum Bayar</mat-option>
+      <mat-option [value]="1">Menunggu Pembayaran</mat-option>
+      <mat-option [value]="2">Lunas</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource" matSort>
+    <!-- Index Column -->
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <span class="mobile-label">No:</span>
+        {{ element.index }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Path Column -->
+    <ng-container matColumnDef="members.university_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Nama Institusi</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.universityName }}</mat-cell
+      >
+    </ng-container>
+    <!-- Path Column -->
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef>Jenis Tagihan</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        <span *ngIf="element.type === 'register'">Pendaftaran</span>
+        <span *ngIf="element.type === 'annual'">Iuran Tahun {{ element.year }}</span>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Path Column -->
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef>Nominal</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        Rp. {{ element.amount + element.fee | number }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="last_status">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        <span *ngIf="element.lastStatus === 0" class="pills-warn">Belum Bayar</span>
+        <span *ngIf="element.lastStatus === 1" class="pills-yellow">Menunggu Pembayaran</span>
+        <span *ngIf="element.lastStatus === 2" class="pills-success">Lunas</span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="receipt">
+      <mat-header-cell *matHeaderCellDef>Bukti Bayar</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        <button mat-flat-button color="primary" [disabled]="element.lastStatus !== 2">Lihat</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    [length]="resultsLength"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>

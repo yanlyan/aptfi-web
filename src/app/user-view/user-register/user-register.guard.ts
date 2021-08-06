@@ -22,7 +22,7 @@ export class UserRegisterGuard implements CanActivate {
     this.snackbar.open('Anda sudah melengkapi pendaftaran', '', {
       duration: 1000,
     });
-    this.router.navigate(['']);
+    this.router.navigate(['profil']);
     return false;
   }
 }

@@ -93,7 +93,7 @@
   <mat-divider></mat-divider>
   <table>
     <tr>
-      <td width="30%">
+      <td width="20%">
         <h3 style="margin: 0"><strong>Nama Program Studi</strong></h3>
       </td>
       <td width="5%">:</td>
@@ -175,7 +175,7 @@
   <mat-divider></mat-divider>
   <table>
     <tr>
-      <td width="30%">
+      <td width="20%">
         <h3 style="margin: 0"><strong>File Data Dosen</strong></h3>
       </td>
       <td width="5%">:</td>
@@ -188,12 +188,12 @@
     </tr>
   </table>
   <mat-divider></mat-divider>
-  <section *ngIf="s2">
+  <section *ngIf="s2" style="width: 100%">
     <h2>Program Studi Sarjana (S2)</h2>
     <mat-divider></mat-divider>
-    <table>
+    <table style="width: 100%">
       <tr>
-        <td width="30%">
+        <td width="20%">
           <h3 style="margin: 0"><strong>Nama Program Studi</strong></h3>
         </td>
         <td width="5%">:</td>
@@ -219,13 +219,6 @@
         </td>
         <td width="5%">:</td>
         <td>{{ s2?.prodiAccreditedNo }}</td>
-      </tr>
-      <tr>
-        <td width="20%">
-          <h3 style="margin: 0"><strong>Email Program Studi</strong></h3>
-        </td>
-        <td width="5%">:</td>
-        <td>{{ s2?.prodiEmail }}</td>
       </tr>
       <tr>
         <td width="20%">
@@ -277,7 +270,7 @@
     <mat-divider style="margin-bottom: 16px"></mat-divider>
     <table style="width: 100%">
       <tr>
-        <td width="30%">
+        <td width="20%">
           <h3 style="margin: 0"><strong>File Data Dosen</strong></h3>
         </td>
         <td width="5%">:</td>
@@ -314,7 +307,12 @@
       <mat-icon>keyboard_backspace</mat-icon>
       <label for="">Kembali</label>
     </button>
-    <button *ngIf="member.annualPaid && member.registerPaid" (click)="onVerifyClick()" mat-flat-button style="background-color: #8ecf54; color: #fff">
+    <button
+      *ngIf="member?.annualPaid && member?.registerPaid"
+      (click)="onVerifyClick()"
+      mat-flat-button
+      style="background-color: #8ecf54; color: #fff"
+    >
       <mat-icon>check</mat-icon>
       <label for="">Verifikasi</label>
     </button>

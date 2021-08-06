@@ -1,0 +1,53 @@
+.mobile-label {
+  display: none;
+}
+
+.pills-warn {
+  background-color: #ea5455;
+  padding: 2px 10px;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 11px;
+}
+.pills-success {
+  background-color: #8ecf54;
+  padding: 2px 10px;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 11px;
+}
+
+.pills-yellow {
+  background-color: #f7c601;
+  padding: 2px 10px;
+  color: #333;
+  border-radius: 5px;
+  font-size: 11px;
+}
+@media (max-width: 600px) {
+  .mobile-label {
+    width: 80px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  .mat-header-row {
+    display: none;
+  }
+
+  .mat-row {
+    flex-direction: column;
+    align-items: start;
+    padding: 8px 24px;
+  }
+}
+
+@media (min-width: 600px) {
+  .mat-column-index {
+    flex: 0 0 4%;
+  }
+
+  .mat-column-members-university_name {
+    flex: 0 0 35%;
+  }
+}

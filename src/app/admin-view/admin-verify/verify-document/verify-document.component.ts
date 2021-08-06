@@ -42,7 +42,6 @@ export class VerifyDocumentComponent implements OnInit {
     this.store.dispatch(new SetLoadingState(true));
     this.adminVerifyService.downloadFile(this.member.uuid, column).subscribe(
       (resp) => {
-        this.store.dispatch(new SetLoadingState(false));
         let fileName = '';
         if (column === 'dosen_file_S1') {
           fileName = `Data Dosen Tetap S1 ${this.member.universityName}`;
@@ -52,6 +51,7 @@ export class VerifyDocumentComponent implements OnInit {
           fileName = `Data Anggaran ${this.member.universityName}`;
         }
         this._FileSaverService.save(resp, fileName, 'xlsx');
+        this.store.dispatch(new SetLoadingState(false));
       },
       (err) => {
         this.store.dispatch(new SetLoadingState(false));

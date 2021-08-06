@@ -40,10 +40,15 @@ export class UserNavigationComponent implements OnInit {
             behavior: 'smooth',
           });
         }
+        this.setMenuActive();
       }
     });
+    this.setMenuActive();
+  }
 
+  setMenuActive() {
     const approvalMenu = ['/dosen', '/daftar', '/profil'];
+
     for (const am of approvalMenu) {
       if (this.router.url.includes(am)) {
         this.anggotaOpened = true;
@@ -55,7 +60,12 @@ export class UserNavigationComponent implements OnInit {
         this.tagihanOpened = true;
       }
     }
+
+    if (this.router.url === '/') {
+      this.anggotaOpened = true;
+    }
   }
+
   logout() {
     this.store.dispatch(
       new SetSessionState({

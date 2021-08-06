@@ -60,7 +60,7 @@ export class UserRegisterComponent implements OnInit {
   regForums: RegForum[];
   @ViewChild('title') institute: any;
 
-  state:UserStateModel;
+  state: UserStateModel;
 
   forced: boolean = false;
 
@@ -121,7 +121,7 @@ export class UserRegisterComponent implements OnInit {
       prodiPhone: new FormControl(null, []),
       prodiHead: new FormControl(null, []),
       prodiHeadPhone: new FormControl(null, []),
-      prodiHeadEmail: new FormControl(null, [ Validators.email]),
+      prodiHeadEmail: new FormControl(null, [Validators.email]),
     });
 
     this.pspaForm = new FormGroup({
@@ -222,9 +222,7 @@ export class UserRegisterComponent implements OnInit {
       this.validatePanel();
     }
 
-    this.store.select(UserState).subscribe((state: UserStateModel) => {
-
-    });
+    this.store.select(UserState).subscribe((state: UserStateModel) => {});
   }
 
   validatePanel() {
@@ -244,10 +242,10 @@ export class UserRegisterComponent implements OnInit {
       step = 3;
     }
 
-    if(this.dosenS1Form.valid || this.state.member.dosenFileS1){
+    if (this.dosenS1Form.valid || this.state.member.dosenFileS1) {
       this.dosenS1Validity = true;
       step = 4;
-    }else{
+    } else {
       this.dosenS1Validity = false;
     }
 
@@ -401,7 +399,7 @@ export class UserRegisterComponent implements OnInit {
 
   onSarpraSubmit() {
     if (this.sarpraForm.valid) {
-      this.dosenPspaLoading = true;
+      this.sarpraLoading = true;
       const data = new FormData();
       data.append('file', this.sarpraForm.value.file._files[0]);
       this.userRegister.uploadSarpra(data).subscribe(

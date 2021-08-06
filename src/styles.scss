@@ -74,3 +74,14 @@ body {
 .nav-accordion .mat-expansion-indicator::after {
   color: #fff;
 }
+
+.mat-step-icon-state-done {
+  background-color: #8ecf54 !important;
+  &.mat-step-icon-selected {
+    background-color: #8ecf54 !important;
+  }
+}
+
+.mat-step-icon-selected {
+  background-color: #f5bd00 !important;
+}

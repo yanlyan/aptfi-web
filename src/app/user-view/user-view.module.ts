@@ -28,7 +28,7 @@ const routes: Routes = [
     canActivate: [UserGuard],
     children: [
       {
-        path: '',
+        path: 'profil',
         loadChildren: () => import('./user-profile/user-profile.module').then((m) => m.UserProfileModule),
       },
       {

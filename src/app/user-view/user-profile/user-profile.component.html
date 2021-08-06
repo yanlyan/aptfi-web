@@ -1,1 +1,34 @@
-<p>user-profile works!</p>
+<div>
+  <h2>Status Pendaftaran :</h2>
+  <mat-stepper [linear]="true" #stepper>
+    <mat-step
+      label="Isi Form Pendaftaran"
+      [stepControl]="firstControl"
+      [completed]="firstCompleted"
+      [editable]="!firstCompleted"
+    >
+      Isi dan Lengkapi form pendaftaran pada menu <a [routerLink]="'/daftar'">Keanggotaan -> Pendaftaran</a>
+    </mat-step>
+    <mat-step
+      label="Membayar Biaya Pendaftaran & Iuran"
+      [stepControl]="secondControl"
+      [completed]="secondCompleted"
+      [editable]="!secondCompleted"
+    >
+      Segera lunasi pembayaran biaya pendaftaran dan iuran tahunan pada menu
+      <a [routerLink]="'/tagihan'">Tagihan -> Cek Tagihan</a>
+    </mat-step>
+    <mat-step
+      label="Menunggu Verifikasi"
+      [stepControl]="thirdControl"
+      [completed]="thirdCompleted"
+      [editable]="!thirdCompleted"
+    >
+      Admin akan melakukan pengecekan dan verifikasi data anda.
+    </mat-step>
+    <mat-step label="Anggota Aktif" [completed]="fourthCompleted" [state]="done">
+      Akun anda telah aktif menjadi Anggota APTFI.
+    </mat-step>
+  </mat-stepper>
+</div>
+<mat-divider> </mat-divider>
