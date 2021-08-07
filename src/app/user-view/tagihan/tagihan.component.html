@@ -1,8 +1,8 @@
 <div>
   <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="16px">
-    <mat-card *ngFor="let bill of bills" fxFlex.lg="20%" fxFlex.md="30%" fxFlex.sm="50%">
+    <mat-card *ngFor="let bill of bills" fxFlex.lg="15%" fxFlex.md="48%" fxFlex.sm="50%">
       <mat-card-header fxLayout="row" fxLayoutAlign="center center">
-        <mat-card-title *ngIf="bill.type === 'annual'">Iuran Anggota Tahun 2021</mat-card-title>
+        <mat-card-title *ngIf="bill.type === 'annual'">Iuran Anggota Tahun {{ bill.year }}</mat-card-title>
         <mat-card-title *ngIf="bill.type === 'register'">Biaya Pendaftaran Anggota</mat-card-title>
       </mat-card-header>
       <mat-card-content>
@@ -19,6 +19,10 @@
             <mat-icon style="color: #b9ea81">fiber_manual_record</mat-icon>
             <label for="">Lunas</label>
           </div>
+          <div *ngIf="bill.lastStatus === 3" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+            <mat-icon style="color: #ea5455">fiber_manual_record</mat-icon>
+            <label for="">Pembayaran Kadaluarsa</label>
+          </div>
           <div>
             {{ bill.lastStatusAt | date: "short" }}
           </div>
@@ -28,6 +32,12 @@
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" style="padding: 8px 0">
             <label for="">ID Transaksi</label>
             <strong>{{ bill.token.substr(24, 12) }}</strong>
+          </div>
+
+          <div style="margin: 8px 0" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+            <strong style="color: #ccc; text-transform: uppercase">Pembayaran</strong>
+            <label *ngIf="bill.type === 'register'" style="font-size: 20px">Pendaftaran Anggota</label>
+            <label *ngIf="bill.type === 'annual'" style="font-size: 20px">Iuran Tahunan ({{ bill.year }})</label>
           </div>
           <div style="margin: 8px 0" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
             <strong style="color: #ccc; text-transform: uppercase">Nominal</strong>
@@ -51,6 +61,15 @@
             mat-flat-button
             color="accent"
             (click)="onPayButtonClick(bill)"
+          >
+            <mat-icon>credit_card</mat-icon>
+            Bayar Sekarang
+          </button>
+          <button
+            *ngIf="bill.lastStatus === 3 && !bill.loading"
+            mat-flat-button
+            color="accent"
+            (click)="onRetryClick(bill)"
           >
             <mat-icon>credit_card</mat-icon>
             Bayar Sekarang

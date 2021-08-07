@@ -9,6 +9,7 @@
       <mat-option [value]="0">Belum Bayar</mat-option>
       <mat-option [value]="1">Menunggu Pembayaran</mat-option>
       <mat-option [value]="2">Lunas</mat-option>
+      <mat-option [value]="3">Kadaluarsa</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
@@ -53,9 +54,10 @@
       <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <span class="mobile-label"></span>
-        <span *ngIf="element.lastStatus === 0" class="pills-warn">Belum Bayar</span>
-        <span *ngIf="element.lastStatus === 1" class="pills-yellow">Menunggu Pembayaran</span>
-        <span *ngIf="element.lastStatus === 2" class="pills-success">Lunas</span>
+        <span *ngIf="element.lastStatus === 0" class="pills">Belum Bayar</span>
+        <span *ngIf="element.lastStatus === 1" class="pills yellow">Menunggu Pembayaran</span>
+        <span *ngIf="element.lastStatus === 2" class="pills success">Lunas</span>
+        <span *ngIf="element.lastStatus === 3" class="pills warn">Kadaluarsa</span>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="receipt">

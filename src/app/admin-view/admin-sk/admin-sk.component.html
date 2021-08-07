@@ -1,0 +1,67 @@
+<div fxLayout="row" fxLayoutAlign="space-between start">
+  <mat-card fxFlex="55%">
+    <mat-card-header>
+      <mat-card-title>SK Anggota APTFI {{ member?.universityName }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content style="height: 100vh; padding: 0">
+      <pdf-viewer [src]="member?.skFile" [render-text]="true" style="display: block" [zoom]="0.8"></pdf-viewer>
+    </mat-card-content>
+    <mat-card-actions> </mat-card-actions>
+  </mat-card>
+  <mat-card fxFlex="40%">
+    <mat-card-header>
+      <mat-card-title>Pencarian Anggota</mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
+      <form (ngSubmit)="onSearch()" [formGroup]="searchForm" fxLayout="column" fxLayoutAlign="start stretch">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Nama Universitas</mat-label>
+          <input type="text" matInput formControlName="search" [matAutocomplete]="auto" />
+        </mat-form-field>
+        <mat-autocomplete
+          autoActiveFirstOption
+          #auto="matAutocomplete"
+          (optionSelected)="onSelect($event)"
+          [displayWith]="displayFn"
+        >
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{ option.universityName }}
+          </mat-option>
+        </mat-autocomplete>
+      </form>
+      <div fxLayout="row" fxLayoutAlign="center center" *ngIf="searchLoading">
+        <label for="">Loading...</label>
+      </div>
+      <div class="detail" *ngIf="member">
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <label class="caption">Program Studi</label>
+          <p class="value">{{ s1?.prodiName }}</p>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <label class="caption">Fakultas Farmasi</label>
+          <p class="value">{{ member?.facultyName }}</p>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <label class="caption">Nama Universitas</label>
+          <p class="value">{{ member?.universityName }}</p>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <label class="caption">Alamat</label>
+          <p class="value">{{ member?.universityAddress }}</p>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <label class="caption">Email Fakultas</label>
+          <p class="value">{{ member?.facultyEmail }}</p>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <label class="caption">No. Telp. Fakultas</label>
+          <p class="value">{{ member?.facultyPhone }}</p>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" *ngIf="member">
+        <button mat-flat-button color="accent">Buat SK Anggota</button>
+      </div>
+    </mat-card-content>
+    <mat-card-actions> </mat-card-actions>
+  </mat-card>
+</div>

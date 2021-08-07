@@ -33,6 +33,10 @@ const routes: Routes = [
         path: 'tagihan',
         loadChildren: () => import('./admin-tagihan/admin-tagihan.module').then((m) => m.AdminTagihanModule),
       },
+      {
+        path: 'sk-member',
+        loadChildren: () => import('./admin-sk/admin-sk.module').then((m) => m.AdminSkModule),
+      },
     ],
   },
 ];

@@ -85,3 +85,25 @@ body {
 .mat-step-icon-selected {
   background-color: #f5bd00 !important;
 }
+
+.mat-card-header-text {
+  margin: 0 !important;
+}
+
+.pills {
+  padding: 2px 10px;
+  background-color: #aaa;
+  color: #fff !important;
+  border-radius: 5px;
+  font-size: 11px;
+  &.warn {
+    background-color: #ea5455;
+  }
+  &.success {
+    background-color: #8ecf54;
+  }
+  &.yellow {
+    background-color: #f7c601;
+    color: #ddd;
+  }
+}

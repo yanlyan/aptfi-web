@@ -241,7 +241,7 @@ export class UserRegisterComponent implements OnInit {
     if (this.s1Validity) {
       step = 3;
     }
-
+    console.log(this.dosenS1Form.valid, this.state.member.dosenFileS1);
     if (this.dosenS1Form.valid || this.state.member.dosenFileS1) {
       this.dosenS1Validity = true;
       step = 4;

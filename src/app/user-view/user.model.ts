@@ -63,4 +63,5 @@ export interface Member {
   updatedAt: Date;
   annualPaid: boolean;
   registerPaid: boolean;
+  skFile: string;
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminVerifyComponent } from './admin-verify.component';
+import { AdminVerifyComponent, DialogVerify } from './admin-verify.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -13,6 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { VerifyDocumentComponent } from './verify-document/verify-document.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AdminVerifyComponent, VerifyDocumentComponent],
+  declarations: [AdminVerifyComponent, VerifyDocumentComponent, DialogVerify],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -40,6 +41,7 @@ const routes: Routes = [
     FlexLayoutModule,
     MatIconModule,
     MatDividerModule,
+    MatDialogModule,
   ],
 })
 export class AdminVerifyModule {}

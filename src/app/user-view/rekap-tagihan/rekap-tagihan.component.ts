@@ -11,7 +11,7 @@ import { merge, fromEvent } from 'rxjs';
 import { distinctUntilChanged, debounceTime, startWith, switchMap, map } from 'rxjs/operators';
 import { SetLoadingState } from 'src/app/admin-view/admin-loading.state';
 import { AdminTagihanService } from 'src/app/admin-view/admin-tagihan/admin-tagihan.service';
-import { Bill } from '../tagihan/tagihan.model';
+import { Bill } from '../tagihan/bill.model';
 import { TagihanService } from '../tagihan/tagihan.service';
 
 @Component({

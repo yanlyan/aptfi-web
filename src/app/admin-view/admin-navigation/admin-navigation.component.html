@@ -16,7 +16,7 @@
         <mat-expansion-panel-header>Approval</mat-expansion-panel-header>
         <div fxLayout="column" fxLayoutAlign="start stretch" class="list-item">
           <a routerLink="/admin/verify" [routerLinkActive]="'active'">Verifikasi Pendaftaran</a>
-          <a routerLink="/admin/sk-member">SK Anggota</a>
+          <a routerLink="/admin/sk-member" [routerLinkActive]="'active'">SK Anggota</a>
         </div>
       </mat-expansion-panel>
       <mat-expansion-panel [(expanded)]="tagihanOpened" (opened)="onOpened('tagihan')">

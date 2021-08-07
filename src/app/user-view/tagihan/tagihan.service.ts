@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { HttpClientService } from 'src/app/core/http-client.service';
 import { environment } from 'src/environments/environment';
+import { Bill } from './bill.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,16 +17,21 @@ export class TagihanService {
   }
 
   getOrder() {
-    return this.httpClient.get(`${environment.api}/bills`);
+    return this.httpClient.get(`${environment.api}/bills`).pipe(
+      map((response) => {
+        response.bills.map((b: Bill) => {
+          b.isExpired = new Date(b.expiredDate).getTime() <= Date.now();
+        });
+        return response;
+      })
+    );
   }
 
-  setToCharged(orderId: string) {
-    return this.httpClient.put(`${environment.api}/payments/set-to-charged`, {
-      orderId,
-    });
+  retry(token: string) {
+    return this.httpClient.put(`${environment.api}/bills/retry/${token}`, {});
   }
 
-  print(token: string){
-    return this.httpClient.download(`${environment.api}/bills/print/${token}`, {responseType: 'blob'});
+  print(token: string) {
+    return this.httpClient.download(`${environment.api}/bills/print/${token}`, { responseType: 'blob' });
   }
 }

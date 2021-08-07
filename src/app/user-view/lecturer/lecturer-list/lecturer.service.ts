@@ -8,7 +8,15 @@ import { environment } from 'src/environments/environment';
 export class LecturerService {
   constructor(private httpClient: HttpClientService) {}
 
-  getAll(page: number, size: number, sortColumn: string, sortDirection: string, search: string, type: string) {
+  getAll(
+    page: number,
+    size: number,
+    sortColumn: string,
+    sortDirection: string,
+    search: string,
+    type: string,
+    mine: string
+  ) {
     return this.httpClient.get(`${environment.api}/dosens/paginate`, {
       params: {
         page: page.toString(),
@@ -16,7 +24,8 @@ export class LecturerService {
         orderBy: sortColumn,
         orderDirection: sortDirection,
         search,
-        type: type || 's1',
+        type: type || '',
+        mine: mine || 'false',
       },
     });
   }

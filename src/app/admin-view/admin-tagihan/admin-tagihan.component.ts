@@ -9,7 +9,7 @@ import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
 import { merge, fromEvent } from 'rxjs';
 import { distinctUntilChanged, debounceTime, startWith, switchMap, map } from 'rxjs/operators';
-import { Bill } from 'src/app/user-view/tagihan/tagihan.model';
+import { Bill } from 'src/app/user-view/tagihan/bill.model';
 import { TagihanService } from 'src/app/user-view/tagihan/tagihan.service';
 import { SetLoadingState } from '../admin-loading.state';
 import { AdminTagihanService } from './admin-tagihan.service';

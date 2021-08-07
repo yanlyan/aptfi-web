@@ -4,7 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
 import { SetLoadingState } from 'src/app/admin-view/admin-loading.state';
-import { Bill } from './tagihan.model';
+import { Bill } from './bill.model';
 import { TagihanService } from './tagihan.service';
 
 declare const window: any;
@@ -29,19 +29,10 @@ export class TagihanComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBills();
-
-    this.route.fragment.subscribe((fragment) => {
-      if (fragment === 'finish') {
-        this.snackbar.open('Harap segera lunasi pembayaran anda', '', {
-          duration: 2000,
-          panelClass: ['snackbar-success'],
-        });
-        this.getBills();
-      }
-    });
   }
 
   getBills() {
+    this.store.dispatch(new SetLoadingState(true));
     this.tagihanService.getOrder().subscribe((response) => {
       this.bills = response.bills;
       this.store.dispatch(new SetLoadingState(false));
@@ -57,6 +48,24 @@ export class TagihanComponent implements OnInit {
     this.tagihanService.print(bill.token).subscribe(
       (response) => {
         this._FileSaverService.save(response, 'Bukti Pembayaran.pdf', 'pdf');
+        bill.loading = false;
+      },
+
+      (err) => {
+        bill.loading = false;
+      }
+    );
+  }
+
+  onRetryClick(bill: Bill) {
+    bill.loading = true;
+    this.tagihanService.retry(bill.token).subscribe(
+      (response) => {
+        window.snap.pay(response.bill.token, {
+          onClose: () => {
+            this.getBills();
+          },
+        });
         bill.loading = false;
       },
       (err) => {

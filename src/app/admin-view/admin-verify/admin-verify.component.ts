@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, Inject } from '@angular/core';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { merge, fromEvent } from 'rxjs';
@@ -40,7 +41,8 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
     private adminVerifyService: AdminVerifyService,
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {
     this.store.dispatch(new SetLoadingState(true));
   }
@@ -105,6 +107,16 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
     this.adminVerifyService.verifyMember(member.uuid).subscribe(
       () => {
         this.store.dispatch(new SetLoadingState(false));
+        this.dialog.open(DialogVerify, {
+          width: '320px',
+          data: {
+            member: {
+              universityName: 'Universitas Indonesia',
+            },
+          },
+          closeOnNavigation: false,
+          disableClose: true,
+        });
         this.loadData().subscribe();
       },
       (err) => {
@@ -121,5 +133,25 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
         size: this.paginator.pageSize,
       },
     });
+  }
+}
+
+@Component({
+  selector: 'dialog-verify',
+  templateUrl: './dialog.verify.html',
+})
+export class DialogVerify {
+  constructor(
+    public dialogRef: MatDialogRef<DialogVerify>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  goToSK() {
+    this.router.navigate(['admin/sk-member']);
   }
 }

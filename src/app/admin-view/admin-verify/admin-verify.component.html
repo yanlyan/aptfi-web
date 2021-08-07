@@ -36,10 +36,8 @@
       <mat-header-cell *matHeaderCellDef>Biaya Pendaftaran</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <span class="mobile-label"></span>
-        <mat-chip-list aria-label="Register Paid">
-          <mat-chip *ngIf="element.registerPaid" class="chip-success" selected>Sudah dibayar</mat-chip>
-          <mat-chip *ngIf="!element.registerPaid" color="warn" selected>Belum dibayar</mat-chip>
-        </mat-chip-list>
+        <span *ngIf="element.registerPaid" class="pills success">Sudah dibayar</span>
+        <span *ngIf="!element.registerPaid" class="pills warn">Belum dibayar</span>
       </mat-cell>
     </ng-container>
     <!-- Path Column -->
@@ -47,10 +45,8 @@
       <mat-header-cell *matHeaderCellDef>Iuran Tahun Pertama</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <span class="mobile-label"></span>
-        <mat-chip-list aria-label="Annual Paid">
-          <mat-chip *ngIf="element.annualPaid" class="chip-success" selected>Sudah dibayar</mat-chip>
-          <mat-chip *ngIf="!element.annualPaid" color="warn" selected>Belum dibayar</mat-chip>
-        </mat-chip-list>
+        <span *ngIf="element.annualPaid" class="pills success">Sudah dibayar</span>
+        <span *ngIf="!element.annualPaid" class="pills warn">Belum dibayar</span>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="document">

@@ -5,6 +5,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-select placeholder="Prodi Dosen" #matSelect name="dosenType">
+      <mat-option [value]="''">Tampilkan Semua</mat-option>
       <mat-option [value]="'s1'">Dosen S1</mat-option>
       <mat-option [value]="'pspa'">Dosen PSPA</mat-option>
     </mat-select>

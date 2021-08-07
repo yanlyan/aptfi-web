@@ -14,4 +14,7 @@ export interface Bill {
   member: Member;
   loading: boolean;
   universityName: string;
+  expiredDate: Date;
+  isExpired: boolean;
+  year: number;
 }

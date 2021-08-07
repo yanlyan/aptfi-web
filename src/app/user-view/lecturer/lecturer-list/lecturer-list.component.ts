@@ -51,7 +51,7 @@ export class LecturerListComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.prodiSelect.value = this.route.snapshot.queryParams.prodi || 's1';
+    this.prodiSelect.value = this.route.snapshot.queryParams.prodi || '';
     this.filterInput.nativeElement.value = this.route.snapshot.queryParams.search || '';
     this.sort.sort({
       id: 'id',
@@ -86,7 +86,8 @@ export class LecturerListComponent implements OnInit {
         this.sort.active,
         this.sort.direction,
         this.filterInput.nativeElement.value,
-        this.prodiSelect.value
+        this.prodiSelect.value,
+        'true'
       )
       .pipe(
         map((data) => {

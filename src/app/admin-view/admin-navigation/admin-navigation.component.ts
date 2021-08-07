@@ -39,7 +39,7 @@ export class AdminNavigationComponent implements OnInit {
         }
       }
     });
-    const approvalMenu = ['/admin/verify'];
+    const approvalMenu = ['/admin/verify', '/admin/sk-member'];
     for (const am of approvalMenu) {
       if (this.router.url.includes(am)) {
         this.approvalOpened = true;
