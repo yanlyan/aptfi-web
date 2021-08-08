@@ -50,7 +50,7 @@ export class AdminSkComponent implements OnInit {
       .generateSK(this.member.uuid)
       .pipe(finalize(() => (this.skLoading = false)))
       .subscribe((response) => {
-        console.log(response);
+        this.member = response.member;
       });
   }
 }
