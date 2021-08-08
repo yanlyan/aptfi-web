@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 const routes: Routes = [
   {
     path: '',
@@ -30,6 +31,7 @@ const routes: Routes = [
     MatAutocompleteModule,
     ReactiveFormsModule,
     PdfViewerModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class AdminSkModule {}

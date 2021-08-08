@@ -14,4 +14,8 @@ export class AdminSKService {
   search(keyword: string): Observable<Member[]> {
     return this.httpClient.get(`${environment.api}/members/search/${keyword}`).pipe(map((data) => data.data));
   }
+
+  generateSK(uuid: string) {
+    return this.httpClient.put(`${environment.api}/members/sk/${uuid}`, {});
+  }
 }

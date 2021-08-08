@@ -17,6 +17,7 @@ export class AdminSkComponent implements OnInit {
   member: Member;
   s1: Prodi;
   searchLoading: boolean = false;
+  skLoading: boolean = false;
   constructor(private skService: AdminSKService) {}
 
   ngOnInit(): void {
@@ -34,7 +35,6 @@ export class AdminSkComponent implements OnInit {
       })
     );
   }
-  onSearch() {}
   displayFn(user: Member): string {
     return user && user.universityName ? user.universityName : '';
   }
@@ -42,5 +42,15 @@ export class AdminSkComponent implements OnInit {
     // this.searchForm.controls['search'].setValue(event.option.value.universityName);
     this.member = event.option.value;
     this.s1 = this.member.prodis.filter((p) => p.prodiType === 's1')[0];
+  }
+
+  generateSK() {
+    this.skLoading = true;
+    this.skService
+      .generateSK(this.member.uuid)
+      .pipe(finalize(() => (this.skLoading = false)))
+      .subscribe((response) => {
+        console.log(response);
+      });
   }
 }

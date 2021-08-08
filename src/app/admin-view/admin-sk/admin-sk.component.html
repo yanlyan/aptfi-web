@@ -13,7 +13,7 @@
       <mat-card-title>Pencarian Anggota</mat-card-title>
     </mat-card-header>
     <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
-      <form (ngSubmit)="onSearch()" [formGroup]="searchForm" fxLayout="column" fxLayoutAlign="start stretch">
+      <form [formGroup]="searchForm" fxLayout="column" fxLayoutAlign="start stretch">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Nama Universitas</mat-label>
           <input type="text" matInput formControlName="search" [matAutocomplete]="auto" />
@@ -58,8 +58,12 @@
           <p class="value">{{ member?.facultyPhone }}</p>
         </div>
       </div>
-      <div fxLayout="row" fxLayoutAlign="center center" *ngIf="member">
-        <button mat-flat-button color="accent">Buat SK Anggota</button>
+      <div fxLayout="row" fxLayoutAlign="center center" *ngIf="member && !member.skFile && !skLoading">
+        <button mat-flat-button color="accent" (click)="generateSK()">Buat SK Anggota</button>
+      </div>
+      <div *ngIf="skLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+        <mat-spinner color="accent" [diameter]="20"></mat-spinner>
+        <label for="">Loading</label>
       </div>
     </mat-card-content>
     <mat-card-actions> </mat-card-actions>
