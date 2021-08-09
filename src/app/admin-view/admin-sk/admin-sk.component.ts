@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { setValue } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { debounceTime, filter, finalize, mergeMap, startWith, tap } from 'rxjs/operators';
+import { debounceTime, filter, finalize, map, mergeMap, startWith, tap } from 'rxjs/operators';
 import { Member, Prodi } from 'src/app/user-view/user.model';
 import { AdminSKService } from './admin-sk.service';
 
@@ -26,20 +26,25 @@ export class AdminSkComponent implements OnInit {
     });
     this.filteredOptions = this.searchForm.controls['search'].valueChanges.pipe(
       startWith(''),
-      tap((val) => (this.searchLoading = false)),
       debounceTime(200),
       filter((values) => values.length >= 4),
       tap((val) => (this.searchLoading = true)),
       mergeMap((value) => {
         return this.skService.search(value);
+      }),
+      map((values) => {
+        return values.filter((v) => v.registerPaid && v.annualPaid);
+      }),
+      tap(() => {
+        this.searchLoading = false;
       })
     );
   }
+
   displayFn(user: Member): string {
     return user && user.universityName ? user.universityName : '';
   }
   onSelect(event: any) {
-    // this.searchForm.controls['search'].setValue(event.option.value.universityName);
     this.member = event.option.value;
     this.s1 = this.member.prodis.filter((p) => p.prodiType === 's1')[0];
   }

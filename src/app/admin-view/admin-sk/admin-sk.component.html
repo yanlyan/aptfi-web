@@ -34,6 +34,7 @@
           <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
             {{ option.universityName }}
           </mat-option>
+          <mat-option disabled *ngIf="(filteredOptions | async)?.length === 0"> Data tidak ditemukan </mat-option>
         </mat-autocomplete>
       </form>
       <div fxLayout="row" fxLayoutAlign="center center" *ngIf="searchLoading">

@@ -53,7 +53,7 @@ export class AdminLoginComponent implements OnInit {
               user: response.user,
             })
           );
-          this.router.navigate(['admin']);
+          this.router.navigate(['admin/verify']);
           this.loading = false;
         },
         (error) => {

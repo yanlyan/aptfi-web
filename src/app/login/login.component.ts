@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     private recaptchaService: ReCaptchaService
   ) {
     this.loginForm = new FormGroup({
-      email: new FormControl('john@gmail.com', [Validators.required, Validators.email]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required]),
     });
   }

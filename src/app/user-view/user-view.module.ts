@@ -20,6 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserRegisterGuard } from './user-register/user-register.guard';
+import { TagihanGuard } from './tagihan/tagihan.guard';
 
 const routes: Routes = [
   {
@@ -30,10 +31,12 @@ const routes: Routes = [
       {
         path: 'profil',
         loadChildren: () => import('./user-profile/user-profile.module').then((m) => m.UserProfileModule),
+        canActivate: [TagihanGuard],
       },
       {
         path: 'dosen',
         loadChildren: () => import('./lecturer/lecturer.module').then((m) => m.LecturerModule),
+        canActivate: [TagihanGuard],
       },
       {
         path: 'tagihan',
@@ -42,6 +45,7 @@ const routes: Routes = [
       {
         path: 'rekap-tagihan',
         loadChildren: () => import('./rekap-tagihan/rekap-tagihan.module').then((m) => m.RekapTagihanModule),
+        canActivate: [TagihanGuard],
       },
       {
         path: 'daftar',

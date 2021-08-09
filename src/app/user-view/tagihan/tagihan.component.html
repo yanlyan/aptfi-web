@@ -1,6 +1,6 @@
 <div>
   <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="16px">
-    <mat-card *ngFor="let bill of bills" fxFlex.lg="15%" fxFlex.md="48%" fxFlex.sm="50%">
+    <mat-card *ngFor="let bill of bills" fxFlex.lg="20%" fxFlex.md="48%" fxFlex.sm="50%" style="margin-top: 8px">
       <mat-card-header fxLayout="row" fxLayoutAlign="center center">
         <mat-card-title *ngIf="bill.type === 'annual'">Iuran Anggota Tahun {{ bill.year }}</mat-card-title>
         <mat-card-title *ngIf="bill.type === 'register'">Biaya Pendaftaran Anggota</mat-card-title>

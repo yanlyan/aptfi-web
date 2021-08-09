@@ -1,7 +1,7 @@
 {
-  "name": "aptfi",
-  "short_name": "aptfi",
-  "theme_color": "#1976d2",
+  "name": "APTFI",
+  "short_name": "APTFI",
+  "theme_color": "#455A64",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
