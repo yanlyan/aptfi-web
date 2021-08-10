@@ -12,6 +12,12 @@
       <label for="">Admin APTFI</label>
     </mat-toolbar>
     <mat-accordion class="nav-accordion" multi [displayMode]="'flat'">
+      <mat-expansion-panel [(expanded)]="anggotaOpened" (opened)="onOpened('anggota')">
+        <mat-expansion-panel-header>Anggota</mat-expansion-panel-header>
+        <div fxLayout="column" fxLayoutAlign="start stretch" class="list-item">
+          <a routerLink="/admin/anggota" [routerLinkActive]="'active'">List Anggota</a>
+        </div>
+      </mat-expansion-panel>
       <mat-expansion-panel [(expanded)]="approvalOpened" (opened)="onOpened('approval')">
         <mat-expansion-panel-header>Approval</mat-expansion-panel-header>
         <div fxLayout="column" fxLayoutAlign="start stretch" class="list-item">

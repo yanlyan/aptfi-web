@@ -11,6 +11,7 @@ import { distinctUntilChanged, debounceTime, startWith, switchMap, map } from 'r
 import { Member } from 'src/app/user-view/user.model';
 import { SetLoadingState } from '../admin-loading.state';
 import { AdminVerifyService } from './admin-verify.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-verify',
@@ -42,7 +43,8 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
     private store: Store,
     private router: Router,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar
   ) {
     this.store.dispatch(new SetLoadingState(true));
   }
@@ -103,26 +105,43 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
   }
 
   onVerifyClick(member: Member) {
-    this.store.dispatch(new SetLoadingState(true));
-    this.adminVerifyService.verifyMember(member.uuid).subscribe(
-      () => {
-        this.store.dispatch(new SetLoadingState(false));
-        this.dialog.open(DialogVerify, {
-          width: '320px',
-          data: {
-            member: {
-              universityName: 'Universitas Indonesia',
+    this.dialog
+      .open(DialogConfirmVerify, {
+        width: '320px',
+        data: {
+          member: member,
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.store.dispatch(new SetLoadingState(true));
+          this.adminVerifyService.verifyMember(member.uuid).subscribe(
+            () => {
+              this.store.dispatch(new SetLoadingState(false));
+              this.snackbar
+                .open('Verifikasi berhasil', 'Buat SK', {
+                  panelClass: 'snackbar-success',
+                  duration: 5000,
+                })
+                .afterDismissed()
+                .subscribe((value) => {
+                  if (value) {
+                    this.router.navigate(['admin/sk-member'], {
+                      queryParams: {
+                        member: member.uuid,
+                      },
+                    });
+                  }
+                });
+              this.loadData().subscribe();
             },
-          },
-          closeOnNavigation: false,
-          disableClose: true,
-        });
-        this.loadData().subscribe();
-      },
-      (err) => {
-        this.store.dispatch(new SetLoadingState(false));
-      }
-    );
+            (err) => {
+              this.store.dispatch(new SetLoadingState(false));
+            }
+          );
+        }
+      });
   }
 
   onDetailClick(member: Member) {
@@ -141,6 +160,26 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
   templateUrl: './dialog.verify.html',
 })
 export class DialogVerify {
+  constructor(
+    public dialogRef: MatDialogRef<DialogVerify>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  goToSK() {
+    this.router.navigate(['admin/sk-member']);
+  }
+}
+
+@Component({
+  selector: 'dialog-confirm-verify',
+  templateUrl: './dialog-confirm-verify.html',
+})
+export class DialogConfirmVerify {
   constructor(
     public dialogRef: MatDialogRef<DialogVerify>,
     @Inject(MAT_DIALOG_DATA) public data: any,

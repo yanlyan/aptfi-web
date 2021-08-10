@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Verifikasi Anggota APTFI</h2>
+<div mat-dialog-content>
+  <p>Apakah anda yakin untuk melakukan verifikasi {{data.member.universityName}} sebagai Anggota APTFI ?</p>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-around end" style="margin-bottom: 0px; padding: 0">
+  <button mat-flat-button (click)="this.dialogRef.close(false)" color="primary" cdkFocusInitial>Tidak</button>
+  <button mat-flat-button (click)="this.dialogRef.close(true)" color="accent">Ya, saya yakin</button>
+</div>

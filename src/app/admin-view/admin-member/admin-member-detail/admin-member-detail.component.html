@@ -1,0 +1,441 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="24px">
+  <div>
+    <button mat-flat-button color="primary" (click)="goBack()"><mat-icon>arrow_left</mat-icon> Kembali</button>
+  </div>
+  <mat-divider> </mat-divider>
+  <mat-tab-group>
+    <mat-tab label="Universitas">
+      <mat-list>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Yayasan</dt>
+            <dd>{{ member?.foundationName }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Ketua Yayasan</dt>
+            <dd>{{ member?.headOfFoundation }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Universitas</dt>
+            <dd>{{ member?.universityName }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Rektor</dt>
+            <dd>{{ member?.rectorName }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Forum Wialyah</dt>
+            <dd>{{ member?.regForum.name }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Alamat Universitas</dt>
+            <dd>{{ member?.universityAddress }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-tab>
+    <mat-tab label="Fakultas">
+      <mat-list>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Fakultas</dt>
+            <dd>{{ member?.facultyName }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Dekan</dt>
+            <dd>{{ member?.deanName }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Alamat Fakultas</dt>
+            <dd>{{ member?.facultyAddress }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>No. Telepon / Fax</dt>
+            <dd>{{ member?.facultyPhone }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Website Fakultas</dt>
+            <dd>{{ member?.facultyWebsite }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-tab>
+    <mat-tab label="Prodi S1">
+      <mat-list>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Program Studi</dt>
+            <dd>{{ s1?.prodiName }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Ijin Operasional</dt>
+            <dd>{{ s1?.prodiPermit }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Akreditasi Oleh</dt>
+            <dd>{{ s1?.prodiAccreditedBy }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>No. SK Akreditasi</dt>
+            <dd>{{ s1?.prodiAccreditedNo }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Email Prodi</dt>
+            <dd>{{ s1?.prodiEmail }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Jumlah Mahasiswa</dt>
+            <dd>{{ s1?.prodiStudents }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Jumlah Mahasiswa per Tahun</dt>
+            <dd>{{ s1?.prodiStudentsYear }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>No. Telepon/Fax</dt>
+            <dd>{{ s1?.prodiPhone }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Ketua Prodi</dt>
+            <dd>{{ s1?.prodiHead }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>No. HP Ketua Prodi</dt>
+            <dd>{{ s1?.prodiHeadPhone }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Email ketua Prodi</dt>
+            <dd>{{ s1?.prodiEmail }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-tab>
+    <mat-tab label="Dosen S1">
+      <table mat-table [dataSource]="dosenS1" class="mat-elevation-z8" style="width: 100%">
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef>No.</th>
+          <td mat-cell *matCellDef="let index = index">{{ index + 1 }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="dosen_name">
+          <th mat-header-cell *matHeaderCellDef>Nama Dosen</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenName }} {{ element.dosenTitle }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="dosen_nidn">
+          <th mat-header-cell *matHeaderCellDef>NIDN</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenNidn }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="dosen_birth_date">
+          <th mat-header-cell *matHeaderCellDef>Tanggal Lahir</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenBirthDate | date }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="dosen_position">
+          <th mat-header-cell *matHeaderCellDef>Jabatan Akademik</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenPosition }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="dosen_expertise">
+          <th mat-header-cell *matHeaderCellDef>Bidang Keahlian</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenExpertise }}</td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="dosen_prodi">
+          <th mat-header-cell *matHeaderCellDef>Program Studi</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenProdi }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="dosenColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: dosenColumns"></tr>
+      </table>
+    </mat-tab>
+    <mat-tab label="Prodi S2" *ngIf="s2">
+      <mat-list>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Program Studi</dt>
+            <dd>{{ s2?.prodiName }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Ijin Operasional</dt>
+            <dd>{{ s2?.prodiPermit }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Akreditasi Oleh</dt>
+            <dd>{{ s2?.prodiAccreditedBy }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>No. SK Akreditasi</dt>
+            <dd>{{ s2?.prodiAccreditedNo }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Email Prodi</dt>
+            <dd>{{ s2?.prodiEmail }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Jumlah Mahasiswa</dt>
+            <dd>{{ s2?.prodiStudents }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Jumlah Mahasiswa per Tahun</dt>
+            <dd>{{ s2?.prodiStudentsYear }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>No. Telepon/Fax</dt>
+            <dd>{{ s2?.prodiPhone }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Ketua Prodi</dt>
+            <dd>{{ s2?.prodiHead }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>No. HP Ketua Prodi</dt>
+            <dd>{{ s2?.prodiHeadPhone }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Email ketua Prodi</dt>
+            <dd>{{ s2?.prodiEmail }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-tab>
+    <mat-tab label="Prodi PA" *ngIf="pspa">
+      <mat-list>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Program Studi</dt>
+            <dd>{{ pspa?.prodiName }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Ijin Operasional</dt>
+            <dd>{{ pspa?.prodiPermit }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Akreditasi Oleh</dt>
+            <dd>{{ pspa?.prodiAccreditedBy }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>No. SK Akreditasi</dt>
+            <dd>{{ pspa?.prodiAccreditedNo }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Email Prodi</dt>
+            <dd>{{ pspa?.prodiEmail }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Jumlah Mahasiswa</dt>
+            <dd>{{ pspa?.prodiStudents }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Jumlah Mahasiswa per Tahun</dt>
+            <dd>{{ pspa?.prodiStudentsYear }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>No. Telepon/Fax</dt>
+            <dd>{{ pspa?.prodiPhone }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Nama Ketua Prodi</dt>
+            <dd>{{ pspa?.prodiHead }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>No. HP Ketua Prodi</dt>
+            <dd>{{ pspa?.prodiHeadPhone }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <dl>
+            <dt>Email ketua Prodi</dt>
+            <dd>{{ pspa?.prodiEmail }}</dd>
+          </dl>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-tab>
+    <mat-tab label="Dosen PSPA" *ngIf="dosenPSPA?.length > 0">
+      <table mat-table [dataSource]="dosenPSPA" class="mat-elevation-z8" style="width: 100%">
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef>No.</th>
+          <td mat-cell *matCellDef="let index = index">{{ index + 1 }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="dosen_name">
+          <th mat-header-cell *matHeaderCellDef>Nama Dosen</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenName }} {{ element.dosenTitle }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="dosen_nidn">
+          <th mat-header-cell *matHeaderCellDef>NIDN</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenNidn }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="dosen_birth_date">
+          <th mat-header-cell *matHeaderCellDef>Tanggal Lahir</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenBirthDate | date }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="dosen_position">
+          <th mat-header-cell *matHeaderCellDef>Jabatan Akademik</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenPosition }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="dosen_expertise">
+          <th mat-header-cell *matHeaderCellDef>Bidang Keahlian</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenExpertise }}</td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="dosen_prodi">
+          <th mat-header-cell *matHeaderCellDef>Program Studi</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosenProdi }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="dosenColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: dosenColumns"></tr>
+      </table>
+    </mat-tab>
+    <mat-tab label="Anggaran" *ngIf="member?.dosenFileSarpra">
+      <div style="width: 100%; margin-top: 24px" fxLayout="row" fxLayoutAlign="center center">
+        <button mat-flat-button color="primary" (click)="download('dosen_file_sarpra')">
+          Download Data dan Informasi Anggaran, Fasilitas dan Sarana-Prasarana
+        </button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

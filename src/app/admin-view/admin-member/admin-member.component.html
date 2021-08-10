@@ -20,40 +20,33 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>Nama Universitas</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <span class="mobile-label"></span>
-        {{ element.universityName }}</mat-cell
-      >
-    </ng-container>
-    <!-- Path Column -->
-    <ng-container matColumnDef="created_at">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Submit</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <span class="mobile-label"></span>
-        {{ element.registerLastAt | date: "d MMMM y" }}</mat-cell
-      >
-    </ng-container>
-    <!-- Path Column -->
-    <ng-container matColumnDef="register_paid">
-      <mat-header-cell *matHeaderCellDef>Biaya Pendaftaran</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <span class="mobile-label"></span>
-        <span *ngIf="element.registerPaid" class="pills success">Sudah dibayar</span>
-        <span *ngIf="!element.registerPaid" class="pills warn">Belum dibayar</span>
+        <a class="hover" (click)="onDetailClick(element)">{{ element.universityName }}</a>
       </mat-cell>
     </ng-container>
     <!-- Path Column -->
-    <ng-container matColumnDef="annual_paid">
-      <mat-header-cell *matHeaderCellDef>Iuran Tahun Pertama</mat-header-cell>
+    <ng-container matColumnDef="faculty_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Fakultas</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <span class="mobile-label"></span>
-        <span *ngIf="element.annualPaid" class="pills success">Sudah dibayar</span>
-        <span *ngIf="!element.annualPaid" class="pills warn">Belum dibayar</span>
+        {{ element.facultyName }}
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="document">
-      <mat-header-cell *matHeaderCellDef>Dokumen</mat-header-cell>
+    <!-- Path Column -->
+    <ng-container matColumnDef="prodi_name">
+      <mat-header-cell *matHeaderCellDef>Program Studi</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <span class="mobile-label"></span>
-        <button mat-flat-button color="primary" (click)="onDetailClick(element)">Lihat Detail</button>
+        {{ element.prodi.prodiName }}
+      </mat-cell>
+    </ng-container>
+    <!-- Path Column -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Status Anggota</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        <span *ngIf="element.registerLastStatus === 0" class="pills">Daftar Akun</span>
+        <span *ngIf="element.registerLastStatus === 1" class="pills warn">Verifikasi</span>
+        <span *ngIf="element.registerLastStatus === 2" class="pills success">Aktif</span>
       </mat-cell>
     </ng-container>
 
@@ -61,14 +54,12 @@
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
       <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutGap="8px">
-        <button
-          *ngIf="(element.registerMonth >= 10 && element.registerPaid) || (element.annualPaid && element.registerPaid)"
-          mat-flat-button
-          color="accent"
-          (click)="onVerifyClick(element)"
-        >
-          Verifikasi
+        <button mat-flat-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
         </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="onDetailClick(element)">Detail</button>
+        </mat-menu>
       </mat-cell>
     </ng-container>
 

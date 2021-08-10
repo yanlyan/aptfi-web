@@ -34,6 +34,19 @@ export interface Prodi {
   updatedAt: Date;
 }
 
+export interface Dosen {
+  id: bigint;
+  uuid: string;
+  dosenName: string;
+  dosenTitle: string;
+  dosenNidn: string;
+  dosenBirthDate: Date;
+  dosenPosition: string;
+  dosenExpertise: string;
+  dosenProdi: string;
+  dosenType: string;
+}
+
 export interface Member {
   id: bigint;
   uuid: string;
@@ -49,6 +62,8 @@ export interface Member {
   facultyWebsite: string;
   facultyEmail: string;
   registerLastStatus: number;
+  registerLastAt: Date;
+  registerMonth: number;
   regForumId: bigint;
   regForum: RegForum;
   dosenFileS1: string;
@@ -65,4 +80,8 @@ export interface Member {
   registerPaid: boolean;
   skFile: string;
   skFileUrl: string;
+  noSk: number;
+  skString: string;
+  prodi: Prodi;
+  dosens: Dosen[];
 }

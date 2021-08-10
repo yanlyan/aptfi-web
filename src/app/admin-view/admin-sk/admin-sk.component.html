@@ -66,8 +66,13 @@
           <p class="value">{{ member?.facultyPhone }}</p>
         </div>
       </div>
-      <div fxLayout="row" fxLayoutAlign="center center" *ngIf="member && !member.skFile && !skLoading">
-        <button mat-flat-button color="accent" (click)="generateSK()">Buat SK Anggota</button>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <button mat-flat-button color="accent" (click)="generateSK()" *ngIf="member && !member.skFile && !skLoading">
+          Buat SK Anggota
+        </button>
+        <button mat-flat-button color="accent" (click)="downloadSK()" *ngIf="member && member.skFile && !skLoading">
+          Download SK
+        </button>
       </div>
       <div *ngIf="skLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
         <mat-spinner color="accent" [diameter]="20"></mat-spinner>

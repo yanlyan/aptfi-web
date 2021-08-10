@@ -26,6 +26,14 @@ const routes: Routes = [
     canActivate: [AdminViewGuard],
     children: [
       {
+        path: 'anggota',
+        loadChildren: () => import('./admin-member/admin-member.module').then((m) => m.AdminMemberModule),
+      },
+      {
+        path: 'dosen',
+        loadChildren: () => import('./admin-dosen/admin-dosen.module').then((m) => m.AdminDosenModule),
+      },
+      {
         path: 'verify',
         loadChildren: () => import('./admin-verify/admin-verify.module').then((m) => m.AdminVerifyModule),
       },

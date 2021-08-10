@@ -18,4 +18,13 @@ export class AdminSKService {
   generateSK(uuid: string) {
     return this.httpClient.put(`${environment.api}/members/sk/${uuid}`, {});
   }
+
+  downloadSK(uuid: string){
+    return this.httpClient.download(`${environment.api}/members/sk/${uuid}`, { responseType: 'blob' });
+
+  }
+
+  getMember(uuid: string) {
+    return this.httpClient.get(`${environment.api}/members/${uuid}`);
+  }
 }

@@ -22,6 +22,7 @@ export class AdminNavigationComponent implements OnInit {
 
   approvalOpened: boolean = false;
   tagihanOpened: boolean = false;
+  anggotaOpened: boolean = false;
 
   loadingState$: Observable<LoadingStateModel> = this.store.select(LoadingState);
 
@@ -39,6 +40,12 @@ export class AdminNavigationComponent implements OnInit {
         }
       }
     });
+    const anggotaMenu = ['/admin/anggota', '/admin/dosen'];
+    for (const am of anggotaMenu) {
+      if (this.router.url.includes(am)) {
+        this.anggotaOpened = true;
+      }
+    }
     const approvalMenu = ['/admin/verify', '/admin/sk-member'];
     for (const am of approvalMenu) {
       if (this.router.url.includes(am)) {
@@ -58,9 +65,15 @@ export class AdminNavigationComponent implements OnInit {
     if (name === 'approval') {
       this.approvalOpened = true;
       this.tagihanOpened = false;
+      this.anggotaOpened = false;
     } else if (name === 'tagihan') {
       this.approvalOpened = false;
       this.tagihanOpened = true;
+      this.anggotaOpened = false;
+    } else if (name === 'anggota') {
+      this.approvalOpened = false;
+      this.tagihanOpened = false;
+      this.anggotaOpened = true;
     }
   }
   logout() {
