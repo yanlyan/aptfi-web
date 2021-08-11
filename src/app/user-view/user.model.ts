@@ -84,4 +84,5 @@ export interface Member {
   skString: string;
   prodi: Prodi;
   dosens: Dosen[];
+  rejectReason: string;
 }

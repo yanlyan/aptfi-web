@@ -3,6 +3,15 @@
     <mat-label>Cari</mat-label>
     <input matInput #filterInput />
   </mat-form-field>
+  <mat-form-field fxFlex="25%">
+    <mat-select placeholder="Status Pendaftaran" #matSelect name="status">
+      <mat-option [value]="''">Tampilkan Semua</mat-option>
+      <mat-option [value]="0">Daftar Akun</mat-option>
+      <mat-option [value]="1">Menunggu Pembayaran</mat-option>
+      <mat-option [value]="2">Verifikasi</mat-option>
+      <mat-option [value]="3">Ditolak</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="dataSource" matSort>
@@ -25,7 +34,7 @@
     </ng-container>
     <!-- Path Column -->
     <ng-container matColumnDef="created_at">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Submit</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Tanggal Submit</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <span class="mobile-label"></span>
         {{ element.registerLastAt | date: "d MMMM y" }}</mat-cell
@@ -53,21 +62,39 @@
       <mat-header-cell *matHeaderCellDef>Dokumen</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <span class="mobile-label"></span>
-        <button mat-flat-button color="primary" (click)="onDetailClick(element)">Lihat Detail</button>
+        <button mat-flat-button color="primary" (click)="onDetailClick(element)" class="button-small">
+          Lihat Detail
+        </button>
       </mat-cell>
     </ng-container>
 
     <!-- Action Column -->
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
-      <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutGap="8px">
+      <mat-cell
+        *matCellDef="let element"
+        fxLayout="column"
+        fxLayoutAlign="start start"
+        fxLayoutGap="8px"
+        style="padding: 8px 0px"
+      >
         <button
-          *ngIf="(element.registerMonth >= 10 && element.registerPaid) || (element.annualPaid && element.registerPaid)"
+          *ngIf="element.registerLastStatus === 2"
           mat-flat-button
           color="accent"
           (click)="onVerifyClick(element)"
+          class="button-small"
         >
           Verifikasi
+        </button>
+        <button
+          *ngIf="element.registerLastStatus === 2"
+          mat-flat-button
+          color="warn"
+          (click)="onRejectClick(element)"
+          class="button-small"
+        >
+          Tolak
         </button>
       </mat-cell>
     </ng-container>

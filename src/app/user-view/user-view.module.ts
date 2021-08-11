@@ -20,7 +20,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserRegisterGuard } from './user-register/user-register.guard';
-import { TagihanGuard } from './tagihan/tagihan.guard';
+import { VerifiedGuard } from './tagihan/verified.guard';
+import { MemberResolver } from './member.resolver';
 
 const routes: Routes = [
   {
@@ -29,23 +30,28 @@ const routes: Routes = [
     canActivate: [UserGuard],
     children: [
       {
+        path: '',
+        redirectTo: 'profil',
+      },
+      {
         path: 'profil',
         loadChildren: () => import('./user-profile/user-profile.module').then((m) => m.UserProfileModule),
-        canActivate: [TagihanGuard],
       },
       {
         path: 'dosen',
         loadChildren: () => import('./lecturer/lecturer.module').then((m) => m.LecturerModule),
-        canActivate: [TagihanGuard],
+        resolve: [],
+        canActivate: [VerifiedGuard],
       },
       {
         path: 'tagihan',
         loadChildren: () => import('./tagihan/tagihan.module').then((m) => m.TagihanModule),
+        canActivate: [VerifiedGuard],
       },
       {
         path: 'rekap-tagihan',
         loadChildren: () => import('./rekap-tagihan/rekap-tagihan.module').then((m) => m.RekapTagihanModule),
-        canActivate: [TagihanGuard],
+        canActivate: [VerifiedGuard],
       },
       {
         path: 'daftar',

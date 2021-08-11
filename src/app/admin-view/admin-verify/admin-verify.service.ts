@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 export class AdminVerifyService {
   constructor(private httpClient: HttpClientService) {}
 
-  getAllMember(page: number, size: number, sortColumn: string, sortDirection: string, search: string) {
+  getAllMember(page: number, size: number, sortColumn: string, sortDirection: string, search: string, status: number) {
     return this.httpClient.get(`${environment.api}/members/paginate-verify`, {
       params: {
         page: page.toString(),
@@ -16,6 +16,7 @@ export class AdminVerifyService {
         orderBy: sortColumn,
         orderDirection: sortDirection,
         search,
+        status: status.toString(),
       },
     });
   }
@@ -32,5 +33,11 @@ export class AdminVerifyService {
 
   verifyMember(uuid: string) {
     return this.httpClient.put(`${environment.api}/members/verify/${uuid}`, {});
+  }
+
+  rejectMember(uuid: string, reason: string) {
+    return this.httpClient.put(`${environment.api}/members/reject/${uuid}`, {
+      reason,
+    });
   }
 }

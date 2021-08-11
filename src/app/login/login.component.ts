@@ -48,17 +48,6 @@ export class LoginComponent implements OnInit {
               role: response.user.role,
             })
           );
-          const decodedToken = this.jwtService.decodeToken(response.access_token);
-
-          this.userService.getById(decodedToken.sub).subscribe((response) => {
-            this.store.dispatch(
-              new SetUserState({
-                user: response.user,
-                member: response.member,
-              })
-            );
-          });
-
           this.router.navigate(['profil']);
           this.loading = false;
         },

@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Penolakan Anggota APTFI</h2>
+<form [formGroup]="rejectForm" (submit)="onSubmit()" style="width: 100%">
+  <div mat-dialog-content fxLayout="column" fxLayoutAlign="start stretch" style="margin: 0">
+    <p>Berikan alasan penolakan atas pendaftaran <strong>{{data.member.universityName}}</strong></p>
+    <mat-form-field>
+      <textarea matInput placeholder="Alasan Penolakan" formControlName="reason" rows="5"> </textarea>
+      <mat-error>Alsan Penolakan harus diisi</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-around end" style="margin-bottom: 0px; padding: 0">
+    <button mat-flat-button type="button" (click)="this.dialogRef.close(false)" color="primary" cdkFocusInitial>
+      Batal
+    </button>
+    <button mat-flat-button type="submit" color="warn" *ngIf="!loading" [disabled]="!rejectForm.valid">Tolak</button>
+    <mat-spinner [diameter]="20" *ngIf="loading"> </mat-spinner>
+  </div>
+</form>

@@ -312,8 +312,7 @@
         <mat-panel-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
           <div>Detail Program Studi Sarjana 2</div>
           <label style="color: #bbb; font-size: 10px; margin-left: 12px">Tidak wajib diisi</label>
-         </mat-panel-title
-        >
+        </mat-panel-title>
       </mat-expansion-panel-header>
       <form (ngSubmit)="onS2Submit()" [formGroup]="s2Form">
         <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
@@ -455,7 +454,7 @@
       <label for="">Loading</label>
     </div>
     <button
-      *ngIf="!paymentLoading"
+      *ngIf="!paymentLoading && state.member?.registerLastStatus === 0"
       type="button"
       [disabled]="!paymentButtonStatus"
       mat-flat-button
@@ -463,6 +462,17 @@
       (click)="onPaymentButtonClicked()"
     >
       Lanjutkan ke Pembayaran
+      <mat-icon style="width: 20px; height: 20px; font-size: 20px; margin-left: 8px">send</mat-icon>
+    </button>
+    <button
+      *ngIf="!paymentLoading && state.member?.registerLastStatus === 3"
+      type="button"
+      [disabled]="!paymentButtonStatus"
+      mat-flat-button
+      class="paymentButton"
+      (click)="onRegistrationClicked()"
+    >
+      Lanjutkan Pendaftaran
       <mat-icon style="width: 20px; height: 20px; font-size: 20px; margin-left: 8px">send</mat-icon>
     </button>
   </div>

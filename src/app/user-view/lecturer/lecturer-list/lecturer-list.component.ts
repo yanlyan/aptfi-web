@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { merge, fromEvent } from 'rxjs';
-import { distinctUntilChanged, debounceTime, startWith, switchMap, map } from 'rxjs/operators';
+import { distinctUntilChanged, debounceTime, startWith, switchMap, map, finalize, tap } from 'rxjs/operators';
 import { SetLoadingState } from 'src/app/admin-view/admin-loading.state';
 import { LecturerService } from './lecturer.service';
 
@@ -70,8 +70,8 @@ export class LecturerListComponent implements OnInit {
         distinctUntilChanged(),
         debounceTime(500),
         startWith({}),
+
         switchMap(() => {
-          this.store.dispatch(new SetLoadingState(true));
           return this.loadData();
         })
       )
@@ -90,6 +90,10 @@ export class LecturerListComponent implements OnInit {
         'true'
       )
       .pipe(
+        tap(() => {
+          this.store.dispatch(new SetLoadingState(true));
+        }),
+
         map((data) => {
           this.resultsLength = data.pagination.length;
           return data.data;
@@ -102,6 +106,8 @@ export class LecturerListComponent implements OnInit {
             d.index = this.paginator.pageIndex > 0 ? i + this.paginator.pageIndex * this.paginator.pageSize + 1 : i + 1;
             return d;
           });
+        }),
+        finalize(() => {
           this.store.dispatch(new SetLoadingState(false));
         })
       );

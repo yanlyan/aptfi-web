@@ -7,14 +7,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { TagihanGuard } from './tagihan.guard';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [
   {
     path: '',
     component: TagihanComponent,
-    canActivate: [TagihanGuard],
   },
 ];
 
@@ -28,7 +26,7 @@ const routes: Routes = [
     FlexLayoutModule,
     MatIconModule,
     MatDividerModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
 })
 export class TagihanModule {}

@@ -45,7 +45,7 @@
       <mat-cell *matCellDef="let element">
         <span class="mobile-label"></span>
         <span *ngIf="element.registerLastStatus === 0" class="pills">Daftar Akun</span>
-        <span *ngIf="element.registerLastStatus === 1" class="pills warn">Verifikasi</span>
+        <span *ngIf="element.registerLastStatus === 1" class="pills yellow">Verifikasi</span>
         <span *ngIf="element.registerLastStatus === 2" class="pills success">Aktif</span>
       </mat-cell>
     </ng-container>
@@ -54,7 +54,7 @@
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
       <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutGap="8px">
-        <button mat-flat-button [matMenuTriggerFor]="menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">

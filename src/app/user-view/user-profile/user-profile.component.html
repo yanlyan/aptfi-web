@@ -26,8 +26,18 @@
     >
       Admin akan melakukan pengecekan dan verifikasi data anda.
     </mat-step>
-    <mat-step label="Anggota Aktif" [completed]="fourthCompleted" [state]="done">
-      Akun anda telah aktif menjadi Anggota APTFI.
+    <mat-step
+      [label]="fourthLabel"
+      [stepControl]="fourthControl"
+      [editable]="!fourthCompleted"
+      [completed]="fourthCompleted"
+      [state]="done"
+    >
+      <p *ngIf="member?.registerLastStatus === 4">Akun anda telah aktif sebagai anggota APTFI</p>
+      <p *ngIf="member?.registerLastStatus === 3">
+        Maaf, Pendaftaran anda tidak bisa diverifikasi oleh admin karena : {{ member.rejectReason }} <br />
+        Silakan koreksi pengisian form anda pada menu <a [routerLink]="'/daftar'">Keanggotaan -> Pendaftaran</a>
+      </p>
     </mat-step>
   </mat-stepper>
 </div>

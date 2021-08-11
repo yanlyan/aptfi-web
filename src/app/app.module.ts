@@ -21,6 +21,8 @@ import { registerLocaleData } from '@angular/common';
 import localeId from '@angular/common/locales/id';
 import { ReCaptchaModule } from 'angular-recaptcha3';
 import { LoadingState } from './admin-view/admin-loading.state';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FlexLayoutModule } from '@angular/flex-layout';
 registerLocaleData(localeId, 'id');
 
 export function tokenGetter() {
@@ -62,6 +64,8 @@ export function tokenGetter() {
       },
       language: 'id',
     }),
+    MatProgressSpinnerModule,
+    FlexLayoutModule,
   ],
   providers: [
     {

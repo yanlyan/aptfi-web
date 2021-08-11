@@ -18,7 +18,9 @@
           <a routerLink="/profil" [routerLinkActive]="'active'">Profil</a>
           <a routerLink="/dosen" [routerLinkActive]="'active'">List Dosen</a>
           <a
-            *ngIf="(state$ | async).member?.registerLastStatus === 0"
+            *ngIf="
+              (state$ | async).member?.registerLastStatus === 0 || (state$ | async).member?.registerLastStatus === 3
+            "
             routerLink="/daftar"
             [routerLinkActive]="'active'"
             >Pendaftaran</a

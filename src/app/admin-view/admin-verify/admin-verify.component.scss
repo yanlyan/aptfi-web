@@ -9,6 +9,15 @@ table {
 .mobile-label {
   display: none;
 }
+
+.button-small {
+  font-size: 12px;
+  line-height: 28px;
+  padding: 0px 12px;
+}
+.mat-dialog-content {
+  margin: 0 !important;
+}
 @media (max-width: 600px) {
   .mobile-label {
     width: 80px;
@@ -33,6 +42,21 @@ table {
   }
 
   .mat-column-university_name {
-    flex: 0 0 30%;
+    flex: 0 0 25%;
+  }
+  .mat-column-created_at {
+    flex: 0 0 14%;
+  }
+  .mat-column-register_paid {
+    flex: 0 0 14%;
+  }
+  .mat-column-annual_paid {
+    flex: 0 0 14%;
+  }
+  .mat-column-document {
+    flex: 0 0 14%;
+  }
+  .mat-column-action {
+    flex: 0 0 14%;
   }
 }

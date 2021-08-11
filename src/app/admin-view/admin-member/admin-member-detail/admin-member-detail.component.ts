@@ -85,8 +85,14 @@ export class AdminMemberDetailComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/admin/anggota'], {
-      queryParams: this.queryParams,
-    });
+    if (this.queryParams.origin === 'verify') {
+      this.router.navigate(['/admin/verify'], {
+        queryParams: this.queryParams,
+      });
+    } else {
+      this.router.navigate(['/admin/anggota'], {
+        queryParams: this.queryParams,
+      });
+    }
   }
 }

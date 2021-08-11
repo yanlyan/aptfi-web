@@ -1,9 +1,11 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
+import { of } from 'rxjs';
+import { tap, finalize, catchError } from 'rxjs/operators';
 import { LoadingState, SetLoadingState } from 'src/app/admin-view/admin-loading.state';
 import { AdminVerifyService } from 'src/app/admin-view/admin-verify/admin-verify.service';
 import { Member, Prodi } from '../user.model';
@@ -20,7 +22,7 @@ import { UserState, UserStateModel } from '../user.state';
     },
   ],
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, AfterViewInit {
   @ViewChild('stepper', { static: true }) stepper: MatStepper;
   firstControl: FormGroup;
   secondControl: FormGroup;
@@ -33,6 +35,7 @@ export class UserProfileComponent implements OnInit {
   fourthCompleted: boolean = false;
 
   done: string = 'number';
+  fourthLabel: string = 'Anggota Aktif';
 
   member: Member;
   s1: Prodi;
@@ -44,22 +47,32 @@ export class UserProfileComponent implements OnInit {
     private store: Store,
     private adminVerifyService: AdminVerifyService,
     private _FileSaverService: FileSaverService
-  ) {}
+  ) {
+    // this.store.dispatch(new SetLoadingState(true));
+  }
+  ngAfterViewInit(): void {}
 
   ngOnInit(): void {
-    this.store.dispatch(new SetLoadingState(true));
-    this.adminVerifyService.getDetailMember('none').subscribe(
-      (response) => {
-        this.store.dispatch(new SetLoadingState(false));
+    this.adminVerifyService
+      .getDetailMember('none')
+      .pipe(
+        tap(() => {
+          this.store.dispatch(new SetLoadingState(true));
+        }),
+        finalize(() => {
+          this.store.dispatch(new SetLoadingState(false));
+        }),
+        catchError((err) => {
+          this.store.dispatch(new SetLoadingState(false));
+          return of(false);
+        })
+      )
+      .subscribe((response) => {
         this.member = response.member;
         this.s1 = this.member.prodis.filter((prodi) => prodi.prodiType === 's1')[0];
         this.s2 = this.member.prodis.filter((prodi) => prodi.prodiType === 's2')[0];
         this.pspa = this.member.prodis.filter((prodi) => prodi.prodiType === 'pspa')[0];
-      },
-      (err) => {
-        this.store.dispatch(new SetLoadingState(false));
-      }
-    );
+      });
 
     this.firstControl = this._formBuilder.group({
       required: ['', Validators.required],
@@ -73,33 +86,50 @@ export class UserProfileComponent implements OnInit {
     this.fourthControl = this._formBuilder.group({
       required: ['', Validators.required],
     });
+
     this.store.select(UserState).subscribe((state: UserStateModel) => {
       const status: number = state.member?.registerLastStatus;
-      switch (status) {
-        case 0:
-          this.stepper.selectedIndex = 0;
-          break;
-        case 1:
-          this.stepper.selectedIndex = 1;
-          this.firstCompleted = true;
-          break;
+      if (status) {
+        switch (status) {
+          case 0:
+            this.stepper.selectedIndex = 0;
+            break;
+          case 1:
+            this.firstCompleted = true;
+            setTimeout(() => {
+              this.stepper.selectedIndex = 1;
+            }, 500);
+            break;
+          case 2:
+            this.firstCompleted = true;
+            this.secondCompleted = true;
+            this.stepper.selectedIndex = 2;
+            break;
+          case 3:
+            this.firstCompleted = true;
+            this.secondCompleted = true;
+            this.thirdCompleted = true;
+            this.fourthCompleted = true;
+            setTimeout(() => {
+              this.stepper.selectedIndex = 3;
+              this.fourthLabel = 'Ditolak';
+              this.done = 'error';
+            }, 500);
+            break;
+          case 4:
+            this.firstCompleted = true;
+            this.secondCompleted = true;
+            this.thirdCompleted = true;
+            this.fourthCompleted = true;
+            setTimeout(() => {
+              this.stepper.selectedIndex = 3;
+            }, 500);
+            this.done = 'done';
+            break;
 
-        case 2:
-          this.stepper.selectedIndex = 2;
-          this.firstCompleted = true;
-          this.secondCompleted = true;
-          break;
-        case 3:
-          this.stepper.selectedIndex = 3;
-          this.firstCompleted = true;
-          this.secondCompleted = true;
-          this.thirdCompleted = true;
-          this.fourthCompleted = true;
-          this.done = 'done';
-          break;
-
-        default:
-          break;
+          default:
+            break;
+        }
       }
     });
   }

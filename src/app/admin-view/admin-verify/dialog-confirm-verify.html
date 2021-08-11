@@ -1,6 +1,14 @@
-<h2 mat-dialog-title>Verifikasi Anggota APTFI</h2>
+<h2 mat-dialog-title *ngIf="this.data.type === 'verify'">Verifikasi Anggota APTFI</h2>
+<h2 mat-dialog-title *ngIf="this.data.type === 'reject'">Penolakan Anggota APTFI</h2>
 <div mat-dialog-content>
-  <p>Apakah anda yakin untuk melakukan verifikasi {{data.member.universityName}} sebagai Anggota APTFI ?</p>
+  <p *ngIf="this.data.type ==='verify'">
+    Apakah anda yakin untuk melakukan <strong>verifikasi</strong> pendaftaran
+    <strong>{{data.member.universityName}}</strong> ?
+  </p>
+  <p *ngIf="this.data.type ==='reject'">
+    Apakah anda yakin untuk melakukan <strong>penolakan</strong> pendaftaran
+    <strong>{{data.member.universityName}}</strong> ?
+  </p>
 </div>
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-around end" style="margin-bottom: 0px; padding: 0">
   <button mat-flat-button (click)="this.dialogRef.close(false)" color="primary" cdkFocusInitial>Tidak</button>

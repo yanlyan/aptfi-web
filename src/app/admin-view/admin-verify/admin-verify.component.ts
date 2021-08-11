@@ -12,6 +12,8 @@ import { Member } from 'src/app/user-view/user.model';
 import { SetLoadingState } from '../admin-loading.state';
 import { AdminVerifyService } from './admin-verify.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSelect } from '@angular/material/select';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-verify',
@@ -36,6 +38,7 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   @ViewChild('filterInput', { static: true }) filterInput: ElementRef;
+  @ViewChild('matSelect') statusSelect: MatSelect;
 
   constructor(
     private cdref: ChangeDetectorRef,
@@ -56,6 +59,8 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.statusSelect.value = this.route.snapshot.queryParams.status || '';
+
     this.filterInput.nativeElement.value = this.route.snapshot.queryParams.search || '';
     this.sort.sort({
       id: 'university_name',
@@ -64,7 +69,12 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
     });
     this.cdref.detectChanges();
 
-    merge(this.sort.sortChange, this.paginator.page, fromEvent(this.filterInput.nativeElement, 'keyup'))
+    merge(
+      this.sort.sortChange,
+      this.paginator.page,
+      fromEvent(this.filterInput.nativeElement, 'keyup'),
+      this.statusSelect.valueChange
+    )
       .pipe(
         distinctUntilChanged(),
         debounceTime(500),
@@ -84,7 +94,8 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
         this.paginator.pageSize,
         this.sort.active,
         this.sort.direction,
-        this.filterInput.nativeElement.value
+        this.filterInput.nativeElement.value,
+        this.statusSelect.value
       )
       .pipe(
         map((data) => {
@@ -144,34 +155,38 @@ export class AdminVerifyComponent implements OnInit, AfterViewInit {
       });
   }
 
+  onRejectClick(member: Member) {
+    this.dialog
+      .open(DialogReject, {
+        width: '320px',
+        data: {
+          member,
+          type: 'reject',
+        },
+        closeOnNavigation: false,
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.snackbar.open('Penolakan pendaftaran berhasil', 'Tutup', {
+            panelClass: 'snackbar-success',
+            duration: 5000,
+          });
+          this.loadData().subscribe();
+        }
+      });
+  }
+
   onDetailClick(member: Member) {
     this.router.navigate([`admin/verify/detail/${member.uuid}`], {
       queryParams: {
         page: this.paginator.pageIndex,
+        origin: 'verify',
         search: this.filterInput.nativeElement.value,
         size: this.paginator.pageSize,
       },
     });
-  }
-}
-
-@Component({
-  selector: 'dialog-verify',
-  templateUrl: './dialog.verify.html',
-})
-export class DialogVerify {
-  constructor(
-    public dialogRef: MatDialogRef<DialogVerify>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private router: Router
-  ) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  goToSK() {
-    this.router.navigate(['admin/sk-member']);
   }
 }
 
@@ -181,7 +196,7 @@ export class DialogVerify {
 })
 export class DialogConfirmVerify {
   constructor(
-    public dialogRef: MatDialogRef<DialogVerify>,
+    public dialogRef: MatDialogRef<DialogConfirmVerify>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router
   ) {}
@@ -192,5 +207,38 @@ export class DialogConfirmVerify {
 
   goToSK() {
     this.router.navigate(['admin/sk-member']);
+  }
+}
+
+@Component({
+  selector: 'dialog-reject',
+  templateUrl: './dialog-reject.html',
+})
+export class DialogReject implements OnInit {
+  rejectForm: FormGroup;
+  loading: boolean = false;
+  constructor(
+    public dialogRef: MatDialogRef<DialogReject>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private adminVerifyService: AdminVerifyService
+  ) {}
+  ngOnInit(): void {
+    this.rejectForm = new FormGroup({
+      reason: new FormControl(null, [Validators.required]),
+    });
+  }
+
+  onSubmit() {
+    if (this.rejectForm.valid) {
+      this.loading = true;
+      this.adminVerifyService.rejectMember(this.data.member.uuid, this.rejectForm.value.reason).subscribe(
+        () => {
+          this.dialogRef.close(true);
+        },
+        (err) => {
+          this.loading = false;
+        }
+      );
+    }
   }
 }

@@ -23,14 +23,10 @@ const routes: Routes = [
     path: '',
     component: AdminMemberComponent,
   },
-  {
-    path: 'detail/:uuid',
-    component: AdminMemberDetailComponent,
-  },
 ];
 
 @NgModule({
-  declarations: [AdminMemberComponent, AdminMemberDetailComponent],
+  declarations: [AdminMemberComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

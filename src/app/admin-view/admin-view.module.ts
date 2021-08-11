@@ -18,6 +18,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { AdminViewGuard } from './admin-view.guard';
 import { AdminNavigationComponent } from './admin-navigation/admin-navigation.component';
+import { AdminMemberDetailComponent } from './admin-member/admin-member-detail/admin-member-detail.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
 
 const routes: Routes = [
   {
@@ -26,17 +29,27 @@ const routes: Routes = [
     canActivate: [AdminViewGuard],
     children: [
       {
+        path: 'anggota/detail/:uuid',
+        component: AdminMemberDetailComponent,
+      },
+      {
         path: 'anggota',
         loadChildren: () => import('./admin-member/admin-member.module').then((m) => m.AdminMemberModule),
       },
+
       {
         path: 'dosen',
         loadChildren: () => import('./admin-dosen/admin-dosen.module').then((m) => m.AdminDosenModule),
       },
       {
+        path: 'verify/detail/:uuid',
+        component: AdminMemberDetailComponent,
+      },
+      {
         path: 'verify',
         loadChildren: () => import('./admin-verify/admin-verify.module').then((m) => m.AdminVerifyModule),
       },
+
       {
         path: 'tagihan',
         loadChildren: () => import('./admin-tagihan/admin-tagihan.module').then((m) => m.AdminTagihanModule),
@@ -50,7 +63,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AdminViewComponent, AdminNavigationComponent],
+  declarations: [AdminViewComponent, AdminNavigationComponent, AdminMemberDetailComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -68,6 +81,8 @@ const routes: Routes = [
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatInputModule,
+    MatTabsModule,
+    MatTableModule,
   ],
   exports: [],
   providers: [],

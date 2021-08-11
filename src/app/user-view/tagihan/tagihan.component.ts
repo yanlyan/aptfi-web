@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
+import { tap, finalize } from 'rxjs/operators';
 import { SetLoadingState } from 'src/app/admin-view/admin-loading.state';
 import { Bill } from './bill.model';
 import { TagihanService } from './tagihan.service';
@@ -32,11 +33,19 @@ export class TagihanComponent implements OnInit {
   }
 
   getBills() {
-    this.store.dispatch(new SetLoadingState(true));
-    this.tagihanService.getOrder().subscribe((response) => {
-      this.bills = response.bills;
-      this.store.dispatch(new SetLoadingState(false));
-    });
+    this.tagihanService
+      .getOrder()
+      .pipe(
+        tap(() => {
+          this.store.dispatch(new SetLoadingState(true));
+        }),
+        finalize(() => {
+          this.store.dispatch(new SetLoadingState(false));
+        })
+      )
+      .subscribe((response) => {
+        this.bills = response.bills;
+      });
   }
 
   onPayButtonClick(bill: Bill) {
