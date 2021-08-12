@@ -1,11 +1,11 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
-import { defer, of } from 'rxjs';
-import { tap, finalize, catchError } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { SetLoadingState } from 'src/app/admin-view/admin-loading.state';
 import { AdminVerifyService } from 'src/app/admin-view/admin-verify/admin-verify.service';
 import { MemberState, MemberStateModel } from '../member.state';
@@ -24,6 +24,8 @@ import { Dosen, Member, Prodi } from '../user.model';
 })
 export class UserProfileComponent implements OnInit, AfterViewInit {
   @ViewChild('stepper', { static: true }) stepper: MatStepper;
+  selected = new FormControl(0);
+
   firstControl: FormGroup;
   secondControl: FormGroup;
   thirdControl: FormGroup;
@@ -53,7 +55,8 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
     private _formBuilder: FormBuilder,
     private store: Store,
     private adminVerifyService: AdminVerifyService,
-    private _FileSaverService: FileSaverService
+    private _FileSaverService: FileSaverService,
+    private route: ActivatedRoute
   ) {
     this.store.dispatch(new SetLoadingState(true));
 
@@ -145,5 +148,9 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
         this.store.dispatch(new SetLoadingState(false));
       }
     );
+  }
+
+  downloadSK() {
+    window.open(this.member.skFileUrl, '_blank');
   }
 }

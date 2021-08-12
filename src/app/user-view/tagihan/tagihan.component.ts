@@ -21,9 +21,8 @@ export class TagihanComponent implements OnInit {
   constructor(
     private tagihanService: TagihanService,
     private _FileSaverService: FileSaverService,
-    private store: Store
-  ) // private cdr: ChangeDetectorRef
-  {
+    private store: Store // private cdr: ChangeDetectorRef
+  ) {
     this.store.dispatch(new SetLoadingState(true));
     this.getBills();
   }

@@ -40,7 +40,18 @@
       [state]="done"
     >
       <div style="margin-top: 32px">
-        <p *ngIf="member?.registerLastStatus === 4">Akun anda telah aktif sebagai anggota APTFI</p>
+        <div
+          style="width: 100%; margin-top: 16px"
+          fxLayout="column"
+          fxLayoutAlign="center start"
+          *ngIf="member?.registerLastStatus === 4"
+        >
+          <p>Institusi anda telah aktif sebagai anggota APTFI</p>
+          <button mat-flat-button color="primary" (click)="downloadSK()" target="_blank" *ngIf="member?.skFile">
+            Unduh Surat Keputusan
+          </button>
+        </div>
+
         <p *ngIf="member?.registerLastStatus === 3">
           Maaf, Pendaftaran anda tidak bisa diverifikasi oleh admin karena : {{ member.rejectReason }} <br />
           Silakan koreksi pengisian form anda pada menu <a [routerLink]="'/daftar'">Keanggotaan -> Pendaftaran</a>
@@ -53,7 +64,7 @@
 <div fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="16px" style="margin-top: 16px">
   <h2>Data yang telah anda kirim</h2>
   <mat-divider> </mat-divider>
-  <mat-tab-group>
+  <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
     <mat-tab label="Universitas">
       <mat-list>
         <mat-list-item>
@@ -480,6 +491,7 @@
         <tr mat-row *matRowDef="let row; columns: dosenColumns"></tr>
       </table>
     </mat-tab>
+
     <mat-tab label="Anggaran" *ngIf="member?.dosenFileSarpra">
       <div style="width: 100%; margin-top: 24px" fxLayout="row" fxLayoutAlign="center center">
         <button mat-flat-button color="primary" (click)="download('dosen_file_sarpra')">

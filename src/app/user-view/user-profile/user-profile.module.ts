@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 const routes: Routes = [
   {
     path: '',
@@ -30,6 +31,7 @@ const routes: Routes = [
     MatTabsModule,
     MatListModule,
     MatTableModule,
+    PdfViewerModule,
   ],
 })
 export class UserProfileModule {}
