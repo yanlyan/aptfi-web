@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngxs/store';
 import { ReCaptchaService } from 'angular-recaptcha3';
 import { SetSessionState } from '../app.state';
-import { UserService } from '../user-view/user.service';
-import { SetUserState } from '../user-view/user.state';
 import { LoginService } from './login.service';
 
 @Component({
@@ -21,9 +18,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private readonly store: Store,
-    private router: Router, // private readonly store: Store
-    private jwtService: JwtHelperService,
-    private userService: UserService,
+    private router: Router,
     private recaptchaService: ReCaptchaService
   ) {
     this.loginForm = new FormGroup({
@@ -48,10 +43,23 @@ export class LoginComponent implements OnInit {
               role: response.user.role,
             })
           );
-          this.router.navigate(['profil']);
           this.loading = false;
+          switch (response.user.role.id) {
+            case 1:
+              this.router.navigate(['admin']);
+              break;
+            case 2:
+              this.router.navigate(['profil']);
+              break;
+            case 3:
+              this.router.navigate(['pengurus']);
+              break;
+
+            default:
+              break;
+          }
         },
-        (error) => {
+        () => {
           this.loading = false;
         }
       );

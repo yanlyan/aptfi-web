@@ -9,17 +9,17 @@ import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
 import { merge, fromEvent } from 'rxjs';
 import { distinctUntilChanged, debounceTime, startWith, switchMap, map } from 'rxjs/operators';
-import { SetLoadingState } from 'src/app/states/loading.state';
-import { PengurusTagihanService } from 'src/app/pengurus-view/pengurus-tagihan/pengurus-tagihan.service';
-import { Bill } from '../tagihan/bill.model';
-import { TagihanService } from '../tagihan/tagihan.service';
+import { Bill } from 'src/app/user-view/tagihan/bill.model';
+import { TagihanService } from 'src/app/user-view/tagihan/tagihan.service';
+import { SetLoadingState } from '../../states/loading.state';
+import { PengurusTagihanService } from './pengurus-tagihan.service';
 
 @Component({
-  selector: 'app-rekap-tagihan',
-  templateUrl: './rekap-tagihan.component.html',
-  styleUrls: ['./rekap-tagihan.component.scss'],
+  selector: 'app-pengurus-tagihan',
+  templateUrl: './pengurus-tagihan.component.html',
+  styleUrls: ['./pengurus-tagihan.component.scss'],
 })
-export class RekapTagihanComponent implements OnInit {
+export class PengurusTagihanComponent implements OnInit {
   isLoadingResults: boolean;
   resultsLength: any;
   displayedColumns: string[] = ['index', 'members.university_name', 'type', 'amount', 'last_status', 'receipt'];
@@ -87,7 +87,7 @@ export class RekapTagihanComponent implements OnInit {
         this.sort.direction,
         this.filterInput.nativeElement.value,
         this.statusSelect.value,
-        'true'
+        'false'
       )
       .pipe(
         map((data) => {

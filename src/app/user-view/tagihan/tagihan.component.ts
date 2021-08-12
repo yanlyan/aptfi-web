@@ -4,7 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
 import { tap, finalize } from 'rxjs/operators';
-import { SetLoadingState } from 'src/app/admin-view/admin-loading.state';
+import { SetLoadingState } from 'src/app/states/loading.state';
 import { Bill } from './bill.model';
 import { TagihanService } from './tagihan.service';
 

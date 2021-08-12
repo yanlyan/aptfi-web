@@ -1,4 +1,4 @@
-import { Member } from '../user.model';
+import { Member } from 'src/app/models/member.model';
 
 export interface Bill {
   id: number;

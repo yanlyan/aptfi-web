@@ -1,44 +1,37 @@
-import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSelect } from '@angular/material/select';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { FileSaverService } from 'ngx-filesaver';
 import { merge, fromEvent } from 'rxjs';
 import { distinctUntilChanged, debounceTime, startWith, switchMap, map } from 'rxjs/operators';
-import { SetLoadingState } from 'src/app/states/loading.state';
-import { PengurusTagihanService } from 'src/app/pengurus-view/pengurus-tagihan/pengurus-tagihan.service';
-import { Bill } from '../tagihan/bill.model';
-import { TagihanService } from '../tagihan/tagihan.service';
+import { Member } from 'src/app/models/member.model';
+import { SetLoadingState } from '../../states/loading.state';
+import { PengurusMemberService } from './pengurus-member.service';
 
 @Component({
-  selector: 'app-rekap-tagihan',
-  templateUrl: './rekap-tagihan.component.html',
-  styleUrls: ['./rekap-tagihan.component.scss'],
+  selector: 'app-pengurus-member',
+  templateUrl: './pengurus-member.component.html',
+  styleUrls: ['./pengurus-member.component.scss'],
 })
-export class RekapTagihanComponent implements OnInit {
+export class PengurusMemberComponent implements OnInit {
   isLoadingResults: boolean;
   resultsLength: any;
-  displayedColumns: string[] = ['index', 'members.university_name', 'type', 'amount', 'last_status', 'receipt'];
+  displayedColumns: string[] = ['index', 'university_name', 'faculty_name', 'prodi_name', 'status', 'action'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('matSelect') statusSelect: MatSelect;
 
   @ViewChild('filterInput', { static: true }) filterInput: ElementRef;
 
   constructor(
     private cdref: ChangeDetectorRef,
-    private pengurusTagihanService: PengurusTagihanService,
-    private tagihanService: TagihanService,
+    private pengurusMemberService: PengurusMemberService,
     private store: Store,
-    private route: ActivatedRoute,
-    private _FileSaverService: FileSaverService,
-    private datepipe: DatePipe
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.store.dispatch(new SetLoadingState(true));
   }
@@ -50,22 +43,15 @@ export class RekapTagihanComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.statusSelect.value = this.route.snapshot.queryParams.status || '';
-
     this.filterInput.nativeElement.value = this.route.snapshot.queryParams.search || '';
     this.sort.sort({
-      id: 'id',
+      id: 'university_name',
       start: 'asc',
       disableClear: false,
     });
     this.cdref.detectChanges();
 
-    merge(
-      this.sort.sortChange,
-      this.paginator.page,
-      fromEvent(this.filterInput.nativeElement, 'keyup'),
-      this.statusSelect.valueChange
-    )
+    merge(this.sort.sortChange, this.paginator.page, fromEvent(this.filterInput.nativeElement, 'keyup'))
       .pipe(
         distinctUntilChanged(),
         debounceTime(500),
@@ -79,15 +65,13 @@ export class RekapTagihanComponent implements OnInit {
   }
 
   loadData() {
-    return this.pengurusTagihanService
-      .getAllBills(
+    return this.pengurusMemberService
+      .getAllMember(
         this.paginator.pageIndex + 1,
         this.paginator.pageSize,
         this.sort.active,
         this.sort.direction,
-        this.filterInput.nativeElement.value,
-        this.statusSelect.value,
-        'true'
+        this.filterInput.nativeElement.value
       )
       .pipe(
         map((data) => {
@@ -98,29 +82,26 @@ export class RekapTagihanComponent implements OnInit {
           setTimeout(() => {
             this.filterInput.nativeElement.focus();
           }, 500);
+          this.store.dispatch(new SetLoadingState(false));
+          data = data.map((d: Member) => {
+            d.prodi = d.prodis.filter((p) => p.prodiType === 's1')[0];
+            return d;
+          });
           this.dataSource.data = data.map((d: any, i: number) => {
             d.index = this.paginator.pageIndex > 0 ? i + this.paginator.pageIndex * this.paginator.pageSize + 1 : i + 1;
             return d;
           });
-          this.store.dispatch(new SetLoadingState(false));
         })
       );
   }
 
-  download(bill: Bill) {
-    bill.loading = true;
-    this.tagihanService.print(bill.token).subscribe(
-      (response) => {
-        this._FileSaverService.save(
-          response,
-          `Bukti Pembayaran ${bill.universityName} ${this.datepipe.transform(bill.lastStatusAt, 'd MMMM y')} .pdf`,
-          'pdf'
-        );
-        bill.loading = false;
+  onDetailClick(member: Member) {
+    this.router.navigate([`pengurus/anggota/detail/${member.uuid}`], {
+      queryParams: {
+        page: this.paginator.pageIndex,
+        search: this.filterInput.nativeElement.value,
+        size: this.paginator.pageSize,
       },
-      (err) => {
-        bill.loading = false;
-      }
-    );
+    });
   }
 }

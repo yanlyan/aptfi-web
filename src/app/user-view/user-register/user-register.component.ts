@@ -6,14 +6,15 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
 import { delay, finalize, mergeMap, tap } from 'rxjs/operators';
-import { SetLoadingState } from 'src/app/admin-view/admin-loading.state';
-import { RegForum } from 'src/app/master/reg-forum.model';
+import { SetLoadingState } from 'src/app/states/loading.state';
+import { RegForum } from 'src/app/models/reg-forum.model';
 import { RegForumService } from 'src/app/master/reg-forum.service';
 import { TagihanService } from '../tagihan/tagihan.service';
-import { Member, Prodi } from '../user.model';
 import { UserService } from '../user.service';
 import { SetRegisterStatus } from '../user.state';
 import { UserRegisterService } from './user-register.service';
+import { Member } from 'src/app/models/member.model';
+import { Prodi } from 'src/app/models/prodi.model';
 
 declare const window: any;
 

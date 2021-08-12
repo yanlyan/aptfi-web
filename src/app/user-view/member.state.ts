@@ -1,10 +1,10 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { Member, MemberCoba, User } from './user.model';
+import { MemberSimple } from '../models/member-simple.model';
 
 export class SetMemberState {
   static readonly type = '[App] Set Member State';
-  constructor(public state: MemberCoba) {}
+  constructor(public state: MemberSimple) {}
 }
 export class SetRegisterStatus {
   static readonly type = '[App] Set Register Status State';
@@ -12,7 +12,7 @@ export class SetRegisterStatus {
 }
 
 export interface MemberStateModel {
-  member: MemberCoba;
+  member: MemberSimple;
 }
 
 @State<MemberStateModel>({

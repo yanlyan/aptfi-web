@@ -2,14 +2,15 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
-import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
 import { finalize } from 'rxjs/operators';
-import { SetLoadingState } from 'src/app/admin-view/admin-loading.state';
-import { AdminVerifyService } from 'src/app/admin-view/admin-verify/admin-verify.service';
+import { SetLoadingState } from 'src/app/states/loading.state';
+import { PengurusVerifyService } from 'src/app/pengurus-view/pengurus-verify/pengurus-verify.service';
 import { MemberState, MemberStateModel } from '../member.state';
-import { Dosen, Member, Prodi } from '../user.model';
+import { Member } from 'src/app/models/member.model';
+import { Dosen } from 'src/app/models/dosen.model';
+import { Prodi } from 'src/app/models/prodi.model';
 
 @Component({
   selector: 'app-user-profile',
@@ -54,13 +55,12 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
   constructor(
     private _formBuilder: FormBuilder,
     private store: Store,
-    private adminVerifyService: AdminVerifyService,
-    private _FileSaverService: FileSaverService,
-    private route: ActivatedRoute
+    private pengurusVerifyService: PengurusVerifyService,
+    private _FileSaverService: FileSaverService
   ) {
     this.store.dispatch(new SetLoadingState(true));
 
-    this.adminVerifyService
+    this.pengurusVerifyService
       .getDetailMember('none')
       .pipe(
         finalize(() => {
@@ -131,7 +131,7 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
 
   download(column: string) {
     this.store.dispatch(new SetLoadingState(true));
-    this.adminVerifyService.downloadFile(this.member.uuid, column).subscribe(
+    this.pengurusVerifyService.downloadFile(this.member.uuid, column).subscribe(
       (resp) => {
         let fileName = '';
         if (column === 'dosen_file_S1') {

@@ -7,11 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('./user-view/user-view.module').then((m) => m.UserViewModule),
   },
   {
-    path: 'admin/login',
-    loadChildren: () => import('./admin-login/admin-login.module').then((m) => m.AdminLoginModule),
-  },
-
-  {
     path: 'login',
     loadChildren: () => import('./login/login.module').then((m) => m.LoginModule),
   },
@@ -27,10 +22,9 @@ const routes: Routes = [
     path: 'reset-password/:token',
     loadChildren: () => import('./reset-password/reset-password.module').then((m) => m.ResetPasswordModule),
   },
-
   {
-    path: 'admin',
-    loadChildren: () => import('./admin-view/admin-view.module').then((m) => m.AdminViewModule),
+    path: 'pengurus',
+    loadChildren: () => import('./pengurus-view/pengurus-view.module').then((m) => m.PengurusViewModule),
   },
 ];
 

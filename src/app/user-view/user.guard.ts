@@ -4,7 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngxs/store';
 import { of } from 'rxjs';
 import { finalize, map, mergeMap, tap } from 'rxjs/operators';
-import { SetLoadingState } from '../admin-view/admin-loading.state';
+import { SetLoadingState } from '../states/loading.state';
 import { AppState } from '../app.state';
 import { MemberState, SetMemberState } from './member.state';
 import { UserService } from './user.service';

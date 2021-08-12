@@ -1,6 +1,6 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { Role } from './user-view/user.model';
+import { Role } from './models/role.model';
 
 export class SetSessionState {
   static readonly type = '[App] Set Session';

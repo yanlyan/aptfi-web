@@ -47,8 +47,9 @@
           *ngIf="member?.registerLastStatus === 4"
         >
           <p>Institusi anda telah aktif sebagai anggota APTFI</p>
-          <button mat-flat-button color="primary" (click)="downloadSK()" target="_blank" *ngIf="member?.skFile">
-            Unduh Surat Keputusan
+          <button mat-flat-button color="primary" (click)="downloadSK()" target="_blank" *ngIf="member?.skFile" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="8px">
+            <mat-icon>download</mat-icon>
+            <span>Unduh Surat Keputusan</span>
           </button>
         </div>
 

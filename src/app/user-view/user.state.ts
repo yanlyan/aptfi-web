@@ -1,6 +1,6 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { Member, User } from './user.model';
+import { User } from '../models/user.model';
 
 export class SetUserState {
   static readonly type = '[App] Set User State';

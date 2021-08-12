@@ -4,7 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { debounceTime, map, shareReplay } from 'rxjs/operators';
-import { LoadingState, LoadingStateModel } from 'src/app/admin-view/admin-loading.state';
+import { LoadingState, LoadingStateModel } from 'src/app/states/loading.state';
 import { SetSessionState } from 'src/app/app.state';
 import { MemberState, MemberStateModel } from '../member.state';
 import { UserState, UserStateModel } from '../user.state';

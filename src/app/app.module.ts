@@ -20,7 +20,7 @@ import { UserState } from './user-view/user.state';
 import { registerLocaleData } from '@angular/common';
 import localeId from '@angular/common/locales/id';
 import { ReCaptchaModule } from 'angular-recaptcha3';
-import { LoadingState } from './admin-view/admin-loading.state';
+import { LoadingState } from './states/loading.state';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MemberState } from './user-view/member.state';
@@ -40,8 +40,6 @@ export function tokenGetter() {
     MatSnackBarModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
     LayoutModule,

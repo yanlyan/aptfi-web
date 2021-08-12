@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { merge, fromEvent } from 'rxjs';
 import { distinctUntilChanged, debounceTime, startWith, switchMap, map, finalize, tap } from 'rxjs/operators';
-import { SetLoadingState } from 'src/app/admin-view/admin-loading.state';
+import { SetLoadingState } from 'src/app/states/loading.state';
 import { LecturerService } from './lecturer.service';
 
 @Component({

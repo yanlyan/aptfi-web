@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { LoadingState } from '../admin-view/admin-loading.state';
+import { LoadingState } from '../states/loading.state';
 import { MemberState, MemberStateModel } from './member.state';
-import { Member, User } from './user.model';
+import { User } from '../models/user.model';
+import { Member } from '../models/member.model';
 
 @Component({
   selector: 'app-user-view',
