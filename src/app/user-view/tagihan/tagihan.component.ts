@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
@@ -20,25 +20,20 @@ export class TagihanComponent implements OnInit {
 
   constructor(
     private tagihanService: TagihanService,
-    private route: ActivatedRoute,
-    private snackbar: MatSnackBar,
     private _FileSaverService: FileSaverService,
     private store: Store
-  ) {
+  ) // private cdr: ChangeDetectorRef
+  {
     this.store.dispatch(new SetLoadingState(true));
-  }
-
-  ngOnInit(): void {
     this.getBills();
   }
+
+  ngOnInit(): void {}
 
   getBills() {
     this.tagihanService
       .getOrder()
       .pipe(
-        tap(() => {
-          this.store.dispatch(new SetLoadingState(true));
-        }),
         finalize(() => {
           this.store.dispatch(new SetLoadingState(false));
         })

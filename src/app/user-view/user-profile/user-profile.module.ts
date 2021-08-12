@@ -7,6 +7,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
 const routes: Routes = [
   {
     path: '',
@@ -24,6 +27,9 @@ const routes: Routes = [
     FlexLayoutModule,
     MatIconModule,
     MatButtonModule,
+    MatTabsModule,
+    MatListModule,
+    MatTableModule,
   ],
 })
 export class UserProfileModule {}

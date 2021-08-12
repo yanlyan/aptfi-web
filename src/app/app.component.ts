@@ -9,11 +9,5 @@ import { AppLoadingService } from './app-loading.service';
 })
 export class AppComponent {
   title = 'Asosiasi Perguruan Tinggi Farmasi Indonesia';
-  appLoading: boolean = false;
-  constructor(private loadingService: AppLoadingService, private router: Router) {}
-  ngOnInit(): void {
-    this.loadingService.getLoading().subscribe((loading) => {
-      this.appLoading = loading;
-    });
-  }
+  ngOnInit(): void {}
 }

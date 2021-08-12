@@ -11,6 +11,7 @@ export class AppLoadingService {
     return this.loadingSource.asObservable();
   }
   setLoading(loading: boolean) {
+    console.log('this.setLoading');
     return this.loadingSource.next(loading);
   }
 }

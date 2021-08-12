@@ -74,7 +74,7 @@
     </mat-toolbar>
     <!-- Add Content Here -->
     <div
-      *ngIf="(loadingState$ | async).loading"
+      *ngIf="(loadingState$ | async)?.loading"
       style="
         position: absolute;
         top: 0;
@@ -99,7 +99,7 @@
     </div>
     <div style="margin: 24px" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="16px">
       <div
-        *ngIf="!(state$ | async).user?.emailVerifiedAt"
+        *ngIf="!(userState$ | async).user?.emailVerifiedAt"
         style="
           background-color: #ff9966;
           color: #fff;

@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { debounceTime, map, shareReplay } from 'rxjs/operators';
 import { LoadingState, LoadingStateModel } from 'src/app/admin-view/admin-loading.state';
 import { SetSessionState } from 'src/app/app.state';
+import { MemberState, MemberStateModel } from '../member.state';
 import { UserState, UserStateModel } from '../user.state';
 
 @Component({
@@ -19,11 +20,12 @@ export class UserNavigationComponent implements OnInit {
     shareReplay()
   );
 
-  state$: Observable<UserStateModel> = this.store.select(UserState).pipe();
+  state$: Observable<MemberStateModel> = this.store.select(MemberState).pipe();
+  userState$: Observable<UserStateModel> = this.store.select(UserState).pipe();
   anggotaOpened: boolean = false;
   tagihanOpened: boolean = false;
 
-  loadingState$: Observable<LoadingStateModel> = this.store.select(LoadingState);
+  loadingState$: Observable<LoadingStateModel> = this.store.select(LoadingState).pipe(debounceTime(0));
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -78,12 +80,12 @@ export class UserNavigationComponent implements OnInit {
   }
 
   onOpened(name: string) {
-    if (name === 'anggota') {
-      this.anggotaOpened = true;
-      this.tagihanOpened = false;
-    } else if (name === 'tagihan') {
-      this.anggotaOpened = false;
-      this.tagihanOpened = true;
-    }
+    // if (name === 'anggota') {
+    //   this.anggotaOpened = true;
+    //   this.tagihanOpened = false;
+    // } else if (name === 'tagihan') {
+    //   this.anggotaOpened = false;
+    //   this.tagihanOpened = true;
+    // }
   }
 }

@@ -37,3 +37,25 @@ li:first-child::before {
 .active ~ li::before {
   background: lightblue;
 }
+
+dt {
+  display: block;
+  float: left;
+  width: 200px;
+  text-align: left;
+  font-weight: bold;
+  clear: both;
+}
+
+dl {
+  width: 100%;
+}
+
+dd::before {
+  font-weight: bold;
+  padding-right: 8px;
+  content: ":";
+}
+dd {
+  display: block;
+}

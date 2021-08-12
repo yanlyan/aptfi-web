@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ViewportScroller } from '@angular/common';
-import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngxs/store';
 import { AppState } from '../app.state';
@@ -17,24 +15,14 @@ export class AdminViewComponent {
   member: Member;
   user: User;
   userState: UserStateModel;
-  constructor(
-    private readonly store: Store,
-    private jwtService: JwtHelperService,
-    private userService: UserService,
-    private router: Router,
-    private viewPortScroller: ViewportScroller
-  ) {}
+  constructor(private readonly store: Store, private jwtService: JwtHelperService, private userService: UserService) {}
 
   ngOnInit(): void {
     const token = this.store.selectSnapshot(AppState);
     const decodedToken = this.jwtService.decodeToken(token.session.accessToken);
 
     this.userService.getById(decodedToken.sub).subscribe((response) => {
-      this.store.dispatch(
-        new SetUserState({
-          user: response.user,
-        })
-      );
+      this.store.dispatch(new SetUserState(response.user));
       this.userState = this.store.selectSnapshot(UserState);
     });
   }

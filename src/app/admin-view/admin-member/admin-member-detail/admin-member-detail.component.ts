@@ -33,7 +33,6 @@ export class AdminMemberDetailComponent implements OnInit {
   queryParams: any;
 
   constructor(
-    private adminMemberService: AdminMemberService,
     private adminVerifyService: AdminVerifyService,
     private _FileSaverService: FileSaverService,
     private route: ActivatedRoute,
@@ -45,7 +44,6 @@ export class AdminMemberDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.queryParams = this.route.snapshot.queryParams;
-    console.log(this.queryParams);
     const uuid = this.route.snapshot.params.uuid;
     this.adminVerifyService.getDetailMember(uuid).subscribe(
       (response) => {

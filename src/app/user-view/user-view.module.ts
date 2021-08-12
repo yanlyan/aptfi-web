@@ -21,7 +21,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserRegisterGuard } from './user-register/user-register.guard';
 import { VerifiedGuard } from './tagihan/verified.guard';
-import { MemberResolver } from './member.resolver';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatStepperModule } from '@angular/material/stepper';
 
 const routes: Routes = [
   {
@@ -40,7 +41,6 @@ const routes: Routes = [
       {
         path: 'dosen',
         loadChildren: () => import('./lecturer/lecturer.module').then((m) => m.LecturerModule),
-        resolve: [],
         canActivate: [VerifiedGuard],
       },
       {
@@ -82,6 +82,8 @@ const routes: Routes = [
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatInputModule,
+    MatTabsModule,
+    MatStepperModule,
   ],
 })
 export class UserViewModule {}

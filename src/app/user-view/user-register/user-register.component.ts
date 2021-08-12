@@ -1,17 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
-import { merge, pipe } from 'rxjs';
-import { delay, map, mergeAll, mergeMap } from 'rxjs/operators';
+import { delay, finalize, mergeMap, tap } from 'rxjs/operators';
 import { SetLoadingState } from 'src/app/admin-view/admin-loading.state';
 import { RegForum } from 'src/app/master/reg-forum.model';
 import { RegForumService } from 'src/app/master/reg-forum.service';
 import { TagihanService } from '../tagihan/tagihan.service';
-import { Prodi } from '../user.model';
-import { SetRegisterStatus, UserState, UserStateModel } from '../user.state';
+import { Member, Prodi } from '../user.model';
+import { UserService } from '../user.service';
+import { SetRegisterStatus } from '../user.state';
 import { UserRegisterService } from './user-register.service';
 
 declare const window: any;
@@ -21,7 +22,7 @@ declare const window: any;
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.scss'],
 })
-export class UserRegisterComponent implements OnInit {
+export class UserRegisterComponent implements OnInit, AfterViewInit {
   instituteForm: FormGroup;
   instituteLoading: boolean = false;
   instituteValidity: boolean = false;
@@ -61,7 +62,9 @@ export class UserRegisterComponent implements OnInit {
   regForums: RegForum[];
   @ViewChild('title') institute: any;
 
-  state: UserStateModel;
+  @ViewChild('stepper') stepper: MatStepper;
+
+  state: Member;
 
   forced: boolean = false;
 
@@ -69,16 +72,21 @@ export class UserRegisterComponent implements OnInit {
     private store: Store,
     private regForumService: RegForumService,
     private userRegister: UserRegisterService,
+    private userService: UserService,
     private _FileSaverService: FileSaverService,
     private tagihanService: TagihanService,
     private router: Router,
     private snackbar: MatSnackBar
-  ) {}
+  ) {
+    this.store.dispatch(new SetLoadingState(true));
+  }
+  ngAfterViewInit(): void {}
 
   ngOnInit(): void {
     this.regForumService.getAll().subscribe((response) => {
       this.regForums = response.data;
     });
+
     this.instituteForm = new FormGroup({
       foundationName: new FormControl(null, [Validators.required]),
       headOfFoundation: new FormControl(null, [Validators.required]),
@@ -155,121 +163,96 @@ export class UserRegisterComponent implements OnInit {
         this.dosenS1Form.controls['fileDosen'].updateValueAndValidity();
       }
     });
+    this.userService
+      .getDetailMember('none')
+      .pipe(
+        tap(() => {}),
+        finalize(() => {
+          this.store.dispatch(new SetLoadingState(false));
+        })
+      )
+      .subscribe((result: any) => {
+        this.state = result.member;
+        if (this.state) {
+          this.instituteForm.controls['foundationName'].setValue(this.state.foundationName);
+          this.instituteForm.controls['headOfFoundation'].setValue(this.state.headOfFoundation);
+          this.instituteForm.controls['universityName'].setValue(this.state.universityName);
+          this.instituteForm.controls['rectorName'].setValue(this.state.rectorName);
+          this.instituteForm.controls['universityAddress'].setValue(this.state.universityAddress);
+          this.instituteForm.controls['regForum'].setValue(this.state.regForumId);
+          if (this.instituteForm.valid) {
+            this.stepper.selected.completed = true;
+            this.stepper.next();
+          }
 
-    this.store.select(UserState).subscribe((userState) => {
-      this.state = userState;
-      if (this.state.member) {
-        this.instituteForm.controls['foundationName'].setValue(this.state.member.foundationName);
-        this.instituteForm.controls['headOfFoundation'].setValue(this.state.member.headOfFoundation);
-        this.instituteForm.controls['universityName'].setValue(this.state.member.universityName);
-        this.instituteForm.controls['rectorName'].setValue(this.state.member.rectorName);
-        this.instituteForm.controls['universityAddress'].setValue(this.state.member.universityAddress);
-        this.instituteForm.controls['regForum'].setValue(this.state.member.regForumId);
+          this.facultyForm.controls['facultyName'].setValue(this.state.facultyName);
+          this.facultyForm.controls['deanName'].setValue(this.state.deanName);
+          this.facultyForm.controls['facultyAddress'].setValue(this.state.facultyAddress);
+          this.facultyForm.controls['facultyPhone'].setValue(this.state.facultyPhone);
+          this.facultyForm.controls['facultyWebsite'].setValue(this.state.facultyWebsite);
+          this.facultyForm.controls['facultyEmail'].setValue(this.state.facultyEmail);
+          if (this.facultyForm.valid) {
+            // this.stepper.selectedIndex = 2;
+            this.stepper.next();
+          }
 
-        this.facultyForm.controls['facultyName'].setValue(this.state.member.facultyName);
-        this.facultyForm.controls['deanName'].setValue(this.state.member.deanName);
-        this.facultyForm.controls['facultyAddress'].setValue(this.state.member.facultyAddress);
-        this.facultyForm.controls['facultyPhone'].setValue(this.state.member.facultyPhone);
-        this.facultyForm.controls['facultyWebsite'].setValue(this.state.member.facultyWebsite);
-        this.facultyForm.controls['facultyEmail'].setValue(this.state.member.facultyEmail);
+          const s1: Prodi = this.state.prodis.filter((p) => p.prodiType === 's1')[0];
+          if (s1) {
+            this.s1Form.controls['prodiName'].setValue(s1.prodiName);
+            this.s1Form.controls['prodiPermit'].setValue(s1.prodiPermit);
+            this.s1Form.controls['prodiAccreditedBy'].setValue(s1.prodiAccreditedBy);
+            this.s1Form.controls['prodiAccreditedNo'].setValue(s1.prodiAccreditedNo);
+            this.s1Form.controls['prodiEmail'].setValue(s1.prodiEmail);
+            this.s1Form.controls['prodiStudents'].setValue(s1.prodiStudents);
+            this.s1Form.controls['prodiStudentsYear'].setValue(s1.prodiStudentsYear);
+            this.s1Form.controls['prodiPhone'].setValue(s1.prodiPhone);
+            this.s1Form.controls['prodiHead'].setValue(s1.prodiHead);
+            this.s1Form.controls['prodiHeadPhone'].setValue(s1.prodiHeadPhone);
+            this.s1Form.controls['prodiHeadEmail'].setValue(s1.prodiHeadEmail);
+            if (this.s1Form.valid) {
+              // this.stepper.selectedIndex = 3;
+              this.stepper.next();
+            }
+          }
 
-        const s1: Prodi = this.state.member.prodis.filter((p) => p.prodiType === 's1')[0];
-        if (s1) {
-          this.s1Form.controls['prodiName'].setValue(s1.prodiName);
-          this.s1Form.controls['prodiPermit'].setValue(s1.prodiPermit);
-          this.s1Form.controls['prodiAccreditedBy'].setValue(s1.prodiAccreditedBy);
-          this.s1Form.controls['prodiAccreditedNo'].setValue(s1.prodiAccreditedNo);
-          this.s1Form.controls['prodiEmail'].setValue(s1.prodiEmail);
-          this.s1Form.controls['prodiStudents'].setValue(s1.prodiStudents);
-          this.s1Form.controls['prodiStudentsYear'].setValue(s1.prodiStudentsYear);
-          this.s1Form.controls['prodiPhone'].setValue(s1.prodiPhone);
-          this.s1Form.controls['prodiHead'].setValue(s1.prodiHead);
-          this.s1Form.controls['prodiHeadPhone'].setValue(s1.prodiHeadPhone);
-          this.s1Form.controls['prodiHeadEmail'].setValue(s1.prodiHeadEmail);
+          if (this.state.dosenFileS1) {
+            this.dosenS1Form.controls['fileDosen'].setValue(this.state.dosenFileS1);
+            if (this.dosenS1Form.valid) {
+              this.stepper.selected.completed = true;
+              this.stepper.next();
+            }
+          }
+
+          const s2: Prodi = this.state.prodis.filter((p) => p.prodiType === 's2')[0];
+          if (s2) {
+            this.s2Form.controls['prodiName'].setValue(s2.prodiName);
+            this.s2Form.controls['prodiPermit'].setValue(s2.prodiPermit);
+            this.s2Form.controls['prodiAccreditedBy'].setValue(s2.prodiAccreditedBy);
+            this.s2Form.controls['prodiAccreditedNo'].setValue(s2.prodiAccreditedNo);
+            this.s2Form.controls['prodiStudents'].setValue(s2.prodiStudents);
+            this.s2Form.controls['prodiStudentsYear'].setValue(s2.prodiStudentsYear);
+            this.s2Form.controls['prodiPhone'].setValue(s2.prodiPhone);
+            this.s2Form.controls['prodiHead'].setValue(s2.prodiHead);
+            this.s2Form.controls['prodiHeadPhone'].setValue(s2.prodiHeadPhone);
+            this.s2Form.controls['prodiHeadEmail'].setValue(s2.prodiHeadEmail);
+          }
+
+          const pspa: Prodi = this.state.prodis.filter((p) => p.prodiType === 'pspa')[0];
+          if (pspa) {
+            this.pspaForm.controls['prodiName'].setValue(pspa.prodiName);
+            this.pspaForm.controls['prodiPermit'].setValue(pspa.prodiPermit);
+            this.pspaForm.controls['prodiAccreditedBy'].setValue(pspa.prodiAccreditedBy);
+            this.pspaForm.controls['prodiAccreditedNo'].setValue(pspa.prodiAccreditedNo);
+            this.pspaForm.controls['prodiStudents'].setValue(pspa.prodiStudents);
+            this.pspaForm.controls['prodiStudentsYear'].setValue(pspa.prodiStudentsYear);
+            this.pspaForm.controls['prodiPhone'].setValue(pspa.prodiPhone);
+            this.pspaForm.controls['prodiHead'].setValue(pspa.prodiHead);
+            this.pspaForm.controls['prodiHeadPhone'].setValue(pspa.prodiHeadPhone);
+            this.pspaForm.controls['prodiHeadEmail'].setValue(pspa.prodiHeadEmail);
+          }
+          this.validatePanel();
         }
-
-        const s2: Prodi = this.state.member.prodis.filter((p) => p.prodiType === 's2')[0];
-        if (s2) {
-          this.s2Form.controls['prodiName'].setValue(s2.prodiName);
-          this.s2Form.controls['prodiPermit'].setValue(s2.prodiPermit);
-          this.s2Form.controls['prodiAccreditedBy'].setValue(s2.prodiAccreditedBy);
-          this.s2Form.controls['prodiAccreditedNo'].setValue(s2.prodiAccreditedNo);
-          this.s2Form.controls['prodiStudents'].setValue(s2.prodiStudents);
-          this.s2Form.controls['prodiStudentsYear'].setValue(s2.prodiStudentsYear);
-          this.s2Form.controls['prodiPhone'].setValue(s2.prodiPhone);
-          this.s2Form.controls['prodiHead'].setValue(s2.prodiHead);
-          this.s2Form.controls['prodiHeadPhone'].setValue(s2.prodiHeadPhone);
-          this.s2Form.controls['prodiHeadEmail'].setValue(s2.prodiHeadEmail);
-        }
-
-        const pspa: Prodi = this.state.member.prodis.filter((p) => p.prodiType === 'pspa')[0];
-        if (pspa) {
-          this.pspaForm.controls['prodiName'].setValue(pspa.prodiName);
-          this.pspaForm.controls['prodiPermit'].setValue(pspa.prodiPermit);
-          this.pspaForm.controls['prodiAccreditedBy'].setValue(pspa.prodiAccreditedBy);
-          this.pspaForm.controls['prodiAccreditedNo'].setValue(pspa.prodiAccreditedNo);
-          this.pspaForm.controls['prodiStudents'].setValue(pspa.prodiStudents);
-          this.pspaForm.controls['prodiStudentsYear'].setValue(pspa.prodiStudentsYear);
-          this.pspaForm.controls['prodiPhone'].setValue(pspa.prodiPhone);
-          this.pspaForm.controls['prodiHead'].setValue(pspa.prodiHead);
-          this.pspaForm.controls['prodiHeadPhone'].setValue(pspa.prodiHeadPhone);
-          this.pspaForm.controls['prodiHeadEmail'].setValue(pspa.prodiHeadEmail);
-        }
-
-        if (this.state.member.dosenFileS1) {
-          this.dosenS1Form.controls['fileDosen'].setValidators([]);
-          this.dosenS1Form.controls['fileDosen'].updateValueAndValidity();
-        }
-
-        this.validatePanel();
-      }
-    });
-
-    this.store.select(UserState).subscribe((state: UserStateModel) => {});
-  }
-
-  validatePanel() {
-    let step = 0;
-    this.instituteValidity = this.instituteForm.valid;
-    if (this.instituteValidity) {
-      step = 1;
-    }
-
-    this.facultyValidity = this.facultyForm.valid;
-    if (this.facultyValidity) {
-      step = 2;
-    }
-
-    this.s1Validity = this.s1Form.valid;
-    if (this.s1Validity) {
-      step = 3;
-    }
-
-    if (this.dosenS1Form.valid || this.state.member.dosenFileS1) {
-      this.dosenS1Validity = true;
-      step = 4;
-    } else {
-      this.dosenS1Validity = false;
-    }
-
-    this.pspaValidity = this.pspaForm.valid;
-    if (this.pspaValidity) {
-      step = 5;
-    }
-
-    if (
-      this.instituteValidity &&
-      this.facultyValidity &&
-      this.s1Validity &&
-      this.pspaValidity &&
-      this.dosenS1Validity
-    ) {
-      this.paymentButtonStatus = true;
-    } else {
-      this.paymentButtonStatus = false;
-    }
-
-    this.setStep(step);
+      });
   }
 
   onInstituteSubmit() {
@@ -281,7 +264,8 @@ export class UserRegisterComponent implements OnInit {
         .subscribe(
           () => {
             this.instituteLoading = false;
-            this.validatePanel();
+            this.stepper.next();
+            // this.validatePanel();
           },
           (err) => {
             this.instituteLoading = false;
@@ -299,7 +283,8 @@ export class UserRegisterComponent implements OnInit {
         .subscribe(
           () => {
             this.facultyLoading = false;
-            this.validatePanel();
+            this.stepper.next();
+            // this.validatePanel();
           },
           (err) => {
             this.facultyLoading = false;
@@ -317,7 +302,9 @@ export class UserRegisterComponent implements OnInit {
         .subscribe(
           () => {
             this.s1Loading = false;
-            this.validatePanel();
+            this.stepper.next();
+
+            // this.validatePanel();
           },
           (err) => {
             this.s1Loading = false;
@@ -335,7 +322,9 @@ export class UserRegisterComponent implements OnInit {
         .subscribe(
           () => {
             this.s2Loading = false;
-            this.validatePanel();
+            this.stepper.next();
+
+            // this.validatePanel();
           },
           (err) => {
             this.s2Loading = false;
@@ -352,7 +341,9 @@ export class UserRegisterComponent implements OnInit {
         .subscribe(
           () => {
             this.pspaLoading = false;
-            this.validatePanel();
+            this.stepper.next();
+
+            // this.validatePanel();
           },
           (err) => {
             this.pspaLoading = false;
@@ -370,7 +361,9 @@ export class UserRegisterComponent implements OnInit {
       this.userRegister.uploadFileDosen(data).subscribe(
         () => {
           this.dosenS1Loading = false;
-          this.validatePanel();
+          this.stepper.next();
+
+          // this.validatePanel();
         },
         (err) => {
           this.dosenS1Loading = false;
@@ -391,7 +384,7 @@ export class UserRegisterComponent implements OnInit {
       this.userRegister.uploadFileDosen(data).subscribe(
         () => {
           this.dosenPspaLoading = false;
-          this.nextStep();
+          this.stepper.next();
         },
         (err) => {
           this.dosenPspaLoading = false;
@@ -408,7 +401,7 @@ export class UserRegisterComponent implements OnInit {
       this.userRegister.uploadSarpra(data).subscribe(
         () => {
           this.sarpraLoading = false;
-          this.nextStep();
+          this.stepper.next();
         },
         (err) => {
           this.sarpraLoading = false;
@@ -452,22 +445,24 @@ export class UserRegisterComponent implements OnInit {
     );
   }
 
+  validatePanel() {
+    if (
+      this.instituteForm.valid &&
+      this.facultyForm.valid &&
+      this.s1Form.valid &&
+      this.pspaForm.valid &&
+      this.dosenS1Form.valid
+    ) {
+      this.paymentButtonStatus = true;
+    } else {
+      this.paymentButtonStatus = false;
+    }
+  }
+
   downloadTemplate(e: any) {
     this.userRegister.downloadTemplate().subscribe((res) => {
       this._FileSaverService.save(res, 'Template Dosen.xlsx', 'xlsx');
       e.preventDefault();
     });
-  }
-
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
   }
 }

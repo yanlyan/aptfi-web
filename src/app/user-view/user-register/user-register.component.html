@@ -1,460 +1,465 @@
 <div fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="16px">
   <h1 style="text-align: center" #title>Pendaftaran Anggota APTFI</h1>
   <mat-divider></mat-divider>
-  <mat-accordion class="example-headers-align" multi>
-    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
-      <mat-expansion-panel-header>
-        <mat-panel-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-          <div>Detail Institusi</div>
-          <mat-icon *ngIf="instituteValidity" style="color: #53a653">check</mat-icon></mat-panel-title
-        >
-      </mat-expansion-panel-header>
-      <form (ngSubmit)="onInstituteSubmit()" [formGroup]="instituteForm">
-        <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
-          <mat-form-field>
-            <input matInput placeholder="Nama Yayasan" formControlName="foundationName" type="text" />
-            <mat-error>Nama Yayasan harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Nama Ketua Yayasan" formControlName="headOfFoundation" type="text" />
-            <mat-error>Nama Ketua Yayasan harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Nama Universitas / Perguruan Tinggi"
-              formControlName="universityName"
-              type="text"
-            />
+  <mat-vertical-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="instituteForm" state="done">
+      <ng-template matStepLabel>Detail Institusi</ng-template>
 
-            <mat-error>Nama Universitas / Perguruan Tinggi harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Forum Wilayah</mat-label>
-            <mat-select formControlName="regForum">
-              <mat-option *ngFor="let reg of regForums" [value]="reg.id">{{ reg.name }}</mat-option>
-            </mat-select>
-            <mat-error>Forum Wilayah harus dipilih</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Nama Rektor" formControlName="rectorName" type="text" />
-            <mat-error>Nama Rektor harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <textarea
-              matInput
-              placeholder="Alamat Universitas / Perguruan Tinggi"
-              formControlName="universityAddress"
-              rows="5"
-            ></textarea>
-            <mat-error>Alamat Universitas / Perguruan Tinggi harus diisi</mat-error>
-          </mat-form-field>
-          <div *ngIf="instituteLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <mat-spinner color="primary" [diameter]="20"></mat-spinner>
-            <label for="">Loading</label>
-          </div>
-          <button *ngIf="!instituteLoading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
-      <mat-expansion-panel-header>
-        <mat-panel-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-          <div>Detail Fakultas yang menaungi Prodi / PSPA</div>
-          <mat-icon *ngIf="facultyValidity" style="color: #53a653">check</mat-icon>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <form (ngSubmit)="onFacultySubmit()" [formGroup]="facultyForm">
-        <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
-          <mat-form-field>
-            <input matInput placeholder="Nama Fakultas" formControlName="facultyName" type="text" />
-            <mat-error>Nama Fakultas harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Nama Dekan" formControlName="deanName" type="text" />
-            <mat-error>Nama Dekan harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <textarea matInput placeholder="Alamat Fakultas" formControlName="facultyAddress" rows="5"> </textarea>
-            <mat-error>Alamat Fakultas harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="No. Telepon / Fax Fakultas" formControlName="facultyPhone" type="text" />
-            <mat-error>No. Telepon / Fax Fakultas harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Website Fakultas" formControlName="facultyWebsite" type="url" />
-            <mat-error>Website Fakultas harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Email Fakultas" formControlName="facultyEmail" type="email" />
-            <mat-error *ngIf="!!facultyForm.get('facultyEmail')?.hasError('required')"
-              >Email Fakultas harus diisi</mat-error
-            >
-            <mat-error *ngIf="!!facultyForm.get('facultyEmail')?.hasError('email')"
-              >Email Fakultas tidak harus diisi dengan email yang valid</mat-error
-            >
-          </mat-form-field>
-          <div *ngIf="facultyLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <mat-spinner color="primary" [diameter]="20"></mat-spinner>
-            <label for="">Loading</label>
-          </div>
-          <button *ngIf="!facultyLoading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
-      <mat-expansion-panel-header>
-        <mat-panel-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-          <div>Detail Program Studi Sarjana 1</div>
-          <mat-icon *ngIf="s1Validity" style="color: #53a653">check</mat-icon></mat-panel-title
-        >
-      </mat-expansion-panel-header>
-      <form (ngSubmit)="onS1Submit()" [formGroup]="s1Form">
-        <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
-          <mat-form-field>
-            <input matInput placeholder="Nama Prodi Sarjana" formControlName="prodiName" type="text" />
-            <mat-error>Nama Prodi Sarjana harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Ijin Operasional S-1" formControlName="prodiPermit" type="text" />
-            <mat-error>Ijin Operasional S-1 harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Akreditasi S-1 oleh" formControlName="prodiAccreditedBy" type="text" />
-            <mat-error>Akreditasi S-1 oleh harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="No. SK Akreditasi S-1" formControlName="prodiAccreditedNo" type="text" />
-            <mat-error>No. SK Akreditasi S-1 harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Alamat E-mail Prodi S-1" formControlName="prodiEmail" type="email" />
-            <mat-error *ngIf="!!s1Form.get('prodiEmail')?.hasError('required')"
-              >Alamat E-mail Prodi S-1 harus diisi</mat-error
-            >
-            <mat-error *ngIf="!!s1Form.get('prodiEmail')?.hasError('email')"
-              >Alamat E-mail Prodi S-1 harus diisi dengan email yang valid</mat-error
-            >
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Jumlah mahasiswa S-1 saat ini" formControlName="prodiStudents" type="number" />
-            <mat-error>Jumlah mahasiswa S-1 saat ini harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Jumlah mahasiswa S-1 diterima/tahun"
-              formControlName="prodiStudentsYear"
-              type="number"
-            />
-            <mat-error>Jumlah mahasiswa S-1 diterima/tahun harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="No. Telpon/Fax Prodi S-1" formControlName="prodiPhone" type="text" />
-            <mat-error>No. Telpon/Fax Prodi S-1 harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Nama Ketua Prodi S-1" formControlName="prodiHead" type="text" />
-            <mat-error>Nama Ketua Prodi S-1 harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="No. HP Ketua Prodi S-1" formControlName="prodiHeadPhone" type="text" />
-            <mat-error>No. HP Ketua Prodi S-1 harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Alamat e-mail Ketua Prodi S-1" formControlName="prodiHeadEmail" type="email" />
-            <mat-error *ngIf="!!s1Form.get('prodiHeadEmail')?.hasError('required')"
-              >Alamat e-mail Ketua Prodi S-1 harus diisi</mat-error
-            >
-            <mat-error *ngIf="!!s1Form.get('prodiHeadEmail')?.hasError('email')"
-              >Alamat e-mail Ketua Prodi S-1 harus diisi dengan email yang valid</mat-error
-            >
-          </mat-form-field>
-          <div *ngIf="s1Loading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <mat-spinner color="primary" [diameter]="20"></mat-spinner>
-            <label for="">Loading</label>
-          </div>
-          <button *ngIf="!s1Loading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
-      <mat-expansion-panel-header>
-        <mat-panel-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-          <div>Dosen Tetap Prodi S1 Farmasi</div>
-          <mat-icon *ngIf="dosenS1Validity" style="color: #53a653">check</mat-icon></mat-panel-title
-        >
-      </mat-expansion-panel-header>
-      <form
-        (ngSubmit)="onDosenS1Submit()"
-        [formGroup]="dosenS1Form"
-        fxLayout="column"
-        fxLayoutAlign="start stretch"
-        fxLayoutGap="24px"
-      >
-        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-          <label
-            >Unduh file template terlebih dahulu, isi daftar dosen pada file template tersebut, lalu upload lagi pada
-            input di bawah ini
-          </label>
-          <button
-            mat-flat-button
-            style="margin-bottom: 16px"
-            color="primary"
-            type="button"
-            (click)="downloadTemplate($event)"
-          >
-            <mat-icon>download</mat-icon> Unduh File Template
-          </button>
-        </div>
+      <ng-template matStepContent>
+        <form (ngSubmit)="onInstituteSubmit()" [formGroup]="instituteForm">
+          <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+            <mat-form-field>
+              <input matInput placeholder="Nama Yayasan" formControlName="foundationName" type="text" />
+              <mat-error>Nama Yayasan harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Nama Ketua Yayasan" formControlName="headOfFoundation" type="text" />
+              <mat-error>Nama Ketua Yayasan harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Nama Universitas / Perguruan Tinggi"
+                formControlName="universityName"
+                type="text"
+              />
 
-        <div fxLayout="column" fxLayoutAlign="start stretch">
-          <mat-form-field>
-            <ngx-mat-file-input
-              formControlName="fileDosen"
-              placeholder="File Lampiran Dosen S1"
-              valuePlaceholder="Upload file dosen S1 disini"
-              [autofilled]="true"
-              [accept]="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
-              [required]="true"
-            ></ngx-mat-file-input>
-            <mat-icon matSuffix>folder</mat-icon>
-            <mat-error *ngIf="dosenS1Form.get('fileDosen').hasError('required')"> Harap pilih file </mat-error>
-          </mat-form-field>
-          <div *ngIf="dosenS1Loading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <mat-spinner color="primary" [diameter]="20"></mat-spinner>
-            <label for="">Loading</label>
+              <mat-error>Nama Universitas / Perguruan Tinggi harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Forum Wilayah</mat-label>
+              <mat-select formControlName="regForum">
+                <mat-option *ngFor="let reg of regForums" [value]="reg.id">{{ reg.name }}</mat-option>
+              </mat-select>
+              <mat-error>Forum Wilayah harus dipilih</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Nama Rektor" formControlName="rectorName" type="text" />
+              <mat-error>Nama Rektor harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <textarea
+                matInput
+                placeholder="Alamat Universitas / Perguruan Tinggi"
+                formControlName="universityAddress"
+                rows="5"
+              ></textarea>
+              <mat-error>Alamat Universitas / Perguruan Tinggi harus diisi</mat-error>
+            </mat-form-field>
+            <div *ngIf="instituteLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+              <mat-spinner color="primary" [diameter]="20"></mat-spinner>
+              <label for="">Loading</label>
+            </div>
+            <button *ngIf="!instituteLoading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
           </div>
-          <button *ngIf="!dosenS1Loading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
-      <mat-expansion-panel-header>
-        <mat-panel-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-          <div>Detail Prodi Profesi Apoteker</div>
-          <mat-icon *ngIf="pspaValidity" style="color: #53a653">check</mat-icon></mat-panel-title
+        </form>
+      </ng-template>
+    </mat-step>
+    <mat-step [stepControl]="facultyForm">
+      <ng-template matStepLabel>Detail Fakultas</ng-template>
+
+      <ng-template matStepContent>
+        <form (ngSubmit)="onFacultySubmit()" [formGroup]="facultyForm">
+          <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+            <mat-form-field>
+              <input matInput placeholder="Nama Fakultas" formControlName="facultyName" type="text" />
+              <mat-error>Nama Fakultas harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Nama Dekan" formControlName="deanName" type="text" />
+              <mat-error>Nama Dekan harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <textarea matInput placeholder="Alamat Fakultas" formControlName="facultyAddress" rows="5"> </textarea>
+              <mat-error>Alamat Fakultas harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="No. Telepon / Fax Fakultas" formControlName="facultyPhone" type="text" />
+              <mat-error>No. Telepon / Fax Fakultas harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Website Fakultas" formControlName="facultyWebsite" type="url" />
+              <mat-error>Website Fakultas harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Email Fakultas" formControlName="facultyEmail" type="email" />
+              <mat-error *ngIf="!!facultyForm.get('facultyEmail')?.hasError('required')"
+                >Email Fakultas harus diisi</mat-error
+              >
+              <mat-error *ngIf="!!facultyForm.get('facultyEmail')?.hasError('email')"
+                >Email Fakultas tidak harus diisi dengan email yang valid</mat-error
+              >
+            </mat-form-field>
+            <div *ngIf="facultyLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+              <mat-spinner color="primary" [diameter]="20"></mat-spinner>
+              <label for="">Loading</label>
+            </div>
+            <button *ngIf="!facultyLoading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
+          </div>
+        </form>
+      </ng-template>
+    </mat-step>
+    <mat-step [stepControl]="s1Form">
+      <ng-template matStepLabel>Detail Program Studi Sarjana 1</ng-template>
+
+      <ng-template matStepContent>
+        <form (ngSubmit)="onS1Submit()" [formGroup]="s1Form">
+          <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+            <mat-form-field>
+              <input matInput placeholder="Nama Prodi Sarjana" formControlName="prodiName" type="text" />
+              <mat-error>Nama Prodi Sarjana harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Ijin Operasional S-1" formControlName="prodiPermit" type="text" />
+              <mat-error>Ijin Operasional S-1 harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Akreditasi S-1 oleh" formControlName="prodiAccreditedBy" type="text" />
+              <mat-error>Akreditasi S-1 oleh harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="No. SK Akreditasi S-1" formControlName="prodiAccreditedNo" type="text" />
+              <mat-error>No. SK Akreditasi S-1 harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Alamat E-mail Prodi S-1" formControlName="prodiEmail" type="email" />
+              <mat-error *ngIf="!!s1Form.get('prodiEmail')?.hasError('required')"
+                >Alamat E-mail Prodi S-1 harus diisi</mat-error
+              >
+              <mat-error *ngIf="!!s1Form.get('prodiEmail')?.hasError('email')"
+                >Alamat E-mail Prodi S-1 harus diisi dengan email yang valid</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Jumlah mahasiswa S-1 saat ini"
+                formControlName="prodiStudents"
+                type="number"
+              />
+              <mat-error>Jumlah mahasiswa S-1 saat ini harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Jumlah mahasiswa S-1 diterima/tahun"
+                formControlName="prodiStudentsYear"
+                type="number"
+              />
+              <mat-error>Jumlah mahasiswa S-1 diterima/tahun harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="No. Telpon/Fax Prodi S-1" formControlName="prodiPhone" type="text" />
+              <mat-error>No. Telpon/Fax Prodi S-1 harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Nama Ketua Prodi S-1" formControlName="prodiHead" type="text" />
+              <mat-error>Nama Ketua Prodi S-1 harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="No. HP Ketua Prodi S-1" formControlName="prodiHeadPhone" type="text" />
+              <mat-error>No. HP Ketua Prodi S-1 harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Alamat e-mail Ketua Prodi S-1"
+                formControlName="prodiHeadEmail"
+                type="email"
+              />
+              <mat-error *ngIf="!!s1Form.get('prodiHeadEmail')?.hasError('required')"
+                >Alamat e-mail Ketua Prodi S-1 harus diisi</mat-error
+              >
+              <mat-error *ngIf="!!s1Form.get('prodiHeadEmail')?.hasError('email')"
+                >Alamat e-mail Ketua Prodi S-1 harus diisi dengan email yang valid</mat-error
+              >
+            </mat-form-field>
+            <div *ngIf="s1Loading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+              <mat-spinner color="primary" [diameter]="20"></mat-spinner>
+              <label for="">Loading</label>
+            </div>
+            <button *ngIf="!s1Loading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
+          </div>
+        </form>
+      </ng-template>
+    </mat-step>
+    <mat-step [stepControl]="dosenS1Form" [state]="'done'">
+      <ng-template matStepLabel>Dosen Tetap S1 Farmasi</ng-template>
+
+      <ng-template matStepContent>
+        <form
+          (ngSubmit)="onDosenS1Submit()"
+          [formGroup]="dosenS1Form"
+          fxLayout="column"
+          fxLayoutAlign="start stretch"
+          fxLayoutGap="24px"
         >
-      </mat-expansion-panel-header>
-      <form (ngSubmit)="onPspaSubmit()" [formGroup]="pspaForm">
-        <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
-          <mat-form-field>
-            <input matInput placeholder="Nama PSPA" formControlName="prodiName" type="text" />
-            <mat-error>Nama PSPA harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Ijin Operasional PSPA" formControlName="prodiPermit" type="text" />
-            <mat-error>Ijin Operasional PSPA harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Akreditasi PSPA oleh" formControlName="prodiAccreditedBy" type="text" />
-            <mat-error>Akreditasi PSPA oleh harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="No. SK Akreditasi PSPA" formControlName="prodiAccreditedNo" type="text" />
-            <mat-error>No. SK Akreditasi PSPA harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Jumlah mahasiswa PSPA saat ini"
-              formControlName="prodiStudents"
-              type="number"
-            />
-            <mat-error>Jumlah mahasiswa PSPA saat ini harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Jumlah mahasiswa PSPA diterima/tahun"
-              formControlName="prodiStudentsYear"
-              type="number"
-            />
-            <mat-error>Jumlah mahasiswa PSPA diterima/tahun harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="No. Telpon/Fax Prodi PSPA" formControlName="prodiPhone" type="text" />
-            <mat-error>No. Telpon/Fax Prodi PSPA harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Nama Ketua Prodi PSPA" formControlName="prodiHead" type="text" />
-            <mat-error>Nama Ketua Prodi PSPA harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="No. HP Ketua Prodi PSPA" formControlName="prodiHeadPhone" type="text" />
-            <mat-error>No. HP Ketua Prodi PSPA harus diisi</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Alamat e-mail Ketua Prodi PSPA"
-              formControlName="prodiHeadEmail"
-              type="email"
-            />
-            <mat-error *ngIf="!!pspaForm.get('prodiHeadEmail')?.hasError('required')"
-              >Alamat e-mail Ketua Prodi PSPA harus diisi</mat-error
+          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+            <label
+              >Unduh file template terlebih dahulu, isi daftar dosen pada file template tersebut, lalu upload lagi pada
+              input di bawah ini
+            </label>
+            <button
+              mat-flat-button
+              style="margin-bottom: 16px"
+              color="primary"
+              type="button"
+              (click)="downloadTemplate($event)"
             >
-            <mat-error *ngIf="!!pspaForm.get('prodiHeadEmail')?.hasError('email')"
-              >Alamat e-mail Ketua Prodi PSPA harus diisi dengan email yang valid</mat-error
-            >
-          </mat-form-field>
-          <div *ngIf="pspaLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <mat-spinner color="primary" [diameter]="20"></mat-spinner>
-            <label for="">Loading</label>
+              <mat-icon>download</mat-icon> Unduh File Template
+            </button>
           </div>
-          <button *ngIf="!pspaLoading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
-      <mat-expansion-panel-header>
-        <mat-panel-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-          <div>Detail Program Studi Sarjana 2</div>
-          <label style="color: #bbb; font-size: 10px; margin-left: 12px">Tidak wajib diisi</label>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <form (ngSubmit)="onS2Submit()" [formGroup]="s2Form">
-        <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
-          <mat-form-field>
-            <input matInput placeholder="Nama Prodi Sarjana 2" formControlName="prodiName" type="text" />
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Ijin Operasional S-2" formControlName="prodiPermit" type="text" />
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Akreditasi S-2 oleh" formControlName="prodiAccreditedBy" type="text" />
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="No. SK Akreditasi S-2" formControlName="prodiAccreditedNo" type="text" />
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Jumlah mahasiswa S-2 saat ini" formControlName="prodiStudents" type="number" />
-          </mat-form-field>
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Jumlah mahasiswa S-2 diterima/tahun"
-              formControlName="prodiStudentsYear"
-              type="number"
-            />
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="No. Telpon/Fax Prodi S-2" formControlName="prodiPhone" type="text" />
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Nama Ketua Prodi S-2" formControlName="prodiHead" type="text" />
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="No. HP Ketua Prodi S-2" formControlName="prodiHeadPhone" type="text" />
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Alamat e-mail Ketua Prodi S-2" formControlName="prodiHeadEmail" type="email" />
-            <mat-error *ngIf="!!s2Form.get('prodiHeadEmail')?.hasError('email')"
-              >Alamat e-mail Ketua Prodi S-2 harus diisi dengan email yang valid</mat-error
-            >
-          </mat-form-field>
-          <div *ngIf="s2Loading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <mat-spinner color="primary" [diameter]="20"></mat-spinner>
-            <label for="">Loading</label>
-          </div>
-          <button *ngIf="!s2Loading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Dosen Tetap Prodi Profesi Apoteker
-          <label style="color: #bbb; font-size: 10px; margin-left: 12px">Tidak wajib diisi</label>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <form
-        (ngSubmit)="onDosenPspaSubmit()"
-        [formGroup]="dosenPspaForm"
-        fxLayout="column"
-        fxLayoutAlign="start stretch"
-        fxLayoutGap="24px"
-      >
-        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-          <label
-            >Unduh file template terlebih dahulu, isi daftar dosen pada file template tersebut, lalu upload lagi pada
-            input di bawah ini
-          </label>
-          <button
-            mat-flat-button
-            style="margin-bottom: 16px"
-            color="primary"
-            type="button"
-            (click)="downloadTemplate($event)"
-          >
-            <mat-icon>download</mat-icon> Unduh File Template
-          </button>
-        </div>
 
-        <div fxLayout="column" fxLayoutAlign="start stretch">
-          <mat-form-field>
-            <ngx-mat-file-input
-              formControlName="file"
-              placeholder="File Lampiran Dosen PSPA"
-              valuePlaceholder="Upload file dosen PSPA disini"
-              [autofilled]="true"
-              [accept]="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
-              [required]="true"
-            ></ngx-mat-file-input>
-            <mat-icon matSuffix>folder</mat-icon>
-          </mat-form-field>
-          <div *ngIf="dosenPspaLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <mat-spinner color="primary" [diameter]="20"></mat-spinner>
-            <label for="">Loading</label>
+          <div fxLayout="column" fxLayoutAlign="start stretch">
+            <mat-form-field>
+              <ngx-mat-file-input
+                formControlName="fileDosen"
+                placeholder="File Lampiran Dosen S1"
+                valuePlaceholder="Upload file dosen S1 disini"
+                [autofilled]="true"
+                [accept]="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
+                [required]="true"
+              ></ngx-mat-file-input>
+              <mat-icon matSuffix>folder</mat-icon>
+              <mat-error *ngIf="dosenS1Form.get('fileDosen').hasError('required')"> Harap pilih file </mat-error>
+            </mat-form-field>
+            <div *ngIf="dosenS1Loading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+              <mat-spinner color="primary" [diameter]="20"></mat-spinner>
+              <label for="">Loading</label>
+            </div>
+            <button *ngIf="!dosenS1Loading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
           </div>
-          <button *ngIf="!dosenPspaLoading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="step === 7" (opened)="setStep(7)">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Data Informasi Anggaran, Fasilitas dan Sarana-Prasarana
-          <label style="color: #bbb; font-size: 10px; margin-left: 12px">Tidak wajib diisi</label>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
+        </form>
+      </ng-template>
+    </mat-step>
+    <mat-step [stepControl]="pspaForm">
+      <ng-template matStepLabel>Detail Prodi Profesi Apoteker</ng-template>
 
-      <form
-        (ngSubmit)="onSarpraSubmit()"
-        [formGroup]="sarpraForm"
-        fxLayout="column"
-        fxLayoutAlign="start stretch"
-        fxLayoutGap="24px"
-      >
-        <div fxLayout="column" fxLayoutAlign="start stretch">
-          <mat-form-field>
-            <ngx-mat-file-input
-              formControlName="file"
-              placeholder="File Lampiran Informasi Anggaran, Fasilitas dan Sarana-Prasarana"
-              valuePlaceholder="Upload file Informasi Anggaran, Fasilitas dan Sarana-Prasarana disini"
-              [autofilled]="true"
-              [accept]="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf'"
-              [required]="true"
-            ></ngx-mat-file-input>
-            <mat-icon matSuffix>folder</mat-icon>
-          </mat-form-field>
-          <div *ngIf="sarpraLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <mat-spinner color="primary" [diameter]="20"></mat-spinner>
-            <label for="">Loading</label>
+      <ng-template matStepContent>
+        <form (ngSubmit)="onPspaSubmit()" [formGroup]="pspaForm">
+          <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+            <mat-form-field>
+              <input matInput placeholder="Nama PSPA" formControlName="prodiName" type="text" />
+              <mat-error>Nama PSPA harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Ijin Operasional PSPA" formControlName="prodiPermit" type="text" />
+              <mat-error>Ijin Operasional PSPA harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Akreditasi PSPA oleh" formControlName="prodiAccreditedBy" type="text" />
+              <mat-error>Akreditasi PSPA oleh harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="No. SK Akreditasi PSPA" formControlName="prodiAccreditedNo" type="text" />
+              <mat-error>No. SK Akreditasi PSPA harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Jumlah mahasiswa PSPA saat ini"
+                formControlName="prodiStudents"
+                type="number"
+              />
+              <mat-error>Jumlah mahasiswa PSPA saat ini harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Jumlah mahasiswa PSPA diterima/tahun"
+                formControlName="prodiStudentsYear"
+                type="number"
+              />
+              <mat-error>Jumlah mahasiswa PSPA diterima/tahun harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="No. Telpon/Fax Prodi PSPA" formControlName="prodiPhone" type="text" />
+              <mat-error>No. Telpon/Fax Prodi PSPA harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Nama Ketua Prodi PSPA" formControlName="prodiHead" type="text" />
+              <mat-error>Nama Ketua Prodi PSPA harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="No. HP Ketua Prodi PSPA" formControlName="prodiHeadPhone" type="text" />
+              <mat-error>No. HP Ketua Prodi PSPA harus diisi</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Alamat e-mail Ketua Prodi PSPA"
+                formControlName="prodiHeadEmail"
+                type="email"
+              />
+              <mat-error *ngIf="!!pspaForm.get('prodiHeadEmail')?.hasError('required')"
+                >Alamat e-mail Ketua Prodi PSPA harus diisi</mat-error
+              >
+              <mat-error *ngIf="!!pspaForm.get('prodiHeadEmail')?.hasError('email')"
+                >Alamat e-mail Ketua Prodi PSPA harus diisi dengan email yang valid</mat-error
+              >
+            </mat-form-field>
+            <div *ngIf="pspaLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+              <mat-spinner color="primary" [diameter]="20"></mat-spinner>
+              <label for="">Loading</label>
+            </div>
+            <button *ngIf="!pspaLoading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
           </div>
-          <button *ngIf="!sarpraLoading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
-        </div>
-      </form>
-    </mat-expansion-panel>
-  </mat-accordion>
-  <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="16px">
+        </form>
+      </ng-template>
+    </mat-step>
+    <mat-step [stepControl]="s2Form">
+      <ng-template matStepLabel>Detail Program Studi Sarjana 2</ng-template>
+
+      <ng-template matStepContent>
+        <form (ngSubmit)="onS2Submit()" [formGroup]="s2Form">
+          <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+            <mat-form-field>
+              <input matInput placeholder="Nama Prodi Sarjana 2" formControlName="prodiName" type="text" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Ijin Operasional S-2" formControlName="prodiPermit" type="text" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Akreditasi S-2 oleh" formControlName="prodiAccreditedBy" type="text" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="No. SK Akreditasi S-2" formControlName="prodiAccreditedNo" type="text" />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Jumlah mahasiswa S-2 saat ini"
+                formControlName="prodiStudents"
+                type="number"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Jumlah mahasiswa S-2 diterima/tahun"
+                formControlName="prodiStudentsYear"
+                type="number"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="No. Telpon/Fax Prodi S-2" formControlName="prodiPhone" type="text" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Nama Ketua Prodi S-2" formControlName="prodiHead" type="text" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="No. HP Ketua Prodi S-2" formControlName="prodiHeadPhone" type="text" />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Alamat e-mail Ketua Prodi S-2"
+                formControlName="prodiHeadEmail"
+                type="email"
+              />
+              <mat-error *ngIf="!!s2Form.get('prodiHeadEmail')?.hasError('email')"
+                >Alamat e-mail Ketua Prodi S-2 harus diisi dengan email yang valid</mat-error
+              >
+            </mat-form-field>
+            <div *ngIf="s2Loading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+              <mat-spinner color="primary" [diameter]="20"></mat-spinner>
+              <label for="">Loading</label>
+            </div>
+            <button *ngIf="!s2Loading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
+          </div>
+        </form>
+      </ng-template>
+    </mat-step>
+    <mat-step [stepControl]="dosenPspaForm">
+      <ng-template matStepLabel>Dosen Tetap Prodi Profesi Apoteker</ng-template>
+
+      <ng-template matStepContent>
+        <form
+          (ngSubmit)="onDosenPspaSubmit()"
+          [formGroup]="dosenPspaForm"
+          fxLayout="column"
+          fxLayoutAlign="start stretch"
+          fxLayoutGap="24px"
+        >
+          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+            <label
+              >Unduh file template terlebih dahulu, isi daftar dosen pada file template tersebut, lalu upload lagi pada
+              input di bawah ini
+            </label>
+            <button
+              mat-flat-button
+              style="margin-bottom: 16px"
+              color="primary"
+              type="button"
+              (click)="downloadTemplate($event)"
+            >
+              <mat-icon>download</mat-icon> Unduh File Template
+            </button>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch">
+            <mat-form-field>
+              <ngx-mat-file-input
+                formControlName="file"
+                placeholder="File Lampiran Dosen PSPA"
+                valuePlaceholder="Upload file dosen PSPA disini"
+                [autofilled]="true"
+                [accept]="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
+                [required]="false"
+              ></ngx-mat-file-input>
+              <mat-icon matSuffix>folder</mat-icon>
+            </mat-form-field>
+            <div *ngIf="dosenPspaLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+              <mat-spinner color="primary" [diameter]="20"></mat-spinner>
+              <label for="">Loading</label>
+            </div>
+            <button *ngIf="!dosenPspaLoading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
+          </div>
+        </form>
+      </ng-template>
+    </mat-step>
+    <mat-step [stepControl]="sarpraForm">
+      <ng-template matStepLabel>Data Informasi Anggaran, Fasilitas dan Sarana-Prasarana</ng-template>
+
+      <ng-template matStepContent>
+        <form
+          (ngSubmit)="onSarpraSubmit()"
+          [formGroup]="sarpraForm"
+          fxLayout="column"
+          fxLayoutAlign="start stretch"
+          fxLayoutGap="24px"
+        >
+          <div fxLayout="column" fxLayoutAlign="start stretch">
+            <mat-form-field>
+              <ngx-mat-file-input
+                formControlName="file"
+                placeholder="File Lampiran Informasi Anggaran, Fasilitas dan Sarana-Prasarana"
+                valuePlaceholder="Upload file Informasi Anggaran, Fasilitas dan Sarana-Prasarana disini"
+                [autofilled]="true"
+                [accept]="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf'"
+                [required]="false"
+              ></ngx-mat-file-input>
+              <mat-icon matSuffix>folder</mat-icon>
+            </mat-form-field>
+            <div *ngIf="sarpraLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+              <mat-spinner color="primary" [diameter]="20"></mat-spinner>
+              <label for="">Loading</label>
+            </div>
+            <button *ngIf="!sarpraLoading" mat-flat-button color="primary">Simpan & Lanjutkan</button>
+          </div>
+        </form>
+      </ng-template>
+    </mat-step>
+  </mat-vertical-stepper>
+  <mat-divider></mat-divider>
+
+  <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="16px" style="margin-top: 32px">
     <div *ngIf="paymentLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
       <mat-spinner color="primary" [diameter]="20"></mat-spinner>
       <label for="">Loading</label>
     </div>
     <button
-      *ngIf="!paymentLoading && state.member?.registerLastStatus === 0"
+      *ngIf="!paymentLoading && state?.registerLastStatus === 0"
       type="button"
       [disabled]="!paymentButtonStatus"
       mat-flat-button
@@ -465,7 +470,7 @@
       <mat-icon style="width: 20px; height: 20px; font-size: 20px; margin-left: 8px">send</mat-icon>
     </button>
     <button
-      *ngIf="!paymentLoading && state.member?.registerLastStatus === 3"
+      *ngIf="!paymentLoading && state?.registerLastStatus === 3"
       type="button"
       [disabled]="!paymentButtonStatus"
       mat-flat-button

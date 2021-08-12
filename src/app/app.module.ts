@@ -23,6 +23,7 @@ import { ReCaptchaModule } from 'angular-recaptcha3';
 import { LoadingState } from './admin-view/admin-loading.state';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MemberState } from './user-view/member.state';
 registerLocaleData(localeId, 'id');
 
 export function tokenGetter() {
@@ -44,7 +45,7 @@ export function tokenGetter() {
       registrationStrategy: 'registerWhenStable:30000',
     }),
     LayoutModule,
-    NgxsModule.forRoot([AppState, UserState, LoadingState], {
+    NgxsModule.forRoot([AppState, UserState, MemberState, LoadingState], {
       developmentMode: !environment.production,
     }),
     JwtModule.forRoot({

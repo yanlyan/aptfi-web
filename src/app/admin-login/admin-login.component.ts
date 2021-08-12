@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngxs/store';
 import { ReCaptchaService } from 'angular-recaptcha3';
 import { SetSessionState } from '../app.state';
-import { UserService } from '../user-view/user.service';
 import { SetUserState } from '../user-view/user.state';
 import { AdminLoginService } from './admin-login.service';
 
@@ -22,8 +20,6 @@ export class AdminLoginComponent implements OnInit {
     private loginService: AdminLoginService,
     private readonly store: Store,
     private router: Router,
-    private jwtService: JwtHelperService,
-    private userService: UserService,
     private recaptchaService: ReCaptchaService
   ) {
     this.loginForm = new FormGroup({
@@ -48,15 +44,11 @@ export class AdminLoginComponent implements OnInit {
               role: response.user.role,
             })
           );
-          this.store.dispatch(
-            new SetUserState({
-              user: response.user,
-            })
-          );
+          this.store.dispatch(new SetUserState(response.user));
           this.router.navigate(['admin/verify']);
           this.loading = false;
         },
-        (error) => {
+        () => {
           this.loading = false;
         }
       );

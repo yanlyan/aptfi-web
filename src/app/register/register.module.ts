@@ -11,11 +11,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReCaptchaModule } from 'angular-recaptcha3';
+import { LoginGuard } from '../login/login.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: RegisterComponent,
+    canActivate: [LoginGuard],
   },
 ];
 

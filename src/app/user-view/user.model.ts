@@ -47,6 +47,13 @@ export interface Dosen {
   dosenType: string;
 }
 
+export interface MemberCoba {
+  id: bigint;
+  uuid: bigint;
+  universityName: string;
+  registerLastStatus: number;
+}
+
 export interface Member {
   id: bigint;
   uuid: string;

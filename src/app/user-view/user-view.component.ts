@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { Observable, Subject } from 'rxjs';
-import { LoadingState, SetLoadingState } from '../admin-view/admin-loading.state';
+import { Observable } from 'rxjs';
+import { LoadingState } from '../admin-view/admin-loading.state';
+import { MemberState, MemberStateModel } from './member.state';
 import { Member, User } from './user.model';
-import { UserState, UserStateModel } from './user.state';
 
 @Component({
   selector: 'app-user-view',
@@ -14,12 +14,12 @@ import { UserState, UserStateModel } from './user.state';
 export class UserViewComponent implements OnInit {
   member: Member;
   user: User;
-  userState: UserStateModel;
+  memberState: MemberStateModel;
   loading$: Observable<boolean>;
 
   constructor(private readonly store: Store, private router: Router) {
-    this.userState = this.store.selectSnapshot(UserState);
-    if (this.userState.member.registerLastStatus === 0 || this.userState.member.registerLastStatus === 3) {
+    this.memberState = this.store.selectSnapshot(MemberState);
+    if (this.memberState.member.registerLastStatus === 0 || this.memberState.member.registerLastStatus === 3) {
       this.router.navigate(['daftar']);
     }
 
