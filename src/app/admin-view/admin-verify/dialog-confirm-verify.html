@@ -1,12 +1,7 @@
-<h2 mat-dialog-title *ngIf="this.data.type === 'verify'">Verifikasi Anggota APTFI</h2>
-<h2 mat-dialog-title *ngIf="this.data.type === 'reject'">Penolakan Anggota APTFI</h2>
+<h2 mat-dialog-title>Verifikasi Anggota APTFI</h2>
 <div mat-dialog-content>
-  <p *ngIf="this.data.type ==='verify'">
+  <p>
     Apakah anda yakin untuk melakukan <strong>verifikasi</strong> pendaftaran
-    <strong>{{data.member.universityName}}</strong> ?
-  </p>
-  <p *ngIf="this.data.type ==='reject'">
-    Apakah anda yakin untuk melakukan <strong>penolakan</strong> pendaftaran
     <strong>{{data.member.universityName}}</strong> ?
   </p>
 </div>
