@@ -1,0 +1,81 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="32px">
+  <mat-form-field fxFlex="70%">
+    <mat-label>Cari</mat-label>
+    <input matInput #filterInput />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Role User" #matSelect name="dosenType">
+      <mat-option [value]="''">Tampilkan Semua</mat-option>
+      <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource" matSort>
+    <!-- Index Column -->
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <span class="mobile-label">No:</span>
+        {{ element.index }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Path Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Nama User</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.name }}</mat-cell
+      >
+    </ng-container>
+    <!-- Path Column -->
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.email }}</mat-cell
+      >
+    </ng-container>
+    <!-- Path Column -->
+    <ng-container matColumnDef="email_verified_at">
+      <mat-header-cell *matHeaderCellDef>Verifikasi Email</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        <span *ngIf="element.emailVerifiedAt">
+          {{ element.emailVerifiedAt | date: "d MMMM y" }}
+        </span>
+        <span *ngIf="!element.emailVerifiedAt" class="pills warn"> Belum Verifikasi </span>
+      </mat-cell>
+    </ng-container>
+    <!-- Path Column -->
+    <ng-container matColumnDef="role">
+      <mat-header-cell *matHeaderCellDef>Role</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.role.name }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+      <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutGap="8px">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="edit(element)">Edit</button>
+          <button mat-menu-item color="warn" (click)="delete(element)">Hapus</button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="resultsLength" showFirstLastButtons aria-label="">
+  </mat-paginator>
+</div>
+<div style="margin-top: 32px" fxLayout="row" fxLayoutAlign="end start">
+  <button mat-flat-button color="accent" (click)="add()">Tambah User</button>
+</div>

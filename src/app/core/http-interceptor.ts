@@ -34,6 +34,10 @@ export class MyHttpInterceptor implements HttpInterceptor {
           return event;
         }),
         catchError((error) => {
+          this.snackbar.open(`Terjadi Kesalahan : ${error.error.message}`, 'Tutup', {
+            panelClass: ['snackbar-warn'],
+            duration: 10000,
+          });
           return throwError(error);
         })
       );

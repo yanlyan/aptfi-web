@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'pengurus',
     loadChildren: () => import('./pengurus-view/pengurus-view.module').then((m) => m.PengurusViewModule),
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin-view/admin-view.module').then((m) => m.AdminViewModule),
+  },
 ];
 
 @NgModule({

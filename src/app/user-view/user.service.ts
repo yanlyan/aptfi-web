@@ -12,6 +12,10 @@ export class UserService {
     return this.httpClient.get(`${environment.api}/users/${id}`);
   }
 
+  getWithMember(id: bigint) {
+    return this.httpClient.get(`${environment.api}/users/with-member/${id}`);
+  }
+
   getDetailMember(uuid: string = '') {
     return this.httpClient.get(`${environment.api}/members/${uuid}`);
   }

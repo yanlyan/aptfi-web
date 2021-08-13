@@ -24,6 +24,9 @@ import { LoadingState } from './states/loading.state';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MemberState } from './user-view/member.state';
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 registerLocaleData(localeId, 'id');
 
 export function tokenGetter() {
@@ -31,13 +34,15 @@ export function tokenGetter() {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ConfirmDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatButtonModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
+    MatDialogModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       registrationStrategy: 'registerWhenStable:30000',

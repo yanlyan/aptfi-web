@@ -1,0 +1,40 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <h2>Edit User</h2>
+  <mat-divider> </mat-divider>
+  <form
+    (ngSubmit)="onSubmit()"
+    [formGroup]="form"
+    fxLayout="column"
+    fxLayoutAlign="start stretch"
+    style="padding: 16px"
+  >
+    <mat-form-field>
+      <input matInput placeholder="Nama User" formControlName="name" type="text" required />
+      <mat-error>Nama harus diisi</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email" type="email" required />
+      <mat-error *ngIf="!!form.get('email')?.hasError('required')">Email harus diisi</mat-error>
+      <mat-error *ngIf="!!form.get('email')?.hasError('email')">Email tidak valid</mat-error>
+    </mat-form-field>
+    <mat-form-field hintLabel="isi password untuk menggantinya">
+      <input matInput placeholder="Password" formControlName="password" type="password" />
+      <mat-error>Password harus diisi</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput hi placeholder="Konfirmasi Password" formControlName="passwordConfirmation" type="password" />
+      <mat-error>Konfirmasi Password harus sama dengan password</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Role User" formControlName="roleId">
+        <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <button mat-flat-button color="primary" (click)="back()">Kembali</button>
+      <button mat-flat-button color="accent" [disabled]="loading || !form.valid">Simpan</button>
+    </div>
+  </form>
+</div>
