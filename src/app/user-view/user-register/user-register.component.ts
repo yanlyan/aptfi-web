@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatStepper } from '@angular/material/stepper';
+import { MatStepper, MatStepperIntl } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
@@ -77,11 +77,14 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
     private _FileSaverService: FileSaverService,
     private tagihanService: TagihanService,
     private router: Router,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private _matStepperIntl: MatStepperIntl
   ) {
     this.store.dispatch(new SetLoadingState(true));
   }
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this._matStepperIntl.optionalLabel = 'Tidak wajib diisi';
+  }
 
   ngOnInit(): void {
     this.regForumService.getAll().subscribe((response) => {
@@ -135,16 +138,16 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
     });
 
     this.pspaForm = new FormGroup({
-      prodiName: new FormControl(null, [Validators.required]),
-      prodiPermit: new FormControl(null, [Validators.required]),
-      prodiAccreditedBy: new FormControl(null, [Validators.required]),
-      prodiAccreditedNo: new FormControl(null, [Validators.required]),
-      prodiStudents: new FormControl(null, [Validators.required]),
-      prodiStudentsYear: new FormControl(null, [Validators.required]),
-      prodiPhone: new FormControl(null, [Validators.required]),
-      prodiHead: new FormControl(null, [Validators.required]),
-      prodiHeadPhone: new FormControl(null, [Validators.required]),
-      prodiHeadEmail: new FormControl(null, [Validators.required, Validators.email]),
+      prodiName: new FormControl(null, []),
+      prodiPermit: new FormControl(null, []),
+      prodiAccreditedBy: new FormControl(null, []),
+      prodiAccreditedNo: new FormControl(null, []),
+      prodiStudents: new FormControl(null, []),
+      prodiStudentsYear: new FormControl(null, []),
+      prodiPhone: new FormControl(null, []),
+      prodiHead: new FormControl(null, []),
+      prodiHeadPhone: new FormControl(null, []),
+      prodiHeadEmail: new FormControl(null, [Validators.email]),
     });
 
     this.dosenS1Form = new FormGroup({
@@ -266,7 +269,7 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
           () => {
             this.instituteLoading = false;
             this.stepper.next();
-            // this.validatePanel();
+            this.validatePanel();
           },
           (err) => {
             this.instituteLoading = false;
@@ -285,7 +288,7 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
           () => {
             this.facultyLoading = false;
             this.stepper.next();
-            // this.validatePanel();
+            this.validatePanel();
           },
           (err) => {
             this.facultyLoading = false;
@@ -305,7 +308,7 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
             this.s1Loading = false;
             this.stepper.next();
 
-            // this.validatePanel();
+            this.validatePanel();
           },
           (err) => {
             this.s1Loading = false;
@@ -325,7 +328,7 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
             this.s2Loading = false;
             this.stepper.next();
 
-            // this.validatePanel();
+            this.validatePanel();
           },
           (err) => {
             this.s2Loading = false;
@@ -344,7 +347,7 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
             this.pspaLoading = false;
             this.stepper.next();
 
-            // this.validatePanel();
+            this.validatePanel();
           },
           (err) => {
             this.pspaLoading = false;
@@ -364,7 +367,7 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
           this.dosenS1Loading = false;
           this.stepper.next();
 
-          // this.validatePanel();
+          this.validatePanel();
         },
         (err) => {
           this.dosenS1Loading = false;
@@ -447,13 +450,7 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
   }
 
   validatePanel() {
-    if (
-      this.instituteForm.valid &&
-      this.facultyForm.valid &&
-      this.s1Form.valid &&
-      this.pspaForm.valid &&
-      this.dosenS1Form.valid
-    ) {
+    if (this.instituteForm.valid && this.facultyForm.valid && this.s1Form.valid && this.dosenS1Form.valid) {
       this.paymentButtonStatus = true;
     } else {
       this.paymentButtonStatus = false;

@@ -9,11 +9,17 @@
         <form (ngSubmit)="onInstituteSubmit()" [formGroup]="instituteForm">
           <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
             <mat-form-field>
-              <input matInput placeholder="Nama Yayasan" formControlName="foundationName" type="text" />
+              <input matInput placeholder="Nama Yayasan" formControlName="foundationName" type="text" required />
               <mat-error>Nama Yayasan harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Nama Ketua Yayasan" formControlName="headOfFoundation" type="text" />
+              <input
+                matInput
+                placeholder="Nama Ketua Yayasan"
+                formControlName="headOfFoundation"
+                type="text"
+                required
+              />
               <mat-error>Nama Ketua Yayasan harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -22,19 +28,20 @@
                 placeholder="Nama Universitas / Perguruan Tinggi"
                 formControlName="universityName"
                 type="text"
+                required
               />
 
               <mat-error>Nama Universitas / Perguruan Tinggi harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Forum Wilayah</mat-label>
-              <mat-select formControlName="regForum">
+              <mat-select formControlName="regForum" required>
                 <mat-option *ngFor="let reg of regForums" [value]="reg.id">{{ reg.name }}</mat-option>
               </mat-select>
               <mat-error>Forum Wilayah harus dipilih</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Nama Rektor" formControlName="rectorName" type="text" />
+              <input matInput placeholder="Nama Rektor" formControlName="rectorName" type="text" required />
               <mat-error>Nama Rektor harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -43,6 +50,7 @@
                 placeholder="Alamat Universitas / Perguruan Tinggi"
                 formControlName="universityAddress"
                 rows="5"
+                required
               ></textarea>
               <mat-error>Alamat Universitas / Perguruan Tinggi harus diisi</mat-error>
             </mat-form-field>
@@ -62,27 +70,34 @@
         <form (ngSubmit)="onFacultySubmit()" [formGroup]="facultyForm">
           <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
             <mat-form-field>
-              <input matInput placeholder="Nama Fakultas" formControlName="facultyName" type="text" />
+              <input matInput placeholder="Nama Fakultas" formControlName="facultyName" type="text" required />
               <mat-error>Nama Fakultas harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Nama Dekan" formControlName="deanName" type="text" />
+              <input matInput placeholder="Nama Dekan" formControlName="deanName" type="text" required />
               <mat-error>Nama Dekan harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <textarea matInput placeholder="Alamat Fakultas" formControlName="facultyAddress" rows="5"> </textarea>
+              <textarea matInput placeholder="Alamat Fakultas" formControlName="facultyAddress" rows="5" required>
+              </textarea>
               <mat-error>Alamat Fakultas harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="No. Telepon / Fax Fakultas" formControlName="facultyPhone" type="text" />
+              <input
+                matInput
+                placeholder="No. Telepon / Fax Fakultas"
+                formControlName="facultyPhone"
+                type="text"
+                required
+              />
               <mat-error>No. Telepon / Fax Fakultas harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Website Fakultas" formControlName="facultyWebsite" type="url" />
+              <input matInput placeholder="Website Fakultas" formControlName="facultyWebsite" type="url" required />
               <mat-error>Website Fakultas harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Email Fakultas" formControlName="facultyEmail" type="email" />
+              <input matInput placeholder="Email Fakultas" formControlName="facultyEmail" type="email" required />
               <mat-error *ngIf="!!facultyForm.get('facultyEmail')?.hasError('required')"
                 >Email Fakultas harus diisi</mat-error
               >
@@ -106,23 +121,41 @@
         <form (ngSubmit)="onS1Submit()" [formGroup]="s1Form">
           <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
             <mat-form-field>
-              <input matInput placeholder="Nama Prodi Sarjana" formControlName="prodiName" type="text" />
+              <input matInput placeholder="Nama Prodi Sarjana" formControlName="prodiName" type="text" required />
               <mat-error>Nama Prodi Sarjana harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Ijin Operasional S-1" formControlName="prodiPermit" type="text" />
+              <input matInput placeholder="Ijin Operasional S-1" formControlName="prodiPermit" type="text" required />
               <mat-error>Ijin Operasional S-1 harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Akreditasi S-1 oleh" formControlName="prodiAccreditedBy" type="text" />
+              <input
+                matInput
+                placeholder="Akreditasi S-1 oleh"
+                formControlName="prodiAccreditedBy"
+                type="text"
+                required
+              />
               <mat-error>Akreditasi S-1 oleh harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="No. SK Akreditasi S-1" formControlName="prodiAccreditedNo" type="text" />
+              <input
+                matInput
+                placeholder="No. SK Akreditasi S-1"
+                formControlName="prodiAccreditedNo"
+                type="text"
+                required
+              />
               <mat-error>No. SK Akreditasi S-1 harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Alamat E-mail Prodi S-1" formControlName="prodiEmail" type="email" />
+              <input
+                matInput
+                placeholder="Alamat E-mail Prodi S-1"
+                formControlName="prodiEmail"
+                type="email"
+                required
+              />
               <mat-error *ngIf="!!s1Form.get('prodiEmail')?.hasError('required')"
                 >Alamat E-mail Prodi S-1 harus diisi</mat-error
               >
@@ -149,15 +182,27 @@
               <mat-error>Jumlah mahasiswa S-1 diterima/tahun harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="No. Telpon/Fax Prodi S-1" formControlName="prodiPhone" type="text" />
+              <input
+                matInput
+                placeholder="No. Telpon/Fax Prodi S-1"
+                formControlName="prodiPhone"
+                type="text"
+                required
+              />
               <mat-error>No. Telpon/Fax Prodi S-1 harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Nama Ketua Prodi S-1" formControlName="prodiHead" type="text" />
+              <input matInput placeholder="Nama Ketua Prodi S-1" formControlName="prodiHead" type="text" required />
               <mat-error>Nama Ketua Prodi S-1 harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="No. HP Ketua Prodi S-1" formControlName="prodiHeadPhone" type="text" />
+              <input
+                matInput
+                placeholder="No. HP Ketua Prodi S-1"
+                formControlName="prodiHeadPhone"
+                type="text"
+                required
+              />
               <mat-error>No. HP Ketua Prodi S-1 harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -166,6 +211,7 @@
                 placeholder="Alamat e-mail Ketua Prodi S-1"
                 formControlName="prodiHeadEmail"
                 type="email"
+                required
               />
               <mat-error *ngIf="!!s1Form.get('prodiHeadEmail')?.hasError('required')"
                 >Alamat e-mail Ketua Prodi S-1 harus diisi</mat-error
@@ -232,7 +278,7 @@
         </form>
       </ng-template>
     </mat-step>
-    <mat-step [stepControl]="pspaForm">
+    <mat-step [stepControl]="pspaForm" optional>
       <ng-template matStepLabel>Detail Prodi Profesi Apoteker</ng-template>
 
       <ng-template matStepContent>
@@ -240,19 +286,15 @@
           <div style="width: 100%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
             <mat-form-field>
               <input matInput placeholder="Nama PSPA" formControlName="prodiName" type="text" />
-              <mat-error>Nama PSPA harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
               <input matInput placeholder="Ijin Operasional PSPA" formControlName="prodiPermit" type="text" />
-              <mat-error>Ijin Operasional PSPA harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
               <input matInput placeholder="Akreditasi PSPA oleh" formControlName="prodiAccreditedBy" type="text" />
-              <mat-error>Akreditasi PSPA oleh harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
               <input matInput placeholder="No. SK Akreditasi PSPA" formControlName="prodiAccreditedNo" type="text" />
-              <mat-error>No. SK Akreditasi PSPA harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
               <input
@@ -261,7 +303,6 @@
                 formControlName="prodiStudents"
                 type="number"
               />
-              <mat-error>Jumlah mahasiswa PSPA saat ini harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
               <input
@@ -270,19 +311,15 @@
                 formControlName="prodiStudentsYear"
                 type="number"
               />
-              <mat-error>Jumlah mahasiswa PSPA diterima/tahun harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
               <input matInput placeholder="No. Telpon/Fax Prodi PSPA" formControlName="prodiPhone" type="text" />
-              <mat-error>No. Telpon/Fax Prodi PSPA harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
               <input matInput placeholder="Nama Ketua Prodi PSPA" formControlName="prodiHead" type="text" />
-              <mat-error>Nama Ketua Prodi PSPA harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
               <input matInput placeholder="No. HP Ketua Prodi PSPA" formControlName="prodiHeadPhone" type="text" />
-              <mat-error>No. HP Ketua Prodi PSPA harus diisi</mat-error>
             </mat-form-field>
             <mat-form-field>
               <input
@@ -291,12 +328,6 @@
                 formControlName="prodiHeadEmail"
                 type="email"
               />
-              <mat-error *ngIf="!!pspaForm.get('prodiHeadEmail')?.hasError('required')"
-                >Alamat e-mail Ketua Prodi PSPA harus diisi</mat-error
-              >
-              <mat-error *ngIf="!!pspaForm.get('prodiHeadEmail')?.hasError('email')"
-                >Alamat e-mail Ketua Prodi PSPA harus diisi dengan email yang valid</mat-error
-              >
             </mat-form-field>
             <div *ngIf="pspaLoading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
               <mat-spinner color="primary" [diameter]="20"></mat-spinner>
@@ -307,7 +338,7 @@
         </form>
       </ng-template>
     </mat-step>
-    <mat-step [stepControl]="s2Form">
+    <mat-step [stepControl]="s2Form" optional>
       <ng-template matStepLabel>Detail Program Studi Sarjana 2</ng-template>
 
       <ng-template matStepContent>
@@ -370,7 +401,7 @@
         </form>
       </ng-template>
     </mat-step>
-    <mat-step [stepControl]="dosenPspaForm">
+    <mat-step [stepControl]="dosenPspaForm" optional>
       <ng-template matStepLabel>Dosen Tetap Prodi Profesi Apoteker</ng-template>
 
       <ng-template matStepContent>
@@ -418,7 +449,7 @@
         </form>
       </ng-template>
     </mat-step>
-    <mat-step [stepControl]="sarpraForm">
+    <mat-step [stepControl]="sarpraForm" optional>
       <ng-template matStepLabel>Data Informasi Anggaran, Fasilitas dan Sarana-Prasarana</ng-template>
 
       <ng-template matStepContent>
