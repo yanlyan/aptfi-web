@@ -606,7 +606,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    api: 'http://localhost:8000/api',
+    // api: 'http://localhost:8000/api',
+    api: 'https://api.lyanesia.tech/api',
     recaptchaSiteKey: '6LfaP9obAAAAAMKwhjelySEWJSezrxdiqJK6Vs_i',
 };
 /*
