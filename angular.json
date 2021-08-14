@@ -29,7 +29,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets", "src/manifest.webmanifest", "src/.htaccess"],
+            "assets": ["src/favicon.ico", "src/assets", "src/manifest.webmanifest", "src/.htaccess", "src/pull.php"],
             "styles": ["src/styles.scss", "src/assets/scss/custom.scss"],
             "scripts": ["src/assets/scripts/snap.js"],
 
