@@ -56,7 +56,9 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "outputPath": "dist/aptfi/production",
+              "deployUrl": "https://aptfi.lyanesia.tech"
             },
             "development": {
               "buildOptimizer": false,
@@ -64,7 +66,8 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "outputPath": "dist/aptfi/development"
             }
           },
           "defaultConfiguration": "production"

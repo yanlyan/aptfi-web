@@ -20,7 +20,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
-import { AdminUserComponent } from './admin-user/admin-user.component';
 
 const routes: Routes = [
   {

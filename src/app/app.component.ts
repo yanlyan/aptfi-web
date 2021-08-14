@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { AppLoadingService } from './app-loading.service';
 
 @Component({
   selector: 'app-root',

@@ -1,0 +1,147 @@
+{
+  "configVersion": 1,
+  "timestamp": 1628978688844,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/common.js",
+        "/default-node_modules_angular_material___ivy_ngcc___fesm2015_card_js.js",
+        "/default-node_modules_angular_material___ivy_ngcc___fesm2015_chips_js-node_modules_angular_mat-16f1d3.js",
+        "/default-node_modules_angular_material___ivy_ngcc___fesm2015_divider_js-node_modules_angular_m-5ad527.js",
+        "/default-node_modules_angular_material___ivy_ngcc___fesm2015_expansion_js-node_modules_angular-24e692.js",
+        "/default-node_modules_angular_material___ivy_ngcc___fesm2015_table_js.js",
+        "/default-node_modules_ng2-pdf-viewer___ivy_ngcc___fesm2015_ng2-pdf-viewer_js.js",
+        "/favicon.ico",
+        "/index.html",
+        "/main.js",
+        "/manifest.webmanifest",
+        "/polyfills.js",
+        "/runtime.js",
+        "/scripts.js",
+        "/src_app_admin-view_admin-user_admin-user_module_ts.js",
+        "/src_app_admin-view_admin-view_module_ts.js",
+        "/src_app_forgot-password_forgot-pasword_module_ts.js",
+        "/src_app_login_login_module_ts.js",
+        "/src_app_pengurus-view_pengurus-member_pengurus-member_module_ts.js",
+        "/src_app_pengurus-view_pengurus-sk_pengurus-sk_module_ts.js",
+        "/src_app_pengurus-view_pengurus-tagihan_pengurus-tagihan_module_ts.js",
+        "/src_app_pengurus-view_pengurus-verify_pengurus-verify_module_ts.js",
+        "/src_app_pengurus-view_pengurus-view_module_ts.js",
+        "/src_app_register_register_module_ts.js",
+        "/src_app_reset-password_reset-password_module_ts.js",
+        "/src_app_user-view_lecturer_lecturer_module_ts.js",
+        "/src_app_user-view_rekap-tagihan_rekap-tagihan_module_ts.js",
+        "/src_app_user-view_tagihan_tagihan_module_ts.js",
+        "/src_app_user-view_user-profile_user-profile_module_ts.js",
+        "/src_app_user-view_user-view_module_ts.js",
+        "/styles.css",
+        "/vendor.js"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/Bukti Pembayaran.pdf",
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/image/logo.png",
+        "/assets/image/profile.jpeg",
+        "/assets/image/profile.png",
+        "/assets/image/template_dosen.xlsx",
+        "/assets/scripts/snap.js",
+        "/assets/scss/custom.scss",
+        "/assets/template/template_dosen.xlsx"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/Bukti Pembayaran.pdf": "9301e822ce435a880b2069c74908999f45d25f55",
+    "/assets/icons/icon-128x128.png": "37b814009f103b503d76cd0a45bf3969b1d64cae",
+    "/assets/icons/icon-144x144.png": "5cdc64ca64d67c3eb1dcea8b16705f7d774e12e6",
+    "/assets/icons/icon-152x152.png": "02b1ab0f3b6fec0edd761e1e44eabe31c83e0252",
+    "/assets/icons/icon-192x192.png": "d266bcdda94dab4f8ceea0130cca6cb9f8046410",
+    "/assets/icons/icon-384x384.png": "264fde9869f2a611ae6e924203a09749342c5e3c",
+    "/assets/icons/icon-512x512.png": "48cf7cc3659d1085c5021bf740a0344cb1078539",
+    "/assets/icons/icon-72x72.png": "601555a0d64253365ff83f0da063d9933fdef8f5",
+    "/assets/icons/icon-96x96.png": "bffdafb2f03e73a0361828f11aa2c0d55e712972",
+    "/assets/image/logo.png": "5938cf3ce1cc4ee320991b85262f2ac5c132e56b",
+    "/assets/image/profile.jpeg": "6549714d84d1fd39fc439bdebe2a4749d33985c2",
+    "/assets/image/profile.png": "42f22f41b3e6138e0f22d3646e901a8d9666d656",
+    "/assets/image/template_dosen.xlsx": "1e995b16da999855a79610e631859f3b197b2244",
+    "/assets/scripts/snap.js": "50c979d548ddfa841c58eed6ad78a8737126c547",
+    "/assets/scss/custom.scss": "d9ee09dfd7988b0e0587ed5c48ea982ebe117ed6",
+    "/assets/template/template_dosen.xlsx": "870948bab739195a45a39b348d6caaee7ac2879d",
+    "/common.js": "6f46ab48e1984feb1d4059d2985423c16538de0c",
+    "/default-node_modules_angular_material___ivy_ngcc___fesm2015_card_js.js": "6d9211cc4e1fc610857c39e7c31adb9c9637de67",
+    "/default-node_modules_angular_material___ivy_ngcc___fesm2015_chips_js-node_modules_angular_mat-16f1d3.js": "60249853eaa60989d907b74e5bc16e168cc05711",
+    "/default-node_modules_angular_material___ivy_ngcc___fesm2015_divider_js-node_modules_angular_m-5ad527.js": "42fd3b67280f7d609f4e3820c3467e293850a35e",
+    "/default-node_modules_angular_material___ivy_ngcc___fesm2015_expansion_js-node_modules_angular-24e692.js": "c8e068874397be6f06dbd5227a168beba80a8fed",
+    "/default-node_modules_angular_material___ivy_ngcc___fesm2015_table_js.js": "942fb837c033da04706e4280938789f8b03a1ef4",
+    "/default-node_modules_ng2-pdf-viewer___ivy_ngcc___fesm2015_ng2-pdf-viewer_js.js": "8f6f0e1a79d2748a9a3d4c69d9d07929f09e9c87",
+    "/favicon.ico": "99d776cf6eb13cea5aa2358582b92268feaa84af",
+    "/index.html": "1c1fe64222b1f1b10bb71ae7da586e2d6d2ee886",
+    "/main.js": "717e7b8842be9589bca555b262316b65f3620600",
+    "/manifest.webmanifest": "75853b241e078113d6f209743ae758a544a8f1cb",
+    "/polyfills.js": "ff076249e6d3e633758ded8fd748c1946a0d4535",
+    "/runtime.js": "a44e33de6b636ae23d07c4214f6032d6ccdc65da",
+    "/scripts.js": "1f05b064aed8b9cafe3ee7b3a755b987b48d81ca",
+    "/src_app_admin-view_admin-user_admin-user_module_ts.js": "e6a7c32579101a11236687c07f9d9573922efc9a",
+    "/src_app_admin-view_admin-view_module_ts.js": "9689d0e7597cace7d439094fcce6046775e3c97b",
+    "/src_app_forgot-password_forgot-pasword_module_ts.js": "4f6331f96b8f6c0b2bab7822272e153829ae6664",
+    "/src_app_login_login_module_ts.js": "d60e5d27ebc6098e2ed4e2fc01783fe146bbf6a1",
+    "/src_app_pengurus-view_pengurus-member_pengurus-member_module_ts.js": "8375b1bea4cc814c075ddd38a8cff69bb160477e",
+    "/src_app_pengurus-view_pengurus-sk_pengurus-sk_module_ts.js": "b6f82aa81e0a86b21b271685bb78376c66d32182",
+    "/src_app_pengurus-view_pengurus-tagihan_pengurus-tagihan_module_ts.js": "d5f55cf1038c9873d04e91148f0b79120c3db88d",
+    "/src_app_pengurus-view_pengurus-verify_pengurus-verify_module_ts.js": "31136507f9c0f974a684ce1158160efb8a296010",
+    "/src_app_pengurus-view_pengurus-view_module_ts.js": "77bdc794fa0ea63d75f77ed79ed63b163f302593",
+    "/src_app_register_register_module_ts.js": "c4f643c93531eb56e95b48fbc882518565388889",
+    "/src_app_reset-password_reset-password_module_ts.js": "d462c6100d1afdbd133b1f62fda0b2eb3a0f695e",
+    "/src_app_user-view_lecturer_lecturer_module_ts.js": "a72a30288ffb72ccea70ecb15787fcdc45e5ca1f",
+    "/src_app_user-view_rekap-tagihan_rekap-tagihan_module_ts.js": "564fb02fdb2836c042d352091e6875b5ad8501d8",
+    "/src_app_user-view_tagihan_tagihan_module_ts.js": "961eb9cf3145cbf49d31c31b196ffb10f9e6eafb",
+    "/src_app_user-view_user-profile_user-profile_module_ts.js": "7f16471c9350ff2b2ac6107c9e3f86034830bf3a",
+    "/src_app_user-view_user-view_module_ts.js": "99735e9dd2302fbde592b0892a37aa022d793a0d",
+    "/styles.css": "f5328830983ddbd4ab24de0f2276d43af8b57cb0",
+    "/vendor.js": "7b36c26ce433ed2ed96cfbdb97f8ab2fadd7636c"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}

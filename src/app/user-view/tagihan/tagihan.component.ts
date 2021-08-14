@@ -1,9 +1,7 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
-import { tap, finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { SetLoadingState } from 'src/app/states/loading.state';
 import { Bill } from './bill.model';
 import { TagihanService } from './tagihan.service';

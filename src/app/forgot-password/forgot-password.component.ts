@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReCaptchaService } from 'angular-recaptcha3';
-import { MyErrorStateMatcher } from '../core/error-state.matcher';
 import { ForgotPasswordService } from './forgot-password.service';
 
 @Component({

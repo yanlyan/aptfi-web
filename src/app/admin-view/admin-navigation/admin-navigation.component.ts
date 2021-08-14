@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { map, shareReplay, tap } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { SetSessionState } from 'src/app/app.state';
 import { UserState, UserStateModel } from 'src/app/user-view/user.state';
 import { LoadingStateModel, LoadingState } from '../../states/loading.state';
