@@ -12,6 +12,9 @@ export class VerifiedGuard implements CanActivate {
     const memberState = this.store.selectSnapshot(MemberState);
     switch (memberState.member?.registerLastStatus) {
       case 0:
+        this.snackbar.open('Selesaikan pengisian form pendaftaran anda', '', {
+          duration: 1000,
+        });
         this.router.navigate(['daftar']);
         return false;
       case 1:

@@ -1762,6 +1762,9 @@ class VerifiedGuard {
         const memberState = this.store.selectSnapshot(_member_state__WEBPACK_IMPORTED_MODULE_0__.MemberState);
         switch ((_a = memberState.member) === null || _a === void 0 ? void 0 : _a.registerLastStatus) {
             case 0:
+                this.snackbar.open('Selesaikan pengisian form pendaftaran anda', '', {
+                    duration: 1000,
+                });
                 this.router.navigate(['daftar']);
                 return false;
             case 1:
