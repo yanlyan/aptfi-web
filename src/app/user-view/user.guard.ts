@@ -32,7 +32,7 @@ export class UserGuard implements CanActivate {
             this.router.navigate(['admin/users']);
             return of(false);
           case 3:
-            this.router.navigate(['penggurus/anggota']);
+            this.router.navigate(['pengurus/anggota']);
             return of(false);
 
           default:

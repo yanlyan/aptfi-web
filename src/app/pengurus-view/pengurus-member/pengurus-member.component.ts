@@ -32,9 +32,7 @@ export class PengurusMemberComponent implements OnInit {
     private store: Store,
     private router: Router,
     private route: ActivatedRoute
-  ) {
-    this.store.dispatch(new SetLoadingState(true));
-  }
+  ) {}
 
   ngOnInit() {
     this.paginator.pageIndex = this.route.snapshot.queryParams.page || 0;
@@ -49,6 +47,7 @@ export class PengurusMemberComponent implements OnInit {
       start: 'asc',
       disableClear: false,
     });
+
     this.cdref.detectChanges();
 
     merge(this.sort.sortChange, this.paginator.page, fromEvent(this.filterInput.nativeElement, 'keyup'))
@@ -57,7 +56,7 @@ export class PengurusMemberComponent implements OnInit {
         debounceTime(500),
         startWith({}),
         switchMap(() => {
-          this.store.dispatch(new SetLoadingState(true));
+          // this.store.dispatch(new SetLoadingState(true));
           return this.loadData();
         })
       )

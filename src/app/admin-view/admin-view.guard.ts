@@ -35,7 +35,7 @@ export class AdminViewGuard implements CanActivate {
             this.router.navigate(['profil']);
             return of(false);
           case 3:
-            this.router.navigate(['penggurus/anggota']);
+            this.router.navigate(['pengurus/anggota']);
             return of(false);
 
           default:
