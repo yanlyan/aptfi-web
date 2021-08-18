@@ -27,6 +27,10 @@ export class TagihanService {
     );
   }
 
+  check(orderId: string) {
+    return this.httpClient.get(`${environment.api}/bills/check/${orderId}`);
+  }
+
   retry(token: string) {
     return this.httpClient.put(`${environment.api}/bills/retry/${token}`, {});
   }

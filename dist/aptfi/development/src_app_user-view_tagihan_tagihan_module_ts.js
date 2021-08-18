@@ -265,6 +265,10 @@ class TagihanComponent {
         });
     }
     onPayButtonClick(bill) {
+        // check status
+        this.tagihanService.check(bill.orderId).subscribe((response) => {
+            this.getBills();
+        });
         window.snap.pay(bill.token);
     }
     onPrintClick(bill) {

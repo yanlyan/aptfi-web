@@ -41,6 +41,10 @@ export class TagihanComponent implements OnInit {
   }
 
   onPayButtonClick(bill: Bill) {
+    // check status
+    this.tagihanService.check(bill.orderId).subscribe((response) => {
+      this.getBills();
+    });
     window.snap.pay(bill.token);
   }
 

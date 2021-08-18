@@ -482,6 +482,9 @@ class TagihanService {
             return response;
         }));
     }
+    check(orderId) {
+        return this.httpClient.get(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.api}/bills/check/${orderId}`);
+    }
     retry(token) {
         return this.httpClient.put(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.api}/bills/retry/${token}`, {});
     }

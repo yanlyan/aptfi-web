@@ -17,4 +17,5 @@ export interface Bill {
   expiredDate: Date;
   isExpired: boolean;
   year: number;
+  orderId: string;
 }
