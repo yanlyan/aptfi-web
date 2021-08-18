@@ -138,7 +138,7 @@ function PengurusMemberComponent_mat_cell_22_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const element_r22 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", element_r22.registerLastStatus === 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", element_r22.registerLastStatus === 4);
 } }
 function PengurusMemberComponent_mat_header_cell_24_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "mat-header-cell");
