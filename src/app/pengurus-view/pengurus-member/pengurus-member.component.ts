@@ -37,7 +37,7 @@ export class PengurusMemberComponent implements OnInit {
   ngOnInit() {
     this.paginator.pageIndex = this.route.snapshot.queryParams.page || 0;
     this.paginator.pageSize = this.route.snapshot.queryParams.size || 10;
-    this.paginator.page.next();
+    this.paginator.page.next(null);
   }
 
   ngAfterViewInit() {

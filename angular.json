@@ -58,7 +58,7 @@
               ],
               "outputHashing": "all",
               "outputPath": "dist/aptfi/production",
-              "deployUrl": "https://aptfi.lyanesia.tech"
+              "baseHref": "/"
             },
             "development": {
               "buildOptimizer": false,
