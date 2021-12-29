@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // api: 'http://localhost:8000/api',
-  api: 'https://api-aptfi.lyanesia.tech/api',
+  api: 'http://localhost:8000/api',
+  // api: 'https://api-aptfi.lyanesia.tech/api',
   recaptchaSiteKey: '6LfaP9obAAAAAMKwhjelySEWJSezrxdiqJK6Vs_i',
 };
 
