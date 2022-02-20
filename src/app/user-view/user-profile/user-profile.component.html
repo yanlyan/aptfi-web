@@ -25,10 +25,11 @@
       </div>
     </mat-step>
     <mat-step
-      label="Menunggu Verifikasi"
+      [label]="thirdLabel"
       [stepControl]="thirdControl"
       [completed]="thirdControl.valid"
-      [editable]="!thirdControl.valid"
+      [editable]="thirdEditable"
+      [state]="done"
     >
       <div style="margin-top: 32px">Admin akan melakukan pengecekan dan verifikasi data anda.</div>
     </mat-step>
@@ -54,7 +55,7 @@
         </div>
 
         <p *ngIf="member?.registerLastStatus === 3">
-          Maaf, Pendaftaran anda tidak bisa diverifikasi oleh admin karena : {{ member.rejectReason }} <br />
+          Maaf, Pendaftaran anda tidak bisa diverifikasi oleh admin karena : <strong>{{ member.rejectReason }}</strong> <br />
           Silakan koreksi pengisian form anda pada menu <a [routerLink]="'/daftar'">Keanggotaan -> Pendaftaran</a>
         </p>
       </div>

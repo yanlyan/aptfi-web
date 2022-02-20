@@ -34,6 +34,8 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
 
   done: string = 'number';
   fourthLabel: string = 'Anggota Aktif';
+  thirdLabel: string = 'Menunggu Verifikasi';
+  thirdEditable:boolean = true;
 
   member: Member;
   s1: Prodi;
@@ -109,15 +111,17 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
           this.stepper.selectedIndex = 2;
         }
         if (status == 3) {
-          this.thirdControl.controls['required'].setValue('required');
+          this.thirdEditable = false;
           this.thirdControl.updateValueAndValidity();
           this.fourthControl.controls['required'].setValue('required');
           this.fourthControl.updateValueAndValidity();
           this.fourthLabel = 'Ditolak';
+          this.thirdLabel = 'Verifikasi Ditolak';
           this.done = 'error';
           this.stepper.selectedIndex = 3;
         }
         if (status >= 4) {
+          this.thirdEditable = false;
           this.thirdControl.controls['required'].setValue('required');
           this.thirdControl.updateValueAndValidity();
           this.fourthControl.controls['required'].setValue('required');

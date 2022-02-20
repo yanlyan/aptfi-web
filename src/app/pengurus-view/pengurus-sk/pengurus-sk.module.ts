@@ -9,8 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
 const routes: Routes = [
   {
     path: '',
@@ -30,8 +30,8 @@ const routes: Routes = [
     MatFormFieldModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    PdfViewerModule,
     MatProgressSpinnerModule,
+    NgxExtendedPdfViewerModule,
   ],
 })
 export class PengurusSkModule {}

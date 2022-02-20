@@ -28,7 +28,7 @@
     "@ngxs/store": "^3.7.3",
     "angular-recaptcha3": "^2.0.0",
     "file-saver": "^2.0.5",
-    "ng2-pdf-viewer": "^7.0.2",
+    "ngx-extended-pdf-viewer": "^12.0.0-alpha.1",
     "ngx-filesaver": "^13.0.0",
     "ngx-material-file-input": "^3.0.0",
     "rxjs": "~7.5.1",

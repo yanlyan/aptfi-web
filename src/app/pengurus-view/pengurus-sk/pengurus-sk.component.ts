@@ -7,7 +7,6 @@ import { debounceTime, filter, finalize, map, mergeMap, startWith, tap } from 'r
 import { Member } from 'src/app/models/member.model';
 import { Prodi } from 'src/app/models/prodi.model';
 import { PengurusSKService } from './pengurus-sk.service';
-
 @Component({
   selector: 'app-pengurus-sk',
   templateUrl: './pengurus-sk.component.html',
@@ -36,6 +35,7 @@ export class PengurusSkComponent implements OnInit {
           this.member = response.member;
           this.s1 = this.member.prodis.filter((p) => p.prodiType === 's1')[0];
           this.searchForm.controls['search'].setValue(this.member);
+          console.log(this.member);
         });
       }
     });

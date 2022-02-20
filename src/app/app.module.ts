@@ -27,6 +27,8 @@ import { MemberState } from './user-view/member.state';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+
 registerLocaleData(localeId, 'id');
 
 export function tokenGetter() {
@@ -43,6 +45,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     MatSnackBarModule,
     MatDialogModule,
+    NgxExtendedPdfViewerModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       registrationStrategy: 'registerWhenStable:30000',

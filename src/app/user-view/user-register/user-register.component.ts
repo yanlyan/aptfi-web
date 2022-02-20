@@ -30,15 +30,12 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
 
   facultyForm: FormGroup;
   facultyLoading: boolean = false;
-  facultyValidity: boolean = false;
-
   s1Form: FormGroup;
   s1Loading: boolean = false;
   s1Validity: boolean = false;
 
   s2Form: FormGroup;
   s2Loading: boolean = false;
-  s2Validity: boolean = false;
 
   pspaForm: FormGroup;
   pspaLoading: boolean = false;
@@ -46,15 +43,12 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
 
   dosenS1Form: FormGroup;
   dosenS1Loading: boolean = false;
-  dosenS1Validity: boolean = false;
 
   dosenPspaForm: FormGroup;
   dosenPspaLoading: boolean = false;
-  dosenPspaValidity: boolean = false;
 
   sarpraForm: FormGroup;
   sarpraLoading: boolean = false;
-  sarpraValidity: boolean = false;
 
   paymentButtonStatus: boolean = false;
   paymentLoading: boolean = false;

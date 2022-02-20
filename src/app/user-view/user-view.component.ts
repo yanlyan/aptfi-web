@@ -20,7 +20,7 @@ export class UserViewComponent implements OnInit {
 
   constructor(private readonly store: Store, private router: Router) {
     this.memberState = this.store.selectSnapshot(MemberState);
-    if (this.memberState.member.registerLastStatus === 0 || this.memberState.member.registerLastStatus === 3) {
+    if (this.memberState.member.registerLastStatus === 0) {
       this.router.navigate(['daftar']);
     }
 

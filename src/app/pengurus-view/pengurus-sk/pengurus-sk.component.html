@@ -4,14 +4,11 @@
       <mat-card-title>SK Anggota APTFI {{ member?.universityName }}</mat-card-title>
     </mat-card-header>
     <mat-card-content style="height: 100vh; padding: 0">
-      <pdf-viewer
+      <ngx-extended-pdf-viewer
         *ngIf="member?.skFileUrl"
         [src]="member?.skFileUrl"
-        [render-text]="true"
-        style="display: block"
-        [zoom]="0.8"
-        [show-borders]="true"
-      ></pdf-viewer>
+        [useBrowserLocale]="true">
+      </ngx-extended-pdf-viewer>
     </mat-card-content>
     <mat-card-actions> </mat-card-actions>
   </mat-card>
