@@ -35,7 +35,7 @@
               "output": "/assets/"
             }],
             "styles": ["src/styles.scss", "src/assets/scss/custom.scss"],
-            "scripts": ["src/assets/scripts/snap.js"],
+            "scripts": [],
 
             "serviceWorker": true,
             "ngswConfigPath": "ngsw-config.json"
