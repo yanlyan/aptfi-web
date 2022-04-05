@@ -29,4 +29,8 @@ export class PengurusTagihanService {
       },
     });
   }
+
+  deleteBill(id: number) {
+    return this.httpClient.delete(`${environment.api}/bills/${id}`);
+  }
 }

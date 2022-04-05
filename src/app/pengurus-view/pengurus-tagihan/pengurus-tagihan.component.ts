@@ -1,7 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSelect } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -9,6 +11,7 @@ import { Store } from '@ngxs/store';
 import { FileSaverService } from 'ngx-filesaver';
 import { merge, fromEvent } from 'rxjs';
 import { distinctUntilChanged, debounceTime, startWith, switchMap, map } from 'rxjs/operators';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { Bill } from 'src/app/user-view/tagihan/bill.model';
 import { TagihanService } from 'src/app/user-view/tagihan/tagihan.service';
 import { SetLoadingState } from '../../states/loading.state';
@@ -22,7 +25,15 @@ import { PengurusTagihanService } from './pengurus-tagihan.service';
 export class PengurusTagihanComponent implements OnInit {
   isLoadingResults: boolean;
   resultsLength: any;
-  displayedColumns: string[] = ['index', 'members.university_name', 'type', 'amount', 'last_status', 'receipt'];
+  displayedColumns: string[] = [
+    'index',
+    'members.university_name',
+    'type',
+    'amount',
+    'last_status',
+    'receipt',
+    'action',
+  ];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -38,7 +49,9 @@ export class PengurusTagihanComponent implements OnInit {
     private store: Store,
     private route: ActivatedRoute,
     private _FileSaverService: FileSaverService,
-    private datepipe: DatePipe
+    private datepipe: DatePipe,
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar
   ) {
     this.store.dispatch(new SetLoadingState(true));
   }
@@ -122,5 +135,26 @@ export class PengurusTagihanComponent implements OnInit {
         bill.loading = false;
       }
     );
+  }
+
+  delete(bill: Bill) {
+    console.log(bill);
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        closeOnNavigation: false,
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.pengurusTagihanService.deleteBill(bill.id).subscribe((response) => {
+            this.snackbar.open('Hapus tagihan berhasil', '', {
+              panelClass: ['snackbar-success'],
+              duration: 5000,
+            });
+            this.loadData().subscribe();
+          });
+        }
+      });
   }
 }

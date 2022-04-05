@@ -80,6 +80,18 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        <div *ngIf="element.loading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+          <mat-spinner color="accent" [diameter]="20"></mat-spinner>
+          <label for="">Loading</label>
+        </div>
+        <button *ngIf="!element.loading" mat-flat-button color="warn" (click)="delete(element)">Hapus</button>
+      </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
