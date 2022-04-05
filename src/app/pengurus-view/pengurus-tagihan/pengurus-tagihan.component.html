@@ -43,6 +43,15 @@
     </ng-container>
 
     <!-- Path Column -->
+    <ng-container matColumnDef="month">
+      <mat-header-cell *matHeaderCellDef>Bulan</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        {{ element.createdAt | date: "MMMM" }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Path Column -->
     <ng-container matColumnDef="amount">
       <mat-header-cell *matHeaderCellDef>Nominal</mat-header-cell>
       <mat-cell *matCellDef="let element">

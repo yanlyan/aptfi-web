@@ -29,6 +29,7 @@ export class PengurusTagihanComponent implements OnInit {
     'index',
     'members.university_name',
     'type',
+    'month',
     'amount',
     'last_status',
     'receipt',
