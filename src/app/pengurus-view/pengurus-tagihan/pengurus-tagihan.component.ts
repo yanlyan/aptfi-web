@@ -32,6 +32,7 @@ export class PengurusTagihanComponent implements OnInit {
     'month',
     'amount',
     'last_status',
+    'invoice',
     'receipt',
     'action',
   ];
@@ -121,9 +122,26 @@ export class PengurusTagihanComponent implements OnInit {
       );
   }
 
-  download(bill: Bill) {
+  downloadInvoice(bill: Bill) {
     bill.loading = true;
-    this.tagihanService.print(bill.token).subscribe(
+    this.tagihanService.printInvoice(bill.token).subscribe(
+      (response) => {
+        this._FileSaverService.save(
+          response,
+          `Tagihan ${bill.universityName} ${this.datepipe.transform(bill.lastStatusAt, 'd MMMM y')} .pdf`,
+          'pdf'
+        );
+        bill.loading = false;
+      },
+      (err) => {
+        bill.loading = false;
+      }
+    );
+  }
+
+  downloadReceipt(bill: Bill) {
+    bill.loading = true;
+    this.tagihanService.printReceipt(bill.token).subscribe(
       (response) => {
         this._FileSaverService.save(
           response,

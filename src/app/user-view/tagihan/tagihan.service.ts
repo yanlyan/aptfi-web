@@ -35,7 +35,11 @@ export class TagihanService {
     return this.httpClient.put(`${environment.api}/bills/retry/${token}`, {});
   }
 
-  print(token: string) {
+  printInvoice(token: string) {
+    return this.httpClient.download(`${environment.api}/bills/print-invoice/${token}`, { responseType: 'blob' });
+  }
+
+  printReceipt(token: string) {
     return this.httpClient.download(`${environment.api}/bills/print/${token}`, { responseType: 'blob' });
   }
 }

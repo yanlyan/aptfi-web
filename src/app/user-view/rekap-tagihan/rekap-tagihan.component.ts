@@ -109,7 +109,7 @@ export class RekapTagihanComponent implements OnInit {
 
   download(bill: Bill) {
     bill.loading = true;
-    this.tagihanService.print(bill.token).subscribe(
+    this.tagihanService.printReceipt(bill.token).subscribe(
       (response) => {
         this._FileSaverService.save(
           response,

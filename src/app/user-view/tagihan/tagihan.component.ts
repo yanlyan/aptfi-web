@@ -50,7 +50,7 @@ export class TagihanComponent implements OnInit {
 
   onPrintClick(bill: Bill) {
     bill.loading = true;
-    this.tagihanService.print(bill.token).subscribe(
+    this.tagihanService.printReceipt(bill.token).subscribe(
       (response) => {
         this._FileSaverService.save(response, 'Bukti Pembayaran.pdf', 'pdf');
         bill.loading = false;
