@@ -109,7 +109,7 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
       prodiPermit: new FormControl(null, [Validators.required]),
       prodiAccreditedBy: new FormControl(null, [Validators.required]),
       prodiAccreditedNo: new FormControl(null, [Validators.required]),
-      prodiEmail: new FormControl(null, [Validators.required]),
+      prodiEmail: new FormControl(null, [Validators.required, Validators.email]),
       prodiStudents: new FormControl(null, [Validators.required]),
       prodiStudentsYear: new FormControl(null, [Validators.required]),
       prodiPhone: new FormControl(null, [Validators.required]),
