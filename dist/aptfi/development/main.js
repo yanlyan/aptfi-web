@@ -592,9 +592,9 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    api: 'http://localhost:8000/api',
+    api: 'https://staging-api.aptfi.or.id',
     // api: 'https://api-aptfi.lyanesia.tech/api',
-    recaptchaSiteKey: '6LeB7XUeAAAAAMKNTOdoyXciJLdk6otSsY0VK2_D',
+    recaptchaSiteKey: '6LfaP9obAAAAAMKwhjelySEWJSezrxdiqJK6Vs_i',
 };
 /*
  * For easier debugging in development mode, you can import the following file
