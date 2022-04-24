@@ -592,7 +592,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    api: 'https://staging-api.aptfi.or.id',
+    api: 'https://staging-api.aptfi.or.id/api',
     // api: 'https://api-aptfi.lyanesia.tech/api',
     recaptchaSiteKey: '6LdTG_QdAAAAALFFcUrb34BTJACNIfcocAhbnX3w',
 };
