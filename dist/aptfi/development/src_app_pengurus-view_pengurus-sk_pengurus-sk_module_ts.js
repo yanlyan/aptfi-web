@@ -238,7 +238,7 @@ class PengurusSkComponent {
     this.filteredOptions = this.searchForm.controls['search'].valueChanges.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.tap)(() => console.log), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.startWith)(''), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.debounceTime)(200), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.filter)(values => values.length >= 4), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.tap)(val => this.searchLoading = true), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.mergeMap)(value => {
       return this.skService.search(value);
     }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.map)(values => {
-      return values.filter(v => v.registerPaid && v.annualPaid);
+      return values.filter(v => v.registerPaid);
     }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.tap)(() => {
       this.searchLoading = false;
     }));
