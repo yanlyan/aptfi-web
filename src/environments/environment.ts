@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   api: 'https://staging-api.aptfi.or.id',
   // api: 'https://api-aptfi.lyanesia.tech/api',
-  recaptchaSiteKey: '6LfaP9obAAAAAMKwhjelySEWJSezrxdiqJK6Vs_i',
+  recaptchaSiteKey: '6LdTG_QdAAAAALFFcUrb34BTJACNIfcocAhbnX3w',
 };
 
 /*
