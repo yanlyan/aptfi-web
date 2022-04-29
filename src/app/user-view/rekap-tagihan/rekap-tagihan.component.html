@@ -60,6 +60,19 @@
         <span *ngIf="element.lastStatus === 3" class="pills warn">Kadaluarsa</span>
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="invoice">
+      <mat-header-cell *matHeaderCellDef>Tagihan</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label"></span>
+        <div *ngIf="element.loading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+          <mat-spinner color="accent" [diameter]="20"></mat-spinner>
+          <label for="">Loading</label>
+        </div>
+        <button *ngIf="!element.loading" mat-flat-button color="primary" (click)="downloadInvoice(element)">
+          Lihat
+        </button>
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="receipt">
       <mat-header-cell *matHeaderCellDef>Bukti Bayar</mat-header-cell>
       <mat-cell *matCellDef="let element">
@@ -72,7 +85,7 @@
           *ngIf="!element.loading"
           mat-flat-button
           color="primary"
-          (click)="download(element)"
+          (click)="downloadReceipt(element)"
           [disabled]="element.lastStatus !== 2"
         >
           Lihat

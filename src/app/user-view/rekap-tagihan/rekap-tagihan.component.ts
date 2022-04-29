@@ -22,7 +22,15 @@ import { TagihanService } from '../tagihan/tagihan.service';
 export class RekapTagihanComponent implements OnInit {
   isLoadingResults: boolean;
   resultsLength: any;
-  displayedColumns: string[] = ['index', 'members.university_name', 'type', 'amount', 'last_status', 'receipt'];
+  displayedColumns: string[] = [
+    'index',
+    'members.university_name',
+    'type',
+    'amount',
+    'last_status',
+    'invoice',
+    'receipt',
+  ];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -107,7 +115,24 @@ export class RekapTagihanComponent implements OnInit {
       );
   }
 
-  download(bill: Bill) {
+  downloadInvoice(bill: Bill) {
+    bill.loading = true;
+    this.tagihanService.printInvoice(bill.token).subscribe(
+      (response) => {
+        this._FileSaverService.save(
+          response,
+          `Bukti Pembayaran ${bill.universityName} ${this.datepipe.transform(bill.lastStatusAt, 'd MMMM y')} .pdf`,
+          'pdf'
+        );
+        bill.loading = false;
+      },
+      (err) => {
+        bill.loading = false;
+      }
+    );
+  }
+
+  downloadReceipt(bill: Bill) {
     bill.loading = true;
     this.tagihanService.printReceipt(bill.token).subscribe(
       (response) => {
