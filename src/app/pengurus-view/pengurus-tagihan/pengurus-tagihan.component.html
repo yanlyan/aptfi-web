@@ -77,13 +77,7 @@
           <mat-spinner color="accent" [diameter]="20"></mat-spinner>
           <label for="">Loading</label>
         </div>
-        <button
-          *ngIf="!element.loading"
-          mat-flat-button
-          color="primary"
-          (click)="downloadInvoice(element)"
-          [disabled]="element.lastStatus !== 2"
-        >
+        <button *ngIf="!element.loading" mat-flat-button color="primary" (click)="downloadInvoice(element)">
           Lihat
         </button>
       </mat-cell>

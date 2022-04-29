@@ -49,7 +49,7 @@ export class PengurusSkComponent implements OnInit {
         return this.skService.search(value);
       }),
       map((values) => {
-        return values.filter((v) => v.registerPaid && v.annualPaid);
+        return values.filter((v) => v.registerPaid);
       }),
       tap(() => {
         this.searchLoading = false;

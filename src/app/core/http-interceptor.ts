@@ -13,10 +13,12 @@ import { Store } from '@ngxs/store';
 import { AppStateModel, AppState } from '../app.state';
 import { map, catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SetSessionState } from '../app.state';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class MyHttpInterceptor implements HttpInterceptor {
-  constructor(private readonly store: Store, private readonly snackbar: MatSnackBar) {}
+  constructor(private readonly store: Store, private readonly snackbar: MatSnackBar, private readonly router: Router) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const appState: AppStateModel = this.store.selectSnapshot(AppState);
@@ -34,10 +36,21 @@ export class MyHttpInterceptor implements HttpInterceptor {
           return event;
         }),
         catchError((error) => {
-          this.snackbar.open(`Terjadi Kesalahan : ${error.error.message}`, 'Tutup', {
-            panelClass: ['snackbar-warn'],
-            duration: 10000,
-          });
+          if (error.status === 401) {
+            this.store.dispatch(
+              new SetSessionState({
+                accessToken: '',
+                refreshToken: '',
+                role: null,
+              })
+            );
+            this.router.navigate(['login']);
+          } else {
+            this.snackbar.open(`Terjadi Kesalahan : ${error.error.message}`, 'Tutup', {
+              panelClass: ['snackbar-warn'],
+              duration: 10000,
+            });
+          }
           return throwError(error);
         })
       );
