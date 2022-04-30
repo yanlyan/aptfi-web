@@ -121,7 +121,7 @@ export class RekapTagihanComponent implements OnInit {
       (response) => {
         this._FileSaverService.save(
           response,
-          `Bukti Pembayaran ${bill.universityName} ${this.datepipe.transform(bill.lastStatusAt, 'd MMMM y')} .pdf`,
+          `Tagihan ${bill.universityName} ${this.datepipe.transform(bill.lastStatusAt, 'd MMMM y')} .pdf`,
           'pdf'
         );
         bill.loading = false;
