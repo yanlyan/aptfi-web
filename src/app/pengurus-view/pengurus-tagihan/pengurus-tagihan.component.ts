@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDateRangeInput, MatEndDate, MatStartDate } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSelect } from '@angular/material/select';
@@ -40,9 +41,15 @@ export class PengurusTagihanComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('matSelect') statusSelect: MatSelect;
+  @ViewChild('statusSelect') statusSelect: MatSelect;
+  @ViewChild('typeSelect') typeSelect: MatSelect;
 
   @ViewChild('filterInput', { static: true }) filterInput: ElementRef;
+  @ViewChild(MatStartDate) startDate: MatEndDate<Date>;
+  @ViewChild(MatEndDate) endDate: MatEndDate<Date>;
+  @ViewChild('rangeInput', { static: true }) rangeInput: MatDateRangeInput<Date>;
+
+  exportLoading: boolean = false;
 
   constructor(
     private cdref: ChangeDetectorRef,
@@ -73,13 +80,17 @@ export class PengurusTagihanComponent implements OnInit {
       start: 'asc',
       disableClear: false,
     });
+
     this.cdref.detectChanges();
 
     merge(
       this.sort.sortChange,
       this.paginator.page,
       fromEvent(this.filterInput.nativeElement, 'keyup'),
-      this.statusSelect.valueChange
+      this.statusSelect.valueChange,
+      this.typeSelect.valueChange,
+      this.endDate.dateChange,
+      this.startDate.dateChange
     )
       .pipe(
         distinctUntilChanged(),
@@ -102,7 +113,10 @@ export class PengurusTagihanComponent implements OnInit {
         this.sort.direction,
         this.filterInput.nativeElement.value,
         this.statusSelect.value,
-        'false'
+        'false',
+        this.typeSelect.value,
+        this.startDate.value?.toISOString(),
+        this.endDate.value?.toISOString()
       )
       .pipe(
         map((data) => {
@@ -174,6 +188,33 @@ export class PengurusTagihanComponent implements OnInit {
             this.loadData().subscribe();
           });
         }
+      });
+  }
+
+  export() {
+    this.exportLoading = true;
+    this.pengurusTagihanService
+      .exportBills(
+        this.filterInput.nativeElement.value,
+        this.statusSelect.value,
+        this.typeSelect.value,
+        this.startDate.value?.toISOString(),
+        this.endDate.value?.toISOString()
+      )
+      .subscribe({
+        next: (response) => {
+          this._FileSaverService.save(
+            response,
+            `Tagihan ${this.datepipe.transform(new Date(), 'd MMMM y')} .xlsx`,
+            'xlsx'
+          );
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          this.exportLoading = false;
+        },
       });
   }
 }

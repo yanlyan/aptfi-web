@@ -15,7 +15,10 @@ export class PengurusTagihanService {
     sortDirection: string,
     search: string,
     status: number | string,
-    mine: string
+    mine: string,
+    type: string = '',
+    startDate: string = '',
+    endDate: string = ''
   ) {
     return this.httpClient.get(`${environment.api}/bills/paginate`, {
       params: {
@@ -26,7 +29,29 @@ export class PengurusTagihanService {
         search,
         status: status.toString(),
         mine: mine || 'false',
+        type,
+        startDate,
+        endDate,
       },
+    });
+  }
+
+  exportBills(
+    search: string,
+    status: number | string,
+    type: string = '',
+    startDate: string = '',
+    endDate: string = ''
+  ) {
+    return this.httpClient.download(`${environment.api}/bills/export`, {
+      params: {
+        search,
+        status: status.toString(),
+        type,
+        startDate,
+        endDate,
+      },
+      responseType: 'blob',
     });
   }
 

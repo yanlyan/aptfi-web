@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'https://staging-api.aptfi.or.id/api',
+  api: 'http://localhost:8000/api',
+  // api: 'https://staging-api.aptfi.or.id/api',
   // api: 'https://api-aptfi.lyanesia.tech/api',
   recaptchaSiteKey: '6LdTG_QdAAAAALFFcUrb34BTJACNIfcocAhbnX3w',
 };
