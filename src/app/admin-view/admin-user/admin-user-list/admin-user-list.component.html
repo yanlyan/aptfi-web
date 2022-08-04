@@ -64,7 +64,9 @@
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="edit(element)">Edit</button>
-          <button mat-menu-item (click)="sendEmail(element)">Kirim email verifikasi</button>
+          <button mat-menu-item *ngIf="!element.emailVerifiedAt" (click)="sendEmail(element)">
+            Kirim email verifikasi
+          </button>
           <button mat-menu-item color="warn" (click)="delete(element)">Hapus</button>
         </mat-menu>
       </mat-cell>
