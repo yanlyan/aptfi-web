@@ -157,4 +157,13 @@ export class AdminUserListComponent implements OnInit {
         }
       });
   }
+
+  sendEmail(user: User) {
+    this.adminUserService.sendVerificationEmail(user.id).subscribe((result) => {
+      this.snackbar.open('Email berhasil dikirim', '', {
+        panelClass: ['snackbar-success'],
+        duration: 5000,
+      });
+    });
+  }
 }

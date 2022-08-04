@@ -47,4 +47,8 @@ export class AdminUserService {
   delete(id: bigint) {
     return this.httpClient.delete(`${environment.api}/users/${id}`);
   }
+
+  sendVerificationEmail(id: bigint) {
+    return this.httpClient.post(`${environment.api}/users/${id}/send-verification-email`, {});
+  }
 }
