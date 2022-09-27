@@ -27,4 +27,8 @@ export class PengurusMemberService {
       },
     });
   }
+
+  export() {
+    return this.httpClient.download(`${environment.api}/members/export`, {responseType: 'blob'});
+  }
 }

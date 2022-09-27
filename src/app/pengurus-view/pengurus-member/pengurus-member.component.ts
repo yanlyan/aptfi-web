@@ -9,6 +9,8 @@ import { distinctUntilChanged, debounceTime, startWith, switchMap, map } from 'r
 import { Member } from 'src/app/models/member.model';
 import { SetLoadingState } from '../../states/loading.state';
 import { PengurusMemberService } from './pengurus-member.service';
+import {FileSaverService} from "ngx-filesaver";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-pengurus-member',
@@ -18,6 +20,7 @@ import { PengurusMemberService } from './pengurus-member.service';
 export class PengurusMemberComponent implements OnInit {
   isLoadingResults: boolean;
   resultsLength: any;
+  exportLoading: boolean;
   displayedColumns: string[] = ['index', 'university_name', 'faculty_name', 'prodi_name', 'status', 'action'];
   dataSource = new MatTableDataSource();
 
@@ -31,7 +34,9 @@ export class PengurusMemberComponent implements OnInit {
     private pengurusMemberService: PengurusMemberService,
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _FileSaverService: FileSaverService,
+    private datepipe: DatePipe,
   ) {}
 
   ngOnInit() {
@@ -100,6 +105,25 @@ export class PengurusMemberComponent implements OnInit {
         page: this.paginator.pageIndex,
         search: this.filterInput.nativeElement.value,
         size: this.paginator.pageSize,
+      },
+    });
+  }
+
+  onExportClick() {
+    this.exportLoading = true;
+    this.pengurusMemberService.export().subscribe({
+      next: (response) => {
+        this._FileSaverService.save(
+          response,
+          `Member ${this.datepipe.transform(new Date(), 'd MMMM y')} .xlsx`,
+          'xlsx'
+        );
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        this.exportLoading = false;
       },
     });
   }

@@ -3,6 +3,12 @@
     <mat-label>Cari</mat-label>
     <input matInput #filterInput />
   </mat-form-field>
+
+  <button *ngIf="!exportLoading" mat-flat-button color="primary" (click)="onExportClick()">
+    <mat-icon>file_download</mat-icon> Export Member
+  </button>
+  <mat-spinner *ngIf="exportLoading" color="accent" [diameter]="20"></mat-spinner>
+
 </div>
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="dataSource" matSort>
