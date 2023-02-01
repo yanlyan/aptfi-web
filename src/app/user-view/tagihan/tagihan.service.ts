@@ -42,4 +42,8 @@ export class TagihanService {
   printReceipt(token: string) {
     return this.httpClient.download(`${environment.api}/bills/print/${token}`, { responseType: 'blob' });
   }
+
+  reorder(id: number) {
+    return this.httpClient.put(`${environment.api}/bills/reorder/${id}`, {});
+  }
 }
